@@ -30,9 +30,6 @@ public class RotaRequalificacao {
     @JoinColumn(name = "id_tendencia")
     private TendenciaMercado tendencia;
 
-    @Column(name = "gerada_por_ia", nullable = false)
-    private Boolean geradaPorIa = true;
-
     @OneToMany(mappedBy = "rota", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("ordem ASC")
     @Builder.Default

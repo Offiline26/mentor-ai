@@ -1,6 +1,6 @@
 package br.com.fiap.mentorai.model;
 
-import com.mentorai.model.enums.StatusRotaEnum;
+import br.com.fiap.mentorai.model.enums.StatusRotaEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
