@@ -1,0 +1,62 @@
+package br.com.fiap.mentorai.controller;
+
+import br.com.fiap.mentorai.dto.request.CreateRotaRequalificacaoRequest;
+import br.com.fiap.mentorai.dto.request.UpdateRotaRequalificacaoRequest;
+import br.com.fiap.mentorai.dto.response.RotaRequalificacaoResponse;
+import br.com.fiap.mentorai.mapper.RotaRequalificacaoMapper;
+import br.com.fiap.mentorai.model.RotaRequalificacao;
+import br.com.fiap.mentorai.repository.RotaRequalificacaoRepository;
+import br.com.fiap.mentorai.service.RotaRequalificacaoService;
+import jakarta.validation.Valid;
+import org.springframework.data.domain.*;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.*;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+
+@RestController
+@RequestMapping("/api/rotas")
+@Validated
+public class RotaRequalificacaoController {
+
+    private final RotaRequalificacaoService service;
+    private final RotaRequalificacaoRepository repo;
+
+    public RotaRequalificacaoController(RotaRequalificacaoService service,
+                                        RotaRequalificacaoRepository repo) {
+        this.service = service;
+        this.repo = repo;
+    }
+
+    @PostMapping
+    public ResponseEntity<RotaRequalificacaoResponse> create(@Valid @RequestBody CreateRotaRequalificacaoRequest req) {
+        var resp = service.create(req);
+        return ResponseEntity.created(URI.create("/api/rotas/" + resp.getId())).body(resp);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<RotaRequalificacaoResponse> get(@PathVariable Long id) {
+        return ResponseEntity.ok(service.get(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<RotaRequalificacaoResponse>> list(
+            @PageableDefault(size = 20, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+        Page<RotaRequalificacao> page = repo.findAll(pageable);
+        return ResponseEntity.ok(page.map(RotaRequalificacaoMapper::toDto));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<RotaRequalificacaoResponse> update(@PathVariable Long id,
+                                                             @Valid @RequestBody UpdateRotaRequalificacaoRequest req) {
+        return ResponseEntity.ok(service.update(id, req));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+}

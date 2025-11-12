@@ -11,6 +11,7 @@ import br.com.fiap.mentorai.model.*;
 import br.com.fiap.mentorai.model.enums.NivelProficienciaEnum;
 import br.com.fiap.mentorai.repository.*;
 import jakarta.transaction.Transactional;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public class UsuarioService {
     private final UsuarioHabilidadeRepository usuarioHabRepo;
     private final RotaRequalificacaoRepository rotaRepo;
     private final UsuarioRotaRepository usuarioRotaRepo;
+    private final PasswordEncoder passwordEncoder;
 
     public UsuarioService(UsuarioRepository usuarioRepo,
                           CargoRepository cargoRepo,
@@ -32,7 +34,8 @@ public class UsuarioService {
                           HabilidadeRepository habilidadeRepo,
                           UsuarioHabilidadeRepository usuarioHabRepo,
                           RotaRequalificacaoRepository rotaRepo,
-                          UsuarioRotaRepository usuarioRotaRepo) {
+                          UsuarioRotaRepository usuarioRotaRepo,
+                          PasswordEncoder passwordEncoder) {
         this.usuarioRepo = usuarioRepo;
         this.cargoRepo = cargoRepo;
         this.areaRepo = areaRepo;
@@ -40,6 +43,7 @@ public class UsuarioService {
         this.usuarioHabRepo = usuarioHabRepo;
         this.rotaRepo = rotaRepo;
         this.usuarioRotaRepo = usuarioRotaRepo;
+        this.passwordEncoder = passwordEncoder;
     }
 
     // -------- CRUD --------
@@ -60,7 +64,7 @@ public class UsuarioService {
 
         // senha: gerar hash no futuro (ex.: BCrypt), por ora manter como veio? Ajuste conforme sua regra
         if (req.getSenha() != null) {
-            e.setSenhaHash(req.getSenha()); // TODO: encoder
+            e.setSenhaHash(passwordEncoder.encode(req.getSenha()));
         }
 
         e = usuarioRepo.save(e);

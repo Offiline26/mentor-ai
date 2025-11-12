@@ -1,0 +1,61 @@
+package br.com.fiap.mentorai.controller;
+
+
+import br.com.fiap.mentorai.dto.ParceiroCursoDto;
+import br.com.fiap.mentorai.dto.request.CreateParceiroCursoRequest;
+import br.com.fiap.mentorai.dto.request.UpdateParceiroCursoRequest;
+import br.com.fiap.mentorai.mapper.ParceiroCursoMapper;
+import br.com.fiap.mentorai.model.ParceiroCurso;
+import br.com.fiap.mentorai.repository.ParceiroCursoRepository;
+import br.com.fiap.mentorai.service.ParceiroCursoService;
+import jakarta.validation.Valid;
+import org.springframework.data.domain.*;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.*;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+
+@RestController
+@RequestMapping("/api/parceiros")
+@Validated
+public class ParceiroCursoController {
+
+    private final ParceiroCursoService service;
+    private final ParceiroCursoRepository repo;
+
+    public ParceiroCursoController(ParceiroCursoService service, ParceiroCursoRepository repo) {
+        this.service = service;
+        this.repo = repo;
+    }
+
+    @PostMapping
+    public ResponseEntity<ParceiroCursoDto> create(@Valid @RequestBody CreateParceiroCursoRequest req) {
+        ParceiroCursoDto resp = service.create(req);
+        return ResponseEntity.created(URI.create("/api/parceiros/" + resp.getId())).body(resp);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ParceiroCursoDto> get(@PathVariable Long id) {
+        return ResponseEntity.ok(service.get(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<ParceiroCursoDto>> list(
+            @PageableDefault(size = 20, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+        Page<ParceiroCurso> page = repo.findAll(pageable);
+        return ResponseEntity.ok(page.map(ParceiroCursoMapper::toDto));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ParceiroCursoDto> update(@PathVariable Long id, @Valid @RequestBody UpdateParceiroCursoRequest req) {
+        return ResponseEntity.ok(service.update(id, req));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+}
