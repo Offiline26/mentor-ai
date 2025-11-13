@@ -1,5 +1,7 @@
 package br.com.fiap.mentorai.security;
 
+// PROVAVELMENTE SEM USO, REMOVER DEPOIS
+
 import br.com.fiap.mentorai.model.Usuario;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
