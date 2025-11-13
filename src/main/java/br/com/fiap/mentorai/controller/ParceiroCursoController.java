@@ -2,8 +2,8 @@ package br.com.fiap.mentorai.controller;
 
 
 import br.com.fiap.mentorai.dto.ParceiroCursoDto;
-import br.com.fiap.mentorai.dto.request.CreateParceiroCursoRequest;
-import br.com.fiap.mentorai.dto.request.UpdateParceiroCursoRequest;
+import br.com.fiap.mentorai.dto.request.create.CreateParceiroCursoRequest;
+import br.com.fiap.mentorai.dto.request.update.UpdateParceiroCursoRequest;
 import br.com.fiap.mentorai.mapper.ParceiroCursoMapper;
 import br.com.fiap.mentorai.model.ParceiroCurso;
 import br.com.fiap.mentorai.repository.ParceiroCursoRepository;

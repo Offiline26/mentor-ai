@@ -1,9 +1,9 @@
-package br.com.fiap.mentorai.dto.request;
+package br.com.fiap.mentorai.dto.request.update;
 
 import lombok.*;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
-public class UpdateCargoRequest {
+public class UpdateAreaAtuacaoRequest {
     private String nome;
     private String descricao;
 }

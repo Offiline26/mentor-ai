@@ -1,11 +1,9 @@
-package br.com.fiap.mentorai.dto.request;
+package br.com.fiap.mentorai.dto.request.create;
 
 import lombok.*;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
-public class CreateHabilidadeRequest {
+public class CreateCargoRequest {
     private String nome;
-    private Long idCategoria; // FK
     private String descricao;
 }
-

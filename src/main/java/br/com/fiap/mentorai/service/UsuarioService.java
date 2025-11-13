@@ -1,8 +1,7 @@
 package br.com.fiap.mentorai.service;
 
-import br.com.fiap.mentorai.dto.*;
-import br.com.fiap.mentorai.dto.request.CreateUsuarioRequest;
-import br.com.fiap.mentorai.dto.request.UpdateUsuarioRequest;
+import br.com.fiap.mentorai.dto.request.create.CreateUsuarioRequest;
+import br.com.fiap.mentorai.dto.request.update.UpdateUsuarioRequest;
 import br.com.fiap.mentorai.dto.response.UsuarioResponse;
 import br.com.fiap.mentorai.dto.upsert.UsuarioHabilidadeUpsert;
 import br.com.fiap.mentorai.exception.ResourceNotFoundException;

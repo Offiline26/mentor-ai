@@ -1,8 +1,8 @@
 package br.com.fiap.mentorai.mapper;
 
 import br.com.fiap.mentorai.dto.CargoDto;
-import br.com.fiap.mentorai.dto.request.CreateCargoRequest;
-import br.com.fiap.mentorai.dto.request.UpdateCargoRequest;
+import br.com.fiap.mentorai.dto.request.create.CreateCargoRequest;
+import br.com.fiap.mentorai.dto.request.update.UpdateCargoRequest;
 import br.com.fiap.mentorai.model.Cargo;
 
 import java.util.List;

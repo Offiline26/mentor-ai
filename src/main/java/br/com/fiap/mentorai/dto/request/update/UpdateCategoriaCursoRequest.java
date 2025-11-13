@@ -1,4 +1,4 @@
-package br.com.fiap.mentorai.dto.request;
+package br.com.fiap.mentorai.dto.request.update;
 
 
 import lombok.*;

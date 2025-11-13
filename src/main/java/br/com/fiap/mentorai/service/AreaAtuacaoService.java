@@ -1,8 +1,8 @@
 package br.com.fiap.mentorai.service;
 
 import br.com.fiap.mentorai.dto.AreaAtuacaoDto;
-import br.com.fiap.mentorai.dto.request.CreateAreaAtuacaoRequest;
-import br.com.fiap.mentorai.dto.request.UpdateAreaAtuacaoRequest;
+import br.com.fiap.mentorai.dto.request.create.CreateAreaAtuacaoRequest;
+import br.com.fiap.mentorai.dto.request.update.UpdateAreaAtuacaoRequest;
 import br.com.fiap.mentorai.exception.ResourceNotFoundException;
 import br.com.fiap.mentorai.mapper.AreaAtuacaoMapper;
 import br.com.fiap.mentorai.model.AreaAtuacao;

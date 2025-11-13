@@ -1,8 +1,7 @@
 package br.com.fiap.mentorai.service;
 
-import br.com.fiap.mentorai.dto.*;
-import br.com.fiap.mentorai.dto.request.CreateCursoRequest;
-import br.com.fiap.mentorai.dto.request.UpdateCursoRequest;
+import br.com.fiap.mentorai.dto.request.create.CreateCursoRequest;
+import br.com.fiap.mentorai.dto.request.update.UpdateCursoRequest;
 import br.com.fiap.mentorai.dto.response.CursoResponse;
 import br.com.fiap.mentorai.exception.ResourceNotFoundException;
 import br.com.fiap.mentorai.mapper.CursoMapper;

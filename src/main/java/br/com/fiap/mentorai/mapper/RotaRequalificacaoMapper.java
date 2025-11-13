@@ -1,8 +1,8 @@
 package br.com.fiap.mentorai.mapper;
 
-import br.com.fiap.mentorai.dto.request.CreateRotaRequalificacaoRequest;
+import br.com.fiap.mentorai.dto.request.create.CreateRotaRequalificacaoRequest;
 import br.com.fiap.mentorai.dto.response.RotaRequalificacaoResponse;
-import br.com.fiap.mentorai.dto.request.UpdateRotaRequalificacaoRequest;
+import br.com.fiap.mentorai.dto.request.update.UpdateRotaRequalificacaoRequest;
 import br.com.fiap.mentorai.model.RotaCurso;
 import br.com.fiap.mentorai.model.RotaRequalificacao;
 

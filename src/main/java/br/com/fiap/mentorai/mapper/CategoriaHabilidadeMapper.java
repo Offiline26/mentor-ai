@@ -1,8 +1,8 @@
 package br.com.fiap.mentorai.mapper;
 
 import br.com.fiap.mentorai.dto.CategoriaHabilidadeDto;
-import br.com.fiap.mentorai.dto.request.CreateCategoriaHabilidadeRequest;
-import br.com.fiap.mentorai.dto.request.UpdateCategoriaHabilidadeRequest;
+import br.com.fiap.mentorai.dto.request.create.CreateCategoriaHabilidadeRequest;
+import br.com.fiap.mentorai.dto.request.update.UpdateCategoriaHabilidadeRequest;
 import br.com.fiap.mentorai.model.CategoriaHabilidade;
 
 import java.util.List;

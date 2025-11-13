@@ -1,8 +1,8 @@
 package br.com.fiap.mentorai.mapper;
 
 import br.com.fiap.mentorai.dto.ParceiroCursoDto;
-import br.com.fiap.mentorai.dto.request.CreateParceiroCursoRequest;
-import br.com.fiap.mentorai.dto.request.UpdateParceiroCursoRequest;
+import br.com.fiap.mentorai.dto.request.create.CreateParceiroCursoRequest;
+import br.com.fiap.mentorai.dto.request.update.UpdateParceiroCursoRequest;
 import br.com.fiap.mentorai.model.ParceiroCurso;
 
 import java.util.List;

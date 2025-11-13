@@ -1,7 +1,7 @@
 package br.com.fiap.mentorai.mapper;
 
-import br.com.fiap.mentorai.dto.request.CreateHabilidadeRequest;
-import br.com.fiap.mentorai.dto.request.UpdateHabilidadeRequest;
+import br.com.fiap.mentorai.dto.request.create.CreateHabilidadeRequest;
+import br.com.fiap.mentorai.dto.request.update.UpdateHabilidadeRequest;
 import br.com.fiap.mentorai.dto.response.HabilidadeResponse;
 import br.com.fiap.mentorai.model.Habilidade;
 

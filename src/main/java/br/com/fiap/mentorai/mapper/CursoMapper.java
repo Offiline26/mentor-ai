@@ -1,8 +1,8 @@
 package br.com.fiap.mentorai.mapper;
 
 import br.com.fiap.mentorai.dto.response.CursoResponse;
-import br.com.fiap.mentorai.dto.request.CreateCursoRequest;
-import br.com.fiap.mentorai.dto.request.UpdateCursoRequest;
+import br.com.fiap.mentorai.dto.request.create.CreateCursoRequest;
+import br.com.fiap.mentorai.dto.request.update.UpdateCursoRequest;
 import br.com.fiap.mentorai.model.Curso;
 import br.com.fiap.mentorai.model.Habilidade;
 

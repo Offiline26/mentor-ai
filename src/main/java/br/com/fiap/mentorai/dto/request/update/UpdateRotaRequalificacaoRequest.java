@@ -1,5 +1,6 @@
-package br.com.fiap.mentorai.dto.request;
+package br.com.fiap.mentorai.dto.request.update;
 
+import br.com.fiap.mentorai.dto.request.create.CreateRotaRequalificacaoRequest;
 import lombok.*;
 
 import java.util.List;

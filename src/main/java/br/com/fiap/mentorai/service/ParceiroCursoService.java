@@ -1,8 +1,8 @@
 package br.com.fiap.mentorai.service;
 
 import br.com.fiap.mentorai.dto.ParceiroCursoDto;
-import br.com.fiap.mentorai.dto.request.CreateParceiroCursoRequest;
-import br.com.fiap.mentorai.dto.request.UpdateParceiroCursoRequest;
+import br.com.fiap.mentorai.dto.request.create.CreateParceiroCursoRequest;
+import br.com.fiap.mentorai.dto.request.update.UpdateParceiroCursoRequest;
 import br.com.fiap.mentorai.exception.ResourceNotFoundException;
 import br.com.fiap.mentorai.mapper.ParceiroCursoMapper;
 import br.com.fiap.mentorai.model.ParceiroCurso;

@@ -1,7 +1,7 @@
 package br.com.fiap.mentorai.mapper;
 
-import br.com.fiap.mentorai.dto.request.CreateTendenciaMercadoRequest;
-import br.com.fiap.mentorai.dto.request.UpdateTendenciaMercadoRequest;
+import br.com.fiap.mentorai.dto.request.create.CreateTendenciaMercadoRequest;
+import br.com.fiap.mentorai.dto.request.update.UpdateTendenciaMercadoRequest;
 import br.com.fiap.mentorai.dto.response.TendenciaMercadoResponse;
 import br.com.fiap.mentorai.model.TendenciaMercado;
 import br.com.fiap.mentorai.model.enums.NivelDemandaEnum;

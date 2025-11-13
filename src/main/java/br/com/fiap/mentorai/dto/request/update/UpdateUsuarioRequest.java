@@ -1,5 +1,4 @@
-package br.com.fiap.mentorai.dto.request;
-
+package br.com.fiap.mentorai.dto.request.update;
 import br.com.fiap.mentorai.dto.upsert.UsuarioHabilidadeUpsert;
 import br.com.fiap.mentorai.model.enums.GeneroEnum;
 import lombok.*;
@@ -8,16 +7,14 @@ import java.time.LocalDate;
 import java.util.Set;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
-public class CreateUsuarioRequest {
+public class UpdateUsuarioRequest {
     private String nome;
-    private String email;
-    private String senha; // entra em texto; service gera hash
+    private String email; // se for imutável, remova
     private LocalDate dataNascimento;
-    private GeneroEnum genero; // opcional
+    private GeneroEnum genero;
     private String pais;
     private Long idCargo;
     private Long idAreaAtuacao;
 
-    // opcional: habilidades iniciais
     private Set<UsuarioHabilidadeUpsert> habilidades;
 }
