@@ -5,8 +5,15 @@ import br.com.fiap.mentorai.dto.request.update.UpdateRotaRequalificacaoRequest;
 import br.com.fiap.mentorai.dto.response.RotaRequalificacaoResponse;
 import br.com.fiap.mentorai.exception.ResourceNotFoundException;
 import br.com.fiap.mentorai.mapper.RotaRequalificacaoMapper;
-import br.com.fiap.mentorai.model.*;
-import br.com.fiap.mentorai.repository.*;
+import br.com.fiap.mentorai.messaging.RotaEventPublisher;
+import br.com.fiap.mentorai.messaging.RotaCriadaEvent;
+import br.com.fiap.mentorai.model.Curso;
+import br.com.fiap.mentorai.model.RotaCurso;
+import br.com.fiap.mentorai.model.RotaRequalificacao;
+import br.com.fiap.mentorai.repository.CursoRepository;
+import br.com.fiap.mentorai.repository.RotaCursoRepository;
+import br.com.fiap.mentorai.repository.RotaRequalificacaoRepository;
+import br.com.fiap.mentorai.repository.TendenciaMercadoRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -14,6 +21,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -23,15 +31,18 @@ public class RotaRequalificacaoService {
     private final TendenciaMercadoRepository tendenciaRepo;
     private final CursoRepository cursoRepo;
     private final RotaCursoRepository rotaCursoRepo;
+    private final RotaEventPublisher rotaEventPublisher;
 
     public RotaRequalificacaoService(RotaRequalificacaoRepository rotaRepo,
                                      TendenciaMercadoRepository tendenciaRepo,
                                      CursoRepository cursoRepo,
-                                     RotaCursoRepository rotaCursoRepo) {
+                                     RotaCursoRepository rotaCursoRepo,
+                                     RotaEventPublisher rotaEventPublisher) {
         this.rotaRepo = rotaRepo;
         this.tendenciaRepo = tendenciaRepo;
         this.cursoRepo = cursoRepo;
         this.rotaCursoRepo = rotaCursoRepo;
+        this.rotaEventPublisher = rotaEventPublisher;
     }
 
     @Transactional
@@ -62,7 +73,26 @@ public class RotaRequalificacaoService {
                 e.getCursos().add(rc);
             }
         }
-        return RotaRequalificacaoMapper.toDto(e);
+
+        // monta DTO para retorno
+        RotaRequalificacaoResponse dto = RotaRequalificacaoMapper.toDto(e);
+
+        // publica evento assíncrono no RabbitMQ
+        RotaCriadaEvent event = RotaCriadaEvent.builder()
+                .idRota(e.getId())
+                .nomeRota(e.getNomeRota())
+                .objetivoProfissional(e.getObjetivoProfissional())
+                .dataCriacao(LocalDateTime.now())
+                .cursos(
+                        e.getCursos().stream()
+                                .map(rc -> rc.getCurso().getId())
+                                .toList()
+                )
+                .build();
+
+        rotaEventPublisher.publishRotaCriada(event);
+
+        return dto;
     }
 
     @Cacheable(cacheNames = "rotasById", key = "#id")
