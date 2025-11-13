@@ -41,7 +41,7 @@ public class AuthController {
             final String email = req.getEmail().trim().toLowerCase(Locale.ROOT);
 
             Authentication auth = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(email, req.getPassword())
+                    new UsernamePasswordAuthenticationToken(email, req.getSenha())
             );
 
             UserDetails principal = (UserDetails) auth.getPrincipal();
