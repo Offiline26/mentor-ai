@@ -5,7 +5,7 @@ import br.com.fiap.mentorai.dto.response.LoginResponse;
 import br.com.fiap.mentorai.exception.ResourceNotFoundException;
 import br.com.fiap.mentorai.model.Usuario;
 import br.com.fiap.mentorai.repository.UsuarioRepository;
-import br.com.fiap.mentorai.security.autenticacao.JwtService;
+import br.com.fiap.mentorai.security.JwtService;
 import jakarta.validation.Valid;
 import org.springframework.http.*;
 import org.springframework.security.authentication.*;

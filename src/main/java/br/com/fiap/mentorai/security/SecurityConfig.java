@@ -1,7 +1,5 @@
 package br.com.fiap.mentorai.security;
 
-import br.com.fiap.mentorai.security.autenticacao.JwtAuthFilter;
-import br.com.fiap.mentorai.security.autenticacao.UsuarioUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;

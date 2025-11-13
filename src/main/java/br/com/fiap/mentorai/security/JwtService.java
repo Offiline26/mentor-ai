@@ -1,4 +1,4 @@
-package br.com.fiap.mentorai.security.autenticacao;
+package br.com.fiap.mentorai.security;
 
 
 import io.jsonwebtoken.Jwts;

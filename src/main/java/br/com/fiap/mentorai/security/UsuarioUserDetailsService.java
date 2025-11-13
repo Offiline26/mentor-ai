@@ -1,4 +1,4 @@
-package br.com.fiap.mentorai.security.autenticacao;
+package br.com.fiap.mentorai.security;
 
 import br.com.fiap.mentorai.model.Usuario;
 import br.com.fiap.mentorai.repository.UsuarioRepository;
