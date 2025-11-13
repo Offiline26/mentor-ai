@@ -8,12 +8,12 @@ import lombok.*;
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class LoginRequest {
 
-    @NotBlank
-    @Email
+    @NotBlank(message = "{usuario.email.notblank}")
+    @Email(message = "{usuario.email.invalid}")
     @Size(max = 100)
     private String email;
 
-    @NotBlank
+    @NotBlank(message = "{usuario.password.notblank}")
     @Size(min = 8, max = 100)
-    private String password;
+    private String senha;
 }
