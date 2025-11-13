@@ -8,6 +8,10 @@ import br.com.fiap.mentorai.mapper.CategoriaCursoMapper;
 import br.com.fiap.mentorai.model.CategoriaCurso;
 import br.com.fiap.mentorai.repository.CategoriaCursoRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,23 +26,33 @@ public class CategoriaCursoService {
     }
 
     @Transactional
+    @Caching(
+            put = { @CachePut(cacheNames = "categoriasCursoById", key = "#result.id") },
+            evict = { @CacheEvict(cacheNames = "categoriasCursoList", allEntries = true) }
+    )
     public CategoriaCursoDto create(CreateCategoriaCursoRequest req) {
         CategoriaCurso e = CategoriaCursoMapper.toEntity(req);
         e = repo.save(e);
         return CategoriaCursoMapper.toDto(e);
     }
 
+    @Cacheable(cacheNames = "categoriasCursoById", key = "#id")
     public CategoriaCursoDto get(Long id) {
         CategoriaCurso e = repo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Categoria de curso não encontrada"));
         return CategoriaCursoMapper.toDto(e);
     }
 
+    @Cacheable(cacheNames = "categoriasCursoList")
     public List<CategoriaCursoDto> list() {
         return CategoriaCursoMapper.toDtoList(repo.findAll());
     }
 
     @Transactional
+    @Caching(
+            put = { @CachePut(cacheNames = "categoriasCursoById", key = "#result.id") },
+            evict = { @CacheEvict(cacheNames = "categoriasCursoList", allEntries = true) }
+    )
     public CategoriaCursoDto update(Long id, UpdateCategoriaCursoRequest req) {
         CategoriaCurso e = repo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Categoria de curso não encontrada"));
@@ -47,6 +61,10 @@ public class CategoriaCursoService {
     }
 
     @Transactional
+    @Caching(evict = {
+            @CacheEvict(cacheNames = "categoriasCursoById", key = "#id"),
+            @CacheEvict(cacheNames = "categoriasCursoList", allEntries = true)
+    })
     public void delete(Long id) {
         if (!repo.existsById(id)) throw new ResourceNotFoundException("Categoria de curso não encontrada");
         repo.deleteById(id);

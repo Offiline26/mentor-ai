@@ -10,6 +10,10 @@ import br.com.fiap.mentorai.model.Curso;
 import br.com.fiap.mentorai.model.Habilidade;
 import br.com.fiap.mentorai.repository.*;
 import jakarta.transaction.Transactional;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -34,6 +38,10 @@ public class CursoService {
     }
 
     @Transactional
+    @Caching(
+            put = { @CachePut(cacheNames = "cursosById", key = "#result.id") },
+            evict = { @CacheEvict(cacheNames = "cursosList", allEntries = true) }
+    )
     public CursoResponse create(CreateCursoRequest req) {
         Curso e = CursoMapper.toEntity(req);
 
@@ -58,17 +66,23 @@ public class CursoService {
         return CursoMapper.toDto(e);
     }
 
+    @Cacheable(cacheNames = "cursosById", key = "#id")
     public CursoResponse get(Long id) {
         Curso e = cursoRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Curso não encontrado"));
         return CursoMapper.toDto(e);
     }
 
+    @Cacheable(cacheNames = "cursosList")
     public List<CursoResponse> list() {
         return CursoMapper.toDtoList(cursoRepo.findAll());
     }
 
     @Transactional
+    @Caching(
+            put = { @CachePut(cacheNames = "cursosById", key = "#result.id") },
+            evict = { @CacheEvict(cacheNames = "cursosList", allEntries = true) }
+    )
     public CursoResponse update(Long id, UpdateCursoRequest req) {
         Curso e = cursoRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Curso não encontrado"));
@@ -95,6 +109,10 @@ public class CursoService {
     }
 
     @Transactional
+    @Caching(evict = {
+            @CacheEvict(cacheNames = "cursosById", key = "#id"),
+            @CacheEvict(cacheNames = "cursosList", allEntries = true)
+    })
     public void delete(Long id) {
         if (!cursoRepo.existsById(id)) throw new ResourceNotFoundException("Curso não encontrado");
         cursoRepo.deleteById(id);

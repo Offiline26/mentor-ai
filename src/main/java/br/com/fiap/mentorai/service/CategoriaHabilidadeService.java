@@ -8,6 +8,10 @@ import br.com.fiap.mentorai.mapper.CategoriaHabilidadeMapper;
 import br.com.fiap.mentorai.model.CategoriaHabilidade;
 import br.com.fiap.mentorai.repository.CategoriaHabilidadeRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,23 +26,33 @@ public class CategoriaHabilidadeService {
     }
 
     @Transactional
+    @Caching(
+            put = { @CachePut(cacheNames = "categoriasHabById", key = "#result.id") },
+            evict = { @CacheEvict(cacheNames = "categoriasHabList", allEntries = true) }
+    )
     public CategoriaHabilidadeDto create(CreateCategoriaHabilidadeRequest req) {
         CategoriaHabilidade e = CategoriaHabilidadeMapper.toEntity(req);
         e = repo.save(e);
         return CategoriaHabilidadeMapper.toDto(e);
     }
 
+    @Cacheable(cacheNames = "categoriasHabById", key = "#id")
     public CategoriaHabilidadeDto get(Long id) {
         CategoriaHabilidade e = repo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Categoria de habilidade não encontrada"));
         return CategoriaHabilidadeMapper.toDto(e);
     }
 
+    @Cacheable(cacheNames = "categoriasHabList")
     public List<CategoriaHabilidadeDto> list() {
         return CategoriaHabilidadeMapper.toDtoList(repo.findAll());
     }
 
     @Transactional
+    @Caching(
+            put = { @CachePut(cacheNames = "categoriasHabById", key = "#result.id") },
+            evict = { @CacheEvict(cacheNames = "categoriasHabList", allEntries = true) }
+    )
     public CategoriaHabilidadeDto update(Long id, UpdateCategoriaHabilidadeRequest req) {
         CategoriaHabilidade e = repo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Categoria de habilidade não encontrada"));
@@ -47,6 +61,10 @@ public class CategoriaHabilidadeService {
     }
 
     @Transactional
+    @Caching(evict = {
+            @CacheEvict(cacheNames = "categoriasHabById", key = "#id"),
+            @CacheEvict(cacheNames = "categoriasHabList", allEntries = true)
+    })
     public void delete(Long id) {
         if (!repo.existsById(id)) throw new ResourceNotFoundException("Categoria de habilidade não encontrada");
         repo.deleteById(id);

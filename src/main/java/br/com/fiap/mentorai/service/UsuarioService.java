@@ -11,6 +11,10 @@ import br.com.fiap.mentorai.model.*;
 import br.com.fiap.mentorai.model.enums.NivelProficienciaEnum;
 import br.com.fiap.mentorai.repository.*;
 import jakarta.transaction.Transactional;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -49,10 +53,13 @@ public class UsuarioService {
     // -------- CRUD --------
 
     @Transactional
+    @Caching(
+            put = { @CachePut(cacheNames = "usuariosById", key = "#result.id") },
+            evict = { @CacheEvict(cacheNames = "usuariosList", allEntries = true) }
+    )
     public UsuarioResponse create(CreateUsuarioRequest req) {
         Usuario e = UsuarioMapper.toEntity(req);
 
-        // relacionamentos
         if (req.getIdCargo() != null) {
             e.setCargo(cargoRepo.findById(req.getIdCargo())
                     .orElseThrow(() -> new ResourceNotFoundException("Cargo não encontrado")));
@@ -62,14 +69,12 @@ public class UsuarioService {
                     .orElseThrow(() -> new ResourceNotFoundException("Área de atuação não encontrada")));
         }
 
-        // senha: gerar hash no futuro (ex.: BCrypt), por ora manter como veio? Ajuste conforme sua regra
         if (req.getSenha() != null) {
             e.setSenhaHash(passwordEncoder.encode(req.getSenha()));
         }
 
         e = usuarioRepo.save(e);
 
-        // habilidades iniciais (opcional)
         if (req.getHabilidades() != null) {
             for (UsuarioHabilidadeUpsert h : req.getHabilidades()) {
                 Habilidade hab = habilidadeRepo.findById(h.getIdHabilidade())
@@ -87,17 +92,23 @@ public class UsuarioService {
         return UsuarioMapper.toDto(e);
     }
 
+    @Cacheable(cacheNames = "usuariosById", key = "#id")
     public UsuarioResponse get(Long id) {
         Usuario e = usuarioRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
         return UsuarioMapper.toDto(e);
     }
 
+    @Cacheable(cacheNames = "usuariosList")
     public List<UsuarioResponse> list() {
         return UsuarioMapper.toDtoList(usuarioRepo.findAll());
     }
 
     @Transactional
+    @Caching(
+            put = { @CachePut(cacheNames = "usuariosById", key = "#result.id") },
+            evict = { @CacheEvict(cacheNames = "usuariosList", allEntries = true) }
+    )
     public UsuarioResponse update(Long id, UpdateUsuarioRequest req) {
         Usuario e = usuarioRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
@@ -113,9 +124,7 @@ public class UsuarioService {
                     .orElseThrow(() -> new ResourceNotFoundException("Área de atuação não encontrada")));
         }
 
-        // Upsert de habilidades (se vier no request)
         if (req.getHabilidades() != null) {
-            // estratégia simples: limpa e recria
             usuarioHabRepo.deleteAll(e.getHabilidades());
             e.getHabilidades().clear();
 
@@ -137,6 +146,10 @@ public class UsuarioService {
     }
 
     @Transactional
+    @Caching(evict = {
+            @CacheEvict(cacheNames = "usuariosById", key = "#id"),
+            @CacheEvict(cacheNames = "usuariosList", allEntries = true)
+    })
     public void delete(Long id) {
         if (!usuarioRepo.existsById(id)) {
             throw new ResourceNotFoundException("Usuário não encontrado");
@@ -144,7 +157,7 @@ public class UsuarioService {
         usuarioRepo.deleteById(id);
     }
 
-    // -------- Rotas do usuário --------
+    // -------- Rotas do usuário (não cacheei, pois é ação de domínio que mexe em progresso) --------
 
     @Transactional
     public UsuarioResponse iniciarRota(Long idUsuario, Long idRota) {
@@ -153,12 +166,12 @@ public class UsuarioService {
         RotaRequalificacao rota = rotaRepo.findById(idRota)
                 .orElseThrow(() -> new ResourceNotFoundException("Rota não encontrada"));
 
-        // evita duplicidade
         boolean jaTem = user.getRotas().stream().anyMatch(ur -> ur.getRota().getId().equals(idRota));
         if (!jaTem) {
             UsuarioRota ur = user.iniciarRota(rota);
             usuarioRotaRepo.save(ur);
         }
+        // opcional: poderia atualizar cache de usuariosById aqui com @CachePut se quisesse
         return UsuarioMapper.toDto(user);
     }
 }

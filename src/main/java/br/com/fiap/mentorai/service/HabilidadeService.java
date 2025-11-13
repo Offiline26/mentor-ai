@@ -10,6 +10,10 @@ import br.com.fiap.mentorai.model.Habilidade;
 import br.com.fiap.mentorai.repository.CategoriaHabilidadeRepository;
 import br.com.fiap.mentorai.repository.HabilidadeRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +30,10 @@ public class HabilidadeService {
     }
 
     @Transactional
+    @Caching(
+            put = { @CachePut(cacheNames = "habilidadesById", key = "#result.id") },
+            evict = { @CacheEvict(cacheNames = "habilidadesList", allEntries = true) }
+    )
     public HabilidadeResponse create(CreateHabilidadeRequest req) {
         Habilidade e = HabilidadeMapper.toEntity(req);
         if (req.getIdCategoria() != null) {
@@ -37,17 +45,23 @@ public class HabilidadeService {
         return HabilidadeMapper.toDto(e);
     }
 
+    @Cacheable(cacheNames = "habilidadesById", key = "#id")
     public HabilidadeResponse get(Long id) {
         Habilidade e = repo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Habilidade não encontrada"));
         return HabilidadeMapper.toDto(e);
     }
 
+    @Cacheable(cacheNames = "habilidadesList")
     public List<HabilidadeResponse> list() {
         return HabilidadeMapper.toDtoList(repo.findAll());
     }
 
     @Transactional
+    @Caching(
+            put = { @CachePut(cacheNames = "habilidadesById", key = "#result.id") },
+            evict = { @CacheEvict(cacheNames = "habilidadesList", allEntries = true) }
+    )
     public HabilidadeResponse update(Long id, UpdateHabilidadeRequest req) {
         Habilidade e = repo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Habilidade não encontrada"));
@@ -61,6 +75,10 @@ public class HabilidadeService {
     }
 
     @Transactional
+    @Caching(evict = {
+            @CacheEvict(cacheNames = "habilidadesById", key = "#id"),
+            @CacheEvict(cacheNames = "habilidadesList", allEntries = true)
+    })
     public void delete(Long id) {
         if (!repo.existsById(id)) throw new ResourceNotFoundException("Habilidade não encontrada");
         repo.deleteById(id);
