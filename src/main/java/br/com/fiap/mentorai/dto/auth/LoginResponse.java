@@ -1,4 +1,4 @@
-package br.com.fiap.mentorai.dto.response;
+package br.com.fiap.mentorai.dto.auth;
 
 import lombok.*;
 

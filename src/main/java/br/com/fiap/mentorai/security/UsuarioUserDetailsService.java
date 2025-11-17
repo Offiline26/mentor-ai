@@ -28,7 +28,7 @@ public class UsuarioUserDetailsService implements UserDetailsService {
 
         return new org.springframework.security.core.userdetails.User(
                 u.getEmail(),
-                u.getSenhaHash(),
+                u.getSenha(),
                 auth
         );
     }

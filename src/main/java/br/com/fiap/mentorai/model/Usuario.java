@@ -29,7 +29,7 @@ public class Usuario {
     private String email;
 
     @Column(name = "senha_hash", nullable = false, length = 255)
-    private String senhaHash;
+    private String senha;
 
     @Column(name = "data_nascimento")
     private LocalDate dataNascimento;

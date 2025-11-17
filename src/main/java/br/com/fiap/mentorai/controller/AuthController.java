@@ -1,9 +1,15 @@
 package br.com.fiap.mentorai.controller;
 
-import br.com.fiap.mentorai.dto.request.LoginRequest;
-import br.com.fiap.mentorai.dto.response.LoginResponse;
+import br.com.fiap.mentorai.dto.auth.LoginRequest;
+import br.com.fiap.mentorai.dto.auth.LoginResponse;
+import br.com.fiap.mentorai.dto.auth.RegisterRequest;
+import br.com.fiap.mentorai.dto.auth.RegisterResponse;
 import br.com.fiap.mentorai.exception.ResourceNotFoundException;
+import br.com.fiap.mentorai.model.AreaAtuacao;
+import br.com.fiap.mentorai.model.Cargo;
 import br.com.fiap.mentorai.model.Usuario;
+import br.com.fiap.mentorai.repository.AreaAtuacaoRepository;
+import br.com.fiap.mentorai.repository.CargoRepository;
 import br.com.fiap.mentorai.repository.UsuarioRepository;
 import br.com.fiap.mentorai.security.JwtService;
 import jakarta.validation.Valid;
@@ -12,11 +18,11 @@ import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.LinkedHashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -24,16 +30,29 @@ public class AuthController {
 
     private final AuthenticationManager authenticationManager;
     private final UsuarioRepository usuarioRepository;
+    private final CargoRepository cargoRepository;
+    private final AreaAtuacaoRepository areaAtuacaoRepository;
+    private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
 
     public AuthController(AuthenticationManager authenticationManager,
                           UsuarioRepository usuarioRepository,
+                          CargoRepository cargoRepository,
+                          AreaAtuacaoRepository areaAtuacaoRepository,
+                          PasswordEncoder passwordEncoder,
                           JwtService jwtService) {
+
         this.authenticationManager = authenticationManager;
         this.usuarioRepository = usuarioRepository;
+        this.cargoRepository = cargoRepository;
+        this.areaAtuacaoRepository = areaAtuacaoRepository;
+        this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
     }
 
+    // ------------------------------
+    //           LOGIN
+    // ------------------------------
     @PostMapping("/login")
     public ResponseEntity<?> apiLogin(@Valid @RequestBody LoginRequest req) {
 
@@ -45,7 +64,6 @@ public class AuthController {
             );
 
             UserDetails principal = (UserDetails) auth.getPrincipal();
-
             String token = jwtService.generate(principal.getUsername(), principal.getAuthorities());
 
             Usuario u = usuarioRepository.findByEmail(email)
@@ -72,23 +90,75 @@ public class AuthController {
         }
     }
 
+    // ------------------------------
+    //           REGISTER
+    // ------------------------------
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest req) {
+
+        String email = req.getEmail().trim().toLowerCase(Locale.ROOT);
+
+        if (usuarioRepository.findByEmail(email).isPresent()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(Map.of("error", "E-mail já cadastrado"));
+        }
+
+        Cargo cargo = cargoRepository.findById(req.getIdCargo())
+                .orElseThrow(() -> new ResourceNotFoundException("Cargo não encontrado"));
+
+        AreaAtuacao area = areaAtuacaoRepository.findById(req.getIdAreaAtuacao())
+                .orElseThrow(() -> new ResourceNotFoundException("Área de atuação não encontrada"));
+
+        Usuario u = new Usuario();
+        u.setNome(req.getNome());
+        u.setEmail(email);
+        u.setSenha(passwordEncoder.encode(req.getSenha()));
+        u.setDataNascimento(req.getDataNascimento());
+        u.setGenero(req.getGenero());
+        u.setPais(req.getPais());
+        u.setCargo(cargo);
+        u.setAreaAtuacao(area);
+        u.setDataCadastro(LocalDateTime.now());
+
+        u = usuarioRepository.save(u);
+
+        RegisterResponse resp = RegisterResponse.builder()
+                .idUsuario(u.getId())
+                .nome(u.getNome())
+                .email(u.getEmail())
+                .dataNascimento(u.getDataNascimento())
+                .genero(u.getGenero())
+                .pais(u.getPais())
+                .idCargo(cargo.getId())
+                .cargo(cargo.getNome())          // ajusta pro nome real do campo em Cargo
+                .idAreaAtuacao(area.getId())
+                .areaAtuacao(area.getNome())     // idem para AreaAtuacao
+                .dataCadastro(u.getDataCadastro())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(resp);
+    }
+
+    // ------------------------------
+    //             ME
+    // ------------------------------
     @GetMapping("/me")
     public ResponseEntity<?> me(@AuthenticationPrincipal UserDetails principal) {
+
         if (principal == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(Map.of("error", "Não autenticado"));
         }
 
-        String email = principal.getUsername();
-        Usuario u = usuarioRepository.findByEmail(email)
+        Usuario u = usuarioRepository.findByEmail(principal.getUsername())
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
 
-        LoginResponse userInfo = LoginResponse.builder()
+        LoginResponse response = LoginResponse.builder()
                 .idUsuario(u.getId())
                 .nome(u.getNome())
                 .email(u.getEmail())
                 .build();
 
-        return ResponseEntity.ok(userInfo);
+        return ResponseEntity.ok(response);
     }
 }

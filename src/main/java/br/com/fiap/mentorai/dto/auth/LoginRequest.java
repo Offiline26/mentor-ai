@@ -1,4 +1,4 @@
-package br.com.fiap.mentorai.dto.request;
+package br.com.fiap.mentorai.dto.auth;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

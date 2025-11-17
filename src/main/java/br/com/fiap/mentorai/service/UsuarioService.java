@@ -69,7 +69,7 @@ public class UsuarioService {
         }
 
         if (req.getSenha() != null) {
-            e.setSenhaHash(passwordEncoder.encode(req.getSenha()));
+            e.setSenha(passwordEncoder.encode(req.getSenha()));
         }
 
         e = usuarioRepo.save(e);
