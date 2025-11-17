@@ -68,12 +68,20 @@
                 <label for="cargo">Cargo desejado</label>
                 <select id="cargo" name="idCargo" required>
                     <option value="">Selecione…</option>
+                    <option th:each="cargo : ${cargos}"
+                            th:value="${cargo.id}"
+                            th:text="${cargo.nome}">
+                    </option>
                 </select>
             </div>
             <div>
                 <label for="area">Área de atuação</label>
                 <select id="area" name="idAreaAtuacao" required>
                     <option value="">Selecione…</option>
+                    <option th:each="area : ${areasAtuacao}"
+                            th:value="${area.id}"
+                            th:text="${area.nome}">
+                    </option>
                 </select>
             </div>
         </div>
@@ -86,28 +94,6 @@
 </main>
 
 <script>
-    // popula selects chamando suas APIs REST (ajuste URLs se necessário)
-    async function carregarSelect(id, url, valueField, labelField){
-        const sel = document.getElementById(id);
-        try {
-            const r = await fetch(url);
-            const data = await r.json();
-            const content = Array.isArray(data.content) ? data.content : data; // suporta paginado ou lista pura
-            content.forEach(it => {
-                const op = document.createElement('option');
-                op.value = it[valueField];
-                op.textContent = it[labelField];
-                sel.appendChild(op);
-            });
-        } catch(e) {
-            console.warn('Falha ao carregar', id, e);
-        }
-    }
-
-    // ajuste se seus endpoints de listagem forem diferentes:
-    carregarSelect('cargo', '/api/cargos?size=100', 'id', 'nome');
-    carregarSelect('area',  '/api/areas-atuacao?size=100', 'id', 'nome');
-
     const msg = document.getElementById('msg');
 
     async function enviar(ev){
