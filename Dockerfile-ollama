@@ -1,0 +1,16 @@
+# Dockerfile.ollama
+# Usa a imagem oficial do Ollama
+FROM ollama/ollama:latest
+
+# Define o modelo que deve ser puxado e servido (Exemplo: Llama 3)
+ENV OLLAMA_MODEL=llama3
+
+# Copia um script de inicialização (próximo passo)
+COPY start-ollama.sh /usr/bin/start-ollama.sh
+RUN chmod +x /usr/bin/start-ollama.sh
+
+# A porta padrão 11434 já é exposta pela imagem base.
+EXPOSE 11434
+
+# Executa o script
+ENTRYPOINT ["start-ollama.sh"]
