@@ -1,23 +1,24 @@
 package br.com.fiap.mentorai.dto.response;
 
-import br.com.fiap.mentorai.model.enums.GeneroEnum;
+import br.com.fiap.mentorai.model.enums.Genero;
 import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.UUID;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class UsuarioResponse {
-    private Long id;
+    private UUID id;
     private String nome;
     private String email;
     private LocalDate dataNascimento;
-    private GeneroEnum genero;
+    private Genero genero;
     private String pais;
-    private Long idCargo;
+    private UUID idCargo;
     private String cargo;
-    private Long idAreaAtuacao;
+    private UUID idAreaAtuacao;
     private String areaAtuacao;
     private LocalDateTime dataCadastro;
 
@@ -29,14 +30,14 @@ public class UsuarioResponse {
 
     @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
     public static class UsuarioHabilidadeItem {
-        private Long idHabilidade;
+        private UUID idHabilidade;
         private String habilidade;
         private Integer nivel; // 1..5 (mantém compat c/ request)
     }
 
     @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
     public static class UsuarioRotaItem {
-        private Long idRota;
+        private UUID idRota;
         private String nomeRota;
         private java.math.BigDecimal progressoPercentual;
         private String status; // EM_ANDAMENTO, CONCLUIDA, ...

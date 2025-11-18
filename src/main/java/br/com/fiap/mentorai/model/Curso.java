@@ -6,6 +6,7 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "cursos")
@@ -15,7 +16,7 @@ public class Curso {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_curso")
-    private Long id;
+    private UUID id;
 
     @Column(nullable = false, length = 150)
     private String titulo;

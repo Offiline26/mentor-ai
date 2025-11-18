@@ -15,6 +15,7 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class CategoriaCursoService {
@@ -37,7 +38,7 @@ public class CategoriaCursoService {
     }
 
     @Cacheable(cacheNames = "categoriasCursoById", key = "#id")
-    public CategoriaCursoDto get(Long id) {
+    public CategoriaCursoDto get(UUID id) {
         CategoriaCurso e = repo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Categoria de curso não encontrada"));
         return CategoriaCursoMapper.toDto(e);
@@ -53,7 +54,7 @@ public class CategoriaCursoService {
             put = { @CachePut(cacheNames = "categoriasCursoById", key = "#result.id") },
             evict = { @CacheEvict(cacheNames = "categoriasCursoList", allEntries = true) }
     )
-    public CategoriaCursoDto update(Long id, UpdateCategoriaCursoRequest req) {
+    public CategoriaCursoDto update(UUID id, UpdateCategoriaCursoRequest req) {
         CategoriaCurso e = repo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Categoria de curso não encontrada"));
         CategoriaCursoMapper.applyUpdate(req, e);
@@ -65,7 +66,7 @@ public class CategoriaCursoService {
             @CacheEvict(cacheNames = "categoriasCursoById", key = "#id"),
             @CacheEvict(cacheNames = "categoriasCursoList", allEntries = true)
     })
-    public void delete(Long id) {
+    public void delete(UUID id) {
         if (!repo.existsById(id)) throw new ResourceNotFoundException("Categoria de curso não encontrada");
         repo.deleteById(id);
     }

@@ -15,6 +15,7 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class AreaAtuacaoService {
@@ -37,7 +38,7 @@ public class AreaAtuacaoService {
     }
 
     @Cacheable(cacheNames = "areasById", key = "#id")
-    public AreaAtuacaoDto get(Long id) {
+    public AreaAtuacaoDto get(UUID id) {
         AreaAtuacao e = repo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Área de atuação não encontrada"));
         return AreaAtuacaoMapper.toDto(e);
@@ -53,7 +54,7 @@ public class AreaAtuacaoService {
             put = { @CachePut(cacheNames = "areasById", key = "#result.id") },
             evict = { @CacheEvict(cacheNames = "areasList", allEntries = true) }
     )
-    public AreaAtuacaoDto update(Long id, UpdateAreaAtuacaoRequest req) {
+    public AreaAtuacaoDto update(UUID id, UpdateAreaAtuacaoRequest req) {
         AreaAtuacao e = repo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Área de atuação não encontrada"));
         AreaAtuacaoMapper.applyUpdate(req, e);
@@ -65,7 +66,7 @@ public class AreaAtuacaoService {
             @CacheEvict(cacheNames = "areasById", key = "#id"),
             @CacheEvict(cacheNames = "areasList", allEntries = true)
     })
-    public void delete(Long id) {
+    public void delete(UUID id) {
         if (!repo.existsById(id)) throw new ResourceNotFoundException("Área de atuação não encontrada");
         repo.deleteById(id);
     }

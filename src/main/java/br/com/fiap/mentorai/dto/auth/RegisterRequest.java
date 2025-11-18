@@ -1,12 +1,13 @@
 package br.com.fiap.mentorai.dto.auth;
 
 
-import br.com.fiap.mentorai.model.enums.GeneroEnum;
+import br.com.fiap.mentorai.model.enums.Genero;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -32,14 +33,14 @@ public class RegisterRequest {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataNascimento;
 
-    private GeneroEnum genero;
+    private Genero genero;
 
     @Size(max = 50)
     private String pais;
 
     @NotNull(message = "{usuario.cargo.notnull}")
-    private Long idCargo;
+    private UUID idCargo;
 
     @NotNull(message = "{usuario.area.notnull}")
-    private Long idAreaAtuacao;
+    private UUID idAreaAtuacao;
 }

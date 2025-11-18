@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class RotaRequalificacaoService {
@@ -96,7 +97,7 @@ public class RotaRequalificacaoService {
     }
 
     @Cacheable(cacheNames = "rotasById", key = "#id")
-    public RotaRequalificacaoResponse get(Long id) {
+    public RotaRequalificacaoResponse get(UUID id) {
         RotaRequalificacao e = rotaRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Rota não encontrada"));
         return RotaRequalificacaoMapper.toDto(e);
@@ -114,7 +115,7 @@ public class RotaRequalificacaoService {
             put = { @CachePut(cacheNames = "rotasById", key = "#result.id") },
             evict = { @CacheEvict(cacheNames = "rotasList", allEntries = true) }
     )
-    public RotaRequalificacaoResponse update(Long id, UpdateRotaRequalificacaoRequest req) {
+    public RotaRequalificacaoResponse update(UUID id, UpdateRotaRequalificacaoRequest req) {
         RotaRequalificacao e = rotaRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Rota não encontrada"));
 
@@ -150,7 +151,7 @@ public class RotaRequalificacaoService {
             @CacheEvict(cacheNames = "rotasById", key = "#id"),
             @CacheEvict(cacheNames = "rotasList", allEntries = true)
     })
-    public void delete(Long id) {
+    public void delete(UUID id) {
         if (!rotaRepo.existsById(id)) throw new ResourceNotFoundException("Rota não encontrada");
         rotaRepo.deleteById(id);
     }

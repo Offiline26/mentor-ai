@@ -15,6 +15,7 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class TendenciaMercadoService {
@@ -37,7 +38,7 @@ public class TendenciaMercadoService {
     }
 
     @Cacheable(cacheNames = "tendenciasById", key = "#id")
-    public TendenciaMercadoResponse get(Long id) {
+    public TendenciaMercadoResponse get(UUID id) {
         TendenciaMercado e = repo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Tendência não encontrada"));
         return TendenciaMercadoMapper.toDto(e);
@@ -53,7 +54,7 @@ public class TendenciaMercadoService {
             put = { @CachePut(cacheNames = "tendenciasById", key = "#result.id") },
             evict = { @CacheEvict(cacheNames = "tendenciasList", allEntries = true) }
     )
-    public TendenciaMercadoResponse update(Long id, UpdateTendenciaMercadoRequest req) {
+    public TendenciaMercadoResponse update(UUID id, UpdateTendenciaMercadoRequest req) {
         TendenciaMercado e = repo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Tendência não encontrada"));
         TendenciaMercadoMapper.applyUpdate(req, e);
@@ -65,7 +66,7 @@ public class TendenciaMercadoService {
             @CacheEvict(cacheNames = "tendenciasById", key = "#id"),
             @CacheEvict(cacheNames = "tendenciasList", allEntries = true)
     })
-    public void delete(Long id) {
+    public void delete(UUID id) {
         if (!repo.existsById(id)) throw new ResourceNotFoundException("Tendência não encontrada");
         repo.deleteById(id);
     }

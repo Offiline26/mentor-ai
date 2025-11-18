@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class UpdateRotaRequalificacaoRequest {
@@ -20,7 +21,7 @@ public class UpdateRotaRequalificacaoRequest {
     private String objetivoProfissional;
 
     // opcional, sem @NotNull porque é update
-    private Long idTendencia;
+    private UUID idTendencia;
 
     private Boolean geradaPorIa;
 

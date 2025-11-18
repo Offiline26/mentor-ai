@@ -18,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UsuarioService {
@@ -92,7 +93,7 @@ public class UsuarioService {
     }
 
     @Cacheable(cacheNames = "usuariosById", key = "#id")
-    public UsuarioResponse get(Long id) {
+    public UsuarioResponse get(UUID id) {
         Usuario e = usuarioRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
         return UsuarioMapper.toDto(e);
@@ -108,7 +109,7 @@ public class UsuarioService {
             put = { @CachePut(cacheNames = "usuariosById", key = "#result.id") },
             evict = { @CacheEvict(cacheNames = "usuariosList", allEntries = true) }
     )
-    public UsuarioResponse update(Long id, UpdateUsuarioRequest req) {
+    public UsuarioResponse update(UUID id, UpdateUsuarioRequest req) {
         Usuario e = usuarioRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
 
@@ -149,7 +150,7 @@ public class UsuarioService {
             @CacheEvict(cacheNames = "usuariosById", key = "#id"),
             @CacheEvict(cacheNames = "usuariosList", allEntries = true)
     })
-    public void delete(Long id) {
+    public void delete(UUID id) {
         if (!usuarioRepo.existsById(id)) {
             throw new ResourceNotFoundException("Usuário não encontrado");
         }
@@ -159,7 +160,7 @@ public class UsuarioService {
     // -------- Rotas do usuário (não cacheei, pois é ação de domínio que mexe em progresso) --------
 
     @Transactional
-    public UsuarioResponse iniciarRota(Long idUsuario, Long idRota) {
+    public UsuarioResponse iniciarRota(UUID idUsuario, UUID idRota) {
         Usuario user = usuarioRepo.findById(idUsuario)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
         RotaRequalificacao rota = rotaRepo.findById(idRota)

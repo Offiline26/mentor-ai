@@ -15,6 +15,7 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ParceiroCursoService {
@@ -37,7 +38,7 @@ public class ParceiroCursoService {
     }
 
     @Cacheable(cacheNames = "parceirosById", key = "#id")
-    public ParceiroCursoDto get(Long id) {
+    public ParceiroCursoDto get(UUID id) {
         ParceiroCurso e = repo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Parceiro de curso não encontrado"));
         return ParceiroCursoMapper.toDto(e);
@@ -53,7 +54,7 @@ public class ParceiroCursoService {
             put = { @CachePut(cacheNames = "parceirosById", key = "#result.id") },
             evict = { @CacheEvict(cacheNames = "parceirosList", allEntries = true) }
     )
-    public ParceiroCursoDto update(Long id, UpdateParceiroCursoRequest req) {
+    public ParceiroCursoDto update(UUID id, UpdateParceiroCursoRequest req) {
         ParceiroCurso e = repo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Parceiro de curso não encontrado"));
         ParceiroCursoMapper.applyUpdate(req, e);
@@ -65,7 +66,7 @@ public class ParceiroCursoService {
             @CacheEvict(cacheNames = "parceirosById", key = "#id"),
             @CacheEvict(cacheNames = "parceirosList", allEntries = true)
     })
-    public void delete(Long id) {
+    public void delete(UUID id) {
         if (!repo.existsById(id)) throw new ResourceNotFoundException("Parceiro de curso não encontrado");
         repo.deleteById(id);
     }

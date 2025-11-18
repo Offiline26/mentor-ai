@@ -15,6 +15,7 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class CategoriaHabilidadeService {
@@ -37,7 +38,7 @@ public class CategoriaHabilidadeService {
     }
 
     @Cacheable(cacheNames = "categoriasHabById", key = "#id")
-    public CategoriaHabilidadeDto get(Long id) {
+    public CategoriaHabilidadeDto get(UUID id) {
         CategoriaHabilidade e = repo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Categoria de habilidade não encontrada"));
         return CategoriaHabilidadeMapper.toDto(e);
@@ -53,7 +54,7 @@ public class CategoriaHabilidadeService {
             put = { @CachePut(cacheNames = "categoriasHabById", key = "#result.id") },
             evict = { @CacheEvict(cacheNames = "categoriasHabList", allEntries = true) }
     )
-    public CategoriaHabilidadeDto update(Long id, UpdateCategoriaHabilidadeRequest req) {
+    public CategoriaHabilidadeDto update(UUID id, UpdateCategoriaHabilidadeRequest req) {
         CategoriaHabilidade e = repo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Categoria de habilidade não encontrada"));
         CategoriaHabilidadeMapper.applyUpdate(req, e);
@@ -65,7 +66,7 @@ public class CategoriaHabilidadeService {
             @CacheEvict(cacheNames = "categoriasHabById", key = "#id"),
             @CacheEvict(cacheNames = "categoriasHabList", allEntries = true)
     })
-    public void delete(Long id) {
+    public void delete(UUID id) {
         if (!repo.existsById(id)) throw new ResourceNotFoundException("Categoria de habilidade não encontrada");
         repo.deleteById(id);
     }

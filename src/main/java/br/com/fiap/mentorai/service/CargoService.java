@@ -15,6 +15,7 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class CargoService {
@@ -37,7 +38,7 @@ public class CargoService {
     }
 
     @Cacheable(cacheNames = "cargosById", key = "#id")
-    public CargoDto get(Long id) {
+    public CargoDto get(UUID id) {
         Cargo e = repo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Cargo não encontrado"));
         return CargoMapper.toDto(e);
@@ -53,7 +54,7 @@ public class CargoService {
             put = { @CachePut(cacheNames = "cargosById", key = "#result.id") },
             evict = { @CacheEvict(cacheNames = "cargosList", allEntries = true) }
     )
-    public CargoDto update(Long id, UpdateCargoRequest req) {
+    public CargoDto update(UUID id, UpdateCargoRequest req) {
         Cargo e = repo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Cargo não encontrado"));
         CargoMapper.applyUpdate(req, e);
@@ -65,7 +66,7 @@ public class CargoService {
             @CacheEvict(cacheNames = "cargosById", key = "#id"),
             @CacheEvict(cacheNames = "cargosList", allEntries = true)
     })
-    public void delete(Long id) {
+    public void delete(UUID id) {
         if (!repo.existsById(id)) throw new ResourceNotFoundException("Cargo não encontrado");
         repo.deleteById(id);
     }

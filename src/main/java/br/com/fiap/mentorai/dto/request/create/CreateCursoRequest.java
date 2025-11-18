@@ -8,6 +8,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.Set;
+import java.util.UUID;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class CreateCursoRequest {
@@ -23,14 +24,14 @@ public class CreateCursoRequest {
     @Positive
     private BigDecimal duracaoHoras;
 
-    private Long idParceiro;
+    private UUID idParceiro;
 
     @Size(max = 255)
     private String linkCurso; // se quiser: @URL
 
-    private Long idCategoriaCurso;
+    private UUID idCategoriaCurso;
 
     // IDs de habilidades relacionadas ao curso (opcional)
-    private Set<Long> habilidades;
+    private Set<UUID> habilidades;
 }
 

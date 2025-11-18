@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.URL;
 
 import java.math.BigDecimal;
 import java.util.Set;
+import java.util.UUID;
 
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
@@ -20,14 +21,14 @@ public class UpdateCursoRequest {
     @Positive
     private BigDecimal duracaoHoras;
 
-    private Long idParceiro;
+    private UUID idParceiro;
 
     @Size(max = 255)
     @URL
     private String linkCurso;
 
-    private Long idCategoriaCurso;
+    private UUID idCategoriaCurso;
 
     // IDs de habilidades — nenhum obrigatório
-    private Set<Long> habilidades;
+    private Set<UUID> habilidades;
 }

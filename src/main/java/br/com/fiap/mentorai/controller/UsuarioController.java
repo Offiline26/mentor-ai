@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.*;
 
 import java.net.URI;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -36,7 +37,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UsuarioResponse> get(@PathVariable Long id) {
+    public ResponseEntity<UsuarioResponse> get(@PathVariable UUID id) {
         return ResponseEntity.ok(service.get(id));
     }
 
@@ -50,20 +51,20 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioResponse> update(@PathVariable Long id,
+    public ResponseEntity<UsuarioResponse> update(@PathVariable UUID id,
                                                   @Valid @RequestBody UpdateUsuarioRequest req) {
         return ResponseEntity.ok(service.update(id, req));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     // Ações de domínio
     @PostMapping("/{idUsuario}/rotas/{idRota}:iniciar")
-    public ResponseEntity<UsuarioResponse> iniciarRota(@PathVariable Long idUsuario, @PathVariable Long idRota) {
+    public ResponseEntity<UsuarioResponse> iniciarRota(@PathVariable UUID idUsuario, @PathVariable UUID idRota) {
         return ResponseEntity.ok(service.iniciarRota(idUsuario, idRota));
     }
 }

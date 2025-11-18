@@ -5,17 +5,18 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.Set;
+import java.util.UUID;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class CursoResponse {
-    private Long id;
+    private UUID id;
     private String titulo;
     private String descricao;
     private BigDecimal duracaoHoras;
-    private Long idParceiro;
+    private UUID idParceiro;
     private String parceiro;
     private String linkCurso;
-    private Long idCategoriaCurso;
+    private UUID idCategoriaCurso;
     private String categoriaCurso;
-    private Set<Long> habilidades; // ids das habilidades atreladas
+    private Set<UUID> habilidades; // ids das habilidades atreladas
 }

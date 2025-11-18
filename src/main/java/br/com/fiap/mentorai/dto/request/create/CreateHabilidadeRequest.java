@@ -4,6 +4,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+import java.util.UUID;
+
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class CreateHabilidadeRequest {
     @NotBlank
@@ -11,7 +13,7 @@ public class CreateHabilidadeRequest {
     private String nome;
 
     // opcional no create (pode ser null)
-    private Long idCategoria;
+    private UUID idCategoria;
 
     @Size(max = 4000)
     private String descricao;

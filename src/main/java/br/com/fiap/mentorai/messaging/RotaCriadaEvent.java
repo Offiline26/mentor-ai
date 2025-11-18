@@ -4,16 +4,17 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class RotaCriadaEvent {
 
-    private Long idRota;
+    private UUID idRota;
     private String nomeRota;
     private String objetivoProfissional;
     private Boolean geradaPorIa;
     private LocalDateTime dataCriacao;
 
     // opcional: ids dos cursos da trilha
-    private List<Long> cursos;
+    private List<UUID> cursos;
 }

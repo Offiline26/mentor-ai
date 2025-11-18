@@ -107,8 +107,10 @@
             dataNascimento: document.getElementById('nasc').value || null,
             genero: document.getElementById('genero').value || null,
             pais: document.getElementById('pais').value || null,
-            idCargo: Number(document.getElementById('cargo').value),
-            idAreaAtuacao: Number(document.getElementById('area').value)
+
+            // >>> AQUI A MUDANÇA: sem Number()
+            idCargo: document.getElementById('cargo').value || null,
+            idAreaAtuacao: document.getElementById('area').value || null
         };
 
         try{

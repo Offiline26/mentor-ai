@@ -15,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/habilidades")
@@ -36,7 +37,7 @@ public class HabilidadeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<HabilidadeResponse> get(@PathVariable Long id) {
+    public ResponseEntity<HabilidadeResponse> get(@PathVariable UUID id) {
         return ResponseEntity.ok(service.get(id));
     }
 
@@ -48,13 +49,13 @@ public class HabilidadeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<HabilidadeResponse> update(@PathVariable Long id,
+    public ResponseEntity<HabilidadeResponse> update(@PathVariable UUID id,
                                                      @Valid @RequestBody UpdateHabilidadeRequest req) {
         return ResponseEntity.ok(service.update(id, req));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

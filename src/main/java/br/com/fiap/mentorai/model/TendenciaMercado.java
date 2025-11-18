@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tendencias_mercado")
@@ -15,7 +16,7 @@ public class TendenciaMercado {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_tendencia")
-    private Long id;
+    private UUID id;
 
     @Lob
     @Column(name = "descricao", nullable = false)

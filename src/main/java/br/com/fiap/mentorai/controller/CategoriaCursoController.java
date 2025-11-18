@@ -15,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/categorias-curso")
@@ -36,7 +37,7 @@ public class CategoriaCursoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CategoriaCursoDto> get(@PathVariable Long id) {
+    public ResponseEntity<CategoriaCursoDto> get(@PathVariable UUID id) {
         return ResponseEntity.ok(service.get(id));
     }
 
@@ -48,12 +49,12 @@ public class CategoriaCursoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CategoriaCursoDto> update(@PathVariable Long id, @Valid @RequestBody UpdateCategoriaCursoRequest req) {
+    public ResponseEntity<CategoriaCursoDto> update(@PathVariable UUID id, @Valid @RequestBody UpdateCategoriaCursoRequest req) {
         return ResponseEntity.ok(service.update(id, req));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

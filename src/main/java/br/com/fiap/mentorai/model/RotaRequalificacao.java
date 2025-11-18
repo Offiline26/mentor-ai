@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "rotas_requalificacao")
@@ -15,7 +16,7 @@ public class RotaRequalificacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_rota")
-    private Long id;
+    private UUID id;
 
     @Column(name = "nome_rota", nullable = false, length = 150)
     private String nomeRota;

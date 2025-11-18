@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class CursoService {
@@ -54,7 +55,7 @@ public class CursoService {
         }
         if (req.getHabilidades() != null) {
             e.setHabilidades(new HashSet<>());
-            for (Long idHab : req.getHabilidades()) {
+            for (UUID idHab : req.getHabilidades()) {
                 Habilidade h = habilidadeRepo.findById(idHab)
                         .orElseThrow(() -> new ResourceNotFoundException("Habilidade não encontrada: " + idHab));
                 e.getHabilidades().add(h);
@@ -66,7 +67,7 @@ public class CursoService {
     }
 
     @Cacheable(cacheNames = "cursosById", key = "#id")
-    public CursoResponse get(Long id) {
+    public CursoResponse get(UUID id) {
         Curso e = cursoRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Curso não encontrado"));
         return CursoMapper.toDto(e);
@@ -82,7 +83,7 @@ public class CursoService {
             put = { @CachePut(cacheNames = "cursosById", key = "#result.id") },
             evict = { @CacheEvict(cacheNames = "cursosList", allEntries = true) }
     )
-    public CursoResponse update(Long id, UpdateCursoRequest req) {
+    public CursoResponse update(UUID id, UpdateCursoRequest req) {
         Curso e = cursoRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Curso não encontrado"));
 
@@ -98,7 +99,7 @@ public class CursoService {
         }
         if (req.getHabilidades() != null) {
             e.getHabilidades().clear();
-            for (Long idHab : req.getHabilidades()) {
+            for (UUID idHab : req.getHabilidades()) {
                 Habilidade h = habilidadeRepo.findById(idHab)
                         .orElseThrow(() -> new ResourceNotFoundException("Habilidade não encontrada: " + idHab));
                 e.getHabilidades().add(h);
@@ -112,7 +113,7 @@ public class CursoService {
             @CacheEvict(cacheNames = "cursosById", key = "#id"),
             @CacheEvict(cacheNames = "cursosList", allEntries = true)
     })
-    public void delete(Long id) {
+    public void delete(UUID id) {
         if (!cursoRepo.existsById(id)) throw new ResourceNotFoundException("Curso não encontrado");
         cursoRepo.deleteById(id);
     }

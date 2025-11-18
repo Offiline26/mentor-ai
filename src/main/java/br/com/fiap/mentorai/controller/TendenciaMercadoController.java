@@ -15,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/tendencias")
@@ -36,7 +37,7 @@ public class TendenciaMercadoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TendenciaMercadoResponse> get(@PathVariable Long id) {
+    public ResponseEntity<TendenciaMercadoResponse> get(@PathVariable UUID id) {
         return ResponseEntity.ok(service.get(id));
     }
 
@@ -48,13 +49,13 @@ public class TendenciaMercadoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TendenciaMercadoResponse> update(@PathVariable Long id,
+    public ResponseEntity<TendenciaMercadoResponse> update(@PathVariable UUID id,
                                                            @Valid @RequestBody UpdateTendenciaMercadoRequest req) {
         return ResponseEntity.ok(service.update(id, req));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

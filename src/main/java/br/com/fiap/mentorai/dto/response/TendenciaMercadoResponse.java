@@ -6,10 +6,11 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class TendenciaMercadoResponse {
-    private Long id;
+    private UUID id;
     private String descricao;
     private BigDecimal indiceDemanda; // ex.: 73.50
     private String fonte;

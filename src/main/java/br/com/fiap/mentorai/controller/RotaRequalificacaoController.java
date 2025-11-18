@@ -15,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/rotas")
@@ -37,7 +38,7 @@ public class RotaRequalificacaoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RotaRequalificacaoResponse> get(@PathVariable Long id) {
+    public ResponseEntity<RotaRequalificacaoResponse> get(@PathVariable UUID id) {
         return ResponseEntity.ok(service.get(id));
     }
 
@@ -49,13 +50,13 @@ public class RotaRequalificacaoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RotaRequalificacaoResponse> update(@PathVariable Long id,
+    public ResponseEntity<RotaRequalificacaoResponse> update(@PathVariable UUID id,
                                                              @Valid @RequestBody UpdateRotaRequalificacaoRequest req) {
         return ResponseEntity.ok(service.update(id, req));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

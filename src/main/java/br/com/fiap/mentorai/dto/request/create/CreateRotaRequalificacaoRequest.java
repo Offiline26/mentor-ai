@@ -9,6 +9,7 @@ import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class CreateRotaRequalificacaoRequest {
@@ -24,7 +25,7 @@ public class CreateRotaRequalificacaoRequest {
     private String objetivoProfissional;
 
     // opcional
-    private Long idTendencia;
+    private UUID idTendencia;
 
     private Boolean geradaPorIa;
 
@@ -40,7 +41,7 @@ public class CreateRotaRequalificacaoRequest {
     public static class RotaCursoItem {
 
         @NotNull
-        private Long idCurso;
+        private UUID idCurso;
 
         @NotNull
         @Positive

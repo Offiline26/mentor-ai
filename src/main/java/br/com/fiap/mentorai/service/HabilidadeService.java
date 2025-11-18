@@ -17,6 +17,7 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class HabilidadeService {
@@ -46,7 +47,7 @@ public class HabilidadeService {
     }
 
     @Cacheable(cacheNames = "habilidadesById", key = "#id")
-    public HabilidadeResponse get(Long id) {
+    public HabilidadeResponse get(UUID id) {
         Habilidade e = repo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Habilidade não encontrada"));
         return HabilidadeMapper.toDto(e);
@@ -62,7 +63,7 @@ public class HabilidadeService {
             put = { @CachePut(cacheNames = "habilidadesById", key = "#result.id") },
             evict = { @CacheEvict(cacheNames = "habilidadesList", allEntries = true) }
     )
-    public HabilidadeResponse update(Long id, UpdateHabilidadeRequest req) {
+    public HabilidadeResponse update(UUID id, UpdateHabilidadeRequest req) {
         Habilidade e = repo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Habilidade não encontrada"));
         HabilidadeMapper.applyUpdate(req, e);
@@ -79,7 +80,7 @@ public class HabilidadeService {
             @CacheEvict(cacheNames = "habilidadesById", key = "#id"),
             @CacheEvict(cacheNames = "habilidadesList", allEntries = true)
     })
-    public void delete(Long id) {
+    public void delete(UUID id) {
         if (!repo.existsById(id)) throw new ResourceNotFoundException("Habilidade não encontrada");
         repo.deleteById(id);
     }

@@ -4,11 +4,12 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class UsuarioRotaResponse {
-    private Long idUsuario;
-    private Long idRota;
+    private UUID idUsuario;
+    private UUID idRota;
     private String nomeRota;
     private BigDecimal progressoPercentual;
     private String status;

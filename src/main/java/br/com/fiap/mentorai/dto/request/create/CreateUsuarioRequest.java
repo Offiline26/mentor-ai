@@ -1,12 +1,13 @@
 package br.com.fiap.mentorai.dto.request.create;
 
 import br.com.fiap.mentorai.dto.upsert.UsuarioHabilidadeUpsert;
-import br.com.fiap.mentorai.model.enums.GeneroEnum;
+import br.com.fiap.mentorai.model.enums.Genero;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.time.LocalDate;
 import java.util.Set;
+import java.util.UUID;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class CreateUsuarioRequest {
@@ -29,17 +30,17 @@ public class CreateUsuarioRequest {
     private LocalDate dataNascimento;
 
     @NotNull
-    private GeneroEnum genero;
+    private Genero genero;
 
     @NotBlank
     @Size(max = 50)
     private String pais;
 
     @NotNull
-    private Long idCargo;
+    private UUID idCargo;
 
     @NotNull
-    private Long idAreaAtuacao;
+    private UUID idAreaAtuacao;
 
     private Set<UsuarioHabilidadeUpsert> habilidades;
 }

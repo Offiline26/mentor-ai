@@ -1,8 +1,8 @@
 package br.com.fiap.mentorai.model;
 
 
-import br.com.fiap.mentorai.model.converters.GeneroEnumConverter;
-import br.com.fiap.mentorai.model.enums.GeneroEnum;
+import br.com.fiap.mentorai.model.converters.GeneroConverter;
+import br.com.fiap.mentorai.model.enums.Genero;
 import br.com.fiap.mentorai.model.enums.NivelProficienciaEnum;
 import jakarta.persistence.*;
 import lombok.*;
@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "usuarios")
@@ -20,7 +21,7 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_usuario")
-    private Long id;
+    private UUID id;
 
     @Column(nullable = false, length = 100)
     private String nome;
@@ -34,9 +35,9 @@ public class Usuario {
     @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
 
-    @Convert(converter = GeneroEnumConverter.class)
-    @Column(name = "id_genero")
-    private GeneroEnum genero;
+    @Convert(converter = GeneroConverter.class)
+    @Column(name = "genero")
+    private Genero genero;
 
     @Column(length = 50)
     private String pais;
@@ -66,6 +67,8 @@ public class Usuario {
             dataCadastro = LocalDateTime.now();
         }
     }
+
+
 
     // ---------- Métodos de domínio ----------
 
