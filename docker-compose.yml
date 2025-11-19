@@ -46,6 +46,6 @@ services:
       spring.ai.ollama.base-url: http://mentorai-ollama:11434
       # Configurações do Oracle/H2 aqui...
 
-# Volumes para persistir dados do Ollama
+# Volumes para persistir dados do Ollama.
 volumes:
   ollama-data:
