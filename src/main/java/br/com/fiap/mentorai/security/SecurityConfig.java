@@ -71,20 +71,19 @@ public class SecurityConfig {
                         })
                 )
                 .authorizeHttpRequests(auth -> auth
-                        // 1. Permite pre-flight requests (CORS)
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-
-                        // 2. Rotas de Autenticação (Login/Register) - PÚBLICAS
                         .requestMatchers("/api/auth/**").permitAll()
 
-                        // 3. Rotas de Dados Auxiliares (Cargos, Areas, Habilidades) - PÚBLICAS (Apenas Leitura)
-                        // Isso resolve o erro do React Native no cadastro
-                        .requestMatchers(HttpMethod.GET, "/api/dados/**").permitAll()
+                        // 👇 AQUI ESTÁ A MUDANÇA PARA USAR SEUS CONTROLLERS
+                        // Liberamos APENAS O GET (Leitura) para popular os dropdowns do App
+                        // Se alguém tentar POST ou DELETE sem token, toma erro 401.
+                        .requestMatchers(HttpMethod.GET, "/api/cargos/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/areas/**").permitAll() // ou areas-atuacao, depende da sua rota
+                        .requestMatchers(HttpMethod.GET, "/api/habilidades/**").permitAll()
 
-                        // 4. Rotas de IA (Mentor) - PÚBLICAS (Para testes dev, depois pode fechar)
+                        // IA liberada para testes
                         .requestMatchers("/api/ia/**").permitAll()
 
-                        // 5. Todo o resto exige Token JWT
                         .anyRequest().authenticated()
                 )
                 .formLogin(AbstractHttpConfigurer::disable)
