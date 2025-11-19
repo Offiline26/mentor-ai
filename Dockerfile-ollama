@@ -3,7 +3,7 @@
 FROM ollama/ollama:latest
 
 # Define o modelo que deve ser puxado e servido (Exemplo: Llama 3)
-ENV OLLAMA_MODEL=llama3
+ENV OLLAMA_MODEL=phi3
 
 # Copia um script de inicialização (próximo passo)
 COPY start-ollama.sh /usr/bin/start-ollama.sh

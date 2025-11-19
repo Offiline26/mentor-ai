@@ -3,7 +3,6 @@ package br.com.fiap.mentorai.service.ai;
 import br.com.fiap.mentorai.dto.ai.RecomendacaoRotaRequest;
 import br.com.fiap.mentorai.dto.ai.RecomendacaoRotaResponse;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
