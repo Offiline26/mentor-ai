@@ -1,51 +1,81 @@
 version: "3.8"
 
 services:
+  # === 1. SERVIÇO RABBITMQ (Mensageria Local) ===
+  # Usado pelo perfil 'dev' do Spring Boot
   rabbitmq:
     image: rabbitmq:3-management
     container_name: mentorai-rabbitmq
+    # A porta 5672 será usada internamente pelo backend via nome de host 'rabbitmq'
     ports:
       - "5672:5672"   # Porta AMQP (usada pelo Spring)
-      - "15672:15672" # Porta da UI de management
+      - "15672:15672" # Porta da UI de management (acessível via http://SEU_IP:15672)
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
-  # 1. SERVIÇO OLLAMA (IA)
+
+  # === 2. SERVIÇO OLLAMA (IA) ===
   mentorai-ollama:
     build:
       context: .
-      dockerfile: Dockerfile-ollama # Usa o Dockerfile que criamos
+      dockerfile: Dockerfile-ollama # Usa o Dockerfile que criamos (phi3)
     container_name: mentorai-ollama
-    # Ollama precisa de recursos, garante que ele pode usar o que está disponível
     deploy:
       resources:
         limits:
-          memory: 3500M # Limite 3.5GB para sobrar 500MB para o SO/Backend
+          memory: 3500M # Garante que o contêiner não exceda a RAM da VM (4GB)
     ports:
-      # Expõe a porta para o host, mas o Backend se comunica internamente via nome
+      # Exposto para o HOST da VM (necessário para o NSG)
       - "11434:11434"
     volumes:
-      - ollama-data:/root/.ollama # Persistir o modelo Phi-3
+      # Persiste o modelo baixado no disco SSD Premium da Azure VM
+      - ollama-data:/root/.ollama
     environment:
-      # OLM_MODEL é lido pelo start-ollama.sh
-      OLLAMA_MODEL: phi3
+      OLLAMA_MODEL: phi3 # Modelo a ser puxado pelo start-ollama.sh
 
-  # 2. SERVIÇO BACKEND (SPRING BOOT)
+  # === 3. SERVIÇO BACKEND (SPRING BOOT) ===
   mentorai-backend:
     build:
       context: .
-      dockerfile: Dockerfile # Usa o Dockerfile principal
+      dockerfile: Dockerfile # Usa o Dockerfile principal do Java/Gradle
     container_name: mentorai-backend
     ports:
       # Mapeia a porta pública do host (8081) para a porta interna do contêiner (8081)
       - "8081:8081"
     environment:
-      # Configura o Spring Boot para usar o nome de host interno do Docker Compose
+      # Perfil 'dev' ativo
       SPRING_PROFILES_ACTIVE: dev
-      # O Spring Boot acessará a IA usando o nome do serviço
-      spring.ai.ollama.base-url: http://mentorai-ollama:11434
-      # Configurações do Oracle/H2 aqui...
 
-# Volumes para persistir dados do Ollama.
+      # === CONFIGURAÇÃO IA (Ollama) ===
+      # Comunicação interna via nome do serviço (não usa IP público)
+      spring.ai.ollama.base-url: http://mentorai-ollama:11434
+      spring.ai.ollama.chat.model: phi3
+
+      # === CONFIGURAÇÃO RABBITMQ (Local) ===
+      # Conecta-se ao serviço 'rabbitmq' na porta 5672
+      spring.rabbitmq.host: rabbitmq
+      spring.rabbitmq.port: 5672
+      spring.rabbitmq.username: guest
+      spring.rabbitmq.password: guest
+      spring.rabbitmq.listener.simple.missing-queues-fatal: false
+
+      # === CONFIGURAÇÃO BANCO DE DADOS (H2 - Perfil DEV) ===
+      # O H2 é um arquivo dentro do contêiner para o perfil DEV
+      spring.datasource.url: jdbc:h2:file:./mentorai_h2_db
+      spring.datasource.driver-class-name: org.h2.Driver
+
+      # === CHAVES OAuth2 (VITAIS PARA O PRÓXIMO PASSO) ===
+      # Devem ser definidas via Secret Management na VM ou diretamente aqui para testes.
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:ID_GOOGLE_PLACEHOLDER}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:SECRET_GOOGLE_PLACEHOLDER}
+      GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID:ID_GITHUB_PLACEHOLDER}
+      GITHUB_CLIENT_SECRET: ${GITHUB_CLIENT_SECRET:SECRET_GITHUB_PLACEHOLDER}
+
+    # Garante que o backend só inicie após o RabbitMQ estar de pé
+    depends_on:
+      - rabbitmq
+      - mentorai-ollama
+
+# Volumes para persistir dados do Ollama (phi3) e H2
 volumes:
   ollama-data:
