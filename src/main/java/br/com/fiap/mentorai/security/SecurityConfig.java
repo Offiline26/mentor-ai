@@ -78,7 +78,7 @@ public class SecurityConfig {
                         // Liberamos APENAS O GET (Leitura) para popular os dropdowns do App
                         // Se alguém tentar POST ou DELETE sem token, toma erro 401.
                         .requestMatchers(HttpMethod.GET, "/api/cargos/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/areas-atuacao/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/areas/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/habilidades/**").permitAll()
 
                         // IA liberada para testes
