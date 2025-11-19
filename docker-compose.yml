@@ -18,20 +18,22 @@ services:
   mentorai-ollama:
     build:
       context: .
-      dockerfile: Dockerfile-ollama # Usa o Dockerfile que criamos (phi3)
+      dockerfile: Dockerfile-ollama
     container_name: mentorai-ollama
     deploy:
       resources:
         limits:
-          memory: 3500M # Garante que o contêiner não exceda a RAM da VM (4GB)
+          memory: 3500M
     ports:
-      # Exposto para o HOST da VM (necessário para o NSG)
       - "11434:11434"
     volumes:
-      # Persiste o modelo baixado no disco SSD Premium da Azure VM
       - ollama-data:/root/.ollama
     environment:
-      OLLAMA_MODEL: phi3 # Modelo a ser puxado pelo start-ollama.sh
+      # FORÇA O OLLAMA A OUVIR EM TODAS AS INTERFACES
+      OLLAMA_HOST: "0.0.0.0"
+      # PERMITE REQUISIÇÕES DE QUALQUER ORIGEM (Sua IDE Local)
+      OLLAMA_ORIGINS: "*"
+      OLLAMA_MODEL: phi3
 
   # === 3. SERVIÇO BACKEND (SPRING BOOT) ===
   mentorai-backend:
