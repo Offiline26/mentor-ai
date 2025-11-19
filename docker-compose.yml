@@ -10,3 +10,42 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
+  # 1. SERVIÇO OLLAMA (IA)
+  mentorai-ollama:
+    build:
+      context: .
+      dockerfile: Dockerfile-ollama # Usa o Dockerfile que criamos
+    container_name: mentorai-ollama
+    # Ollama precisa de recursos, garante que ele pode usar o que está disponível
+    deploy:
+      resources:
+        limits:
+          memory: 3500M # Limite 3.5GB para sobrar 500MB para o SO/Backend
+    ports:
+      # Expõe a porta para o host, mas o Backend se comunica internamente via nome
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama # Persistir o modelo Phi-3
+    environment:
+      # OLM_MODEL é lido pelo start-ollama.sh
+      OLLAMA_MODEL: phi3
+
+  # 2. SERVIÇO BACKEND (SPRING BOOT)
+  mentorai-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile # Usa o Dockerfile principal
+    container_name: mentorai-backend
+    ports:
+      # Mapeia a porta pública do host (8081) para a porta interna do contêiner (8081)
+      - "8081:8081"
+    environment:
+      # Configura o Spring Boot para usar o nome de host interno do Docker Compose
+      SPRING_PROFILES_ACTIVE: dev
+      # O Spring Boot acessará a IA usando o nome do serviço
+      spring.ai.ollama.base-url: http://mentorai-ollama:11434
+      # Configurações do Oracle/H2 aqui...
+
+# Volumes para persistir dados do Ollama
+volumes:
+  ollama-data:
