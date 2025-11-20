@@ -81,11 +81,13 @@ Gerencia a autenticação e autorização da plataforma.
    cd mentor-ai
 
 2. **Inicie a Stack: O docker-compose iniciará o Backend, Banco de Dados (Oracle/H2), RabbitMQ e o Serviço de IA.**
-* docker compose up -d
+   ```bash
+   docker compose up -d
 * Nota: Na primeira execução, o download da imagem da IA (aprox. 3GB) pode levar alguns minutos.
 
 3. **Acompanhe os Logs:**
-* docker compose logs -f mentorai-backend
+   ```bash
+   docker compose logs -f mentorai-backend
 
 ## 🔌 Testando a API de IA (Exemplo)
 Para validar a integração da IA Generativa e a resposta do modelo Phi-3:
@@ -93,45 +95,45 @@ Para validar a integração da IA Generativa e a resposta do modelo Phi-3:
 **Endpoint:** POST http://localhost:8081/api/ia/mentor/recomendacoes
 
 Body (JSON):
-
-{
-  "nomeUsuario": "Thiago",
-  
-  "objetivoProfissional": "Arquiteto de Soluções Cloud",
-  
-  "cargoAtual": "Desenvolvedor Java Senior",
-  
-  "areaAtuacao": "TI",
-  
-  "habilidadesAtuais": ["Java", "Spring Boot", "Microservices"],
-  
-  "habilidadesDesejadas": ["Azure", "Kubernetes", "DevOps"],
-  
-  "horasPorSemana": 10
-}
+   
+     {
+        "nomeUsuario": "Thiago",
+        
+        "objetivoProfissional": "Arquiteto de Soluções Cloud",
+        
+        "cargoAtual": "Desenvolvedor Java Senior",
+        
+        "areaAtuacao": "TI",
+        
+        "habilidadesAtuais": ["Java", "Spring Boot", "Microservices"],
+        
+        "habilidadesDesejadas": ["Azure", "Kubernetes", "DevOps"],
+        
+        "horasPorSemana": 10
+     }
 
 Resposta Esperada (Gerada via Deep Learning):
-
-{
-    "resumoEstrategia": "Para transicionar de Desenvolvedor Java para Arquiteto Cloud, o foco deve ser em infraestrutura como código e orquestração...",
     
-    "passosSugeridos": [
-        "Dominar os padrões de arquitetura em nuvem (Well-Architected Framework).",
-        "Aprofundar conhecimentos em orquestração de containers (K8s) e CI/CD."
-    ],
-    
-    "habilidadesPrioritarias": [
-        "Kubernetes Administration",
-        "Terraform / IaC",
-        
-        "Azure Solutions Architect"
-    ],
-    
-    "sugestoesDeCursos": [
-        "Certificação AZ-305",
-        "CKA (Certified Kubernetes Administrator)"
-    ]
-}
+    {
+       "resumoEstrategia": "Para transicionar de Desenvolvedor Java para Arquiteto Cloud, o foco deve ser em infraestrutura como código e orquestração...",
+       
+       "passosSugeridos": [
+           "Dominar os padrões de arquitetura em nuvem (Well-Architected Framework).",
+           "Aprofundar conhecimentos em orquestração de containers (K8s) e CI/CD."
+       ],
+       
+       "habilidadesPrioritarias": [
+           "Kubernetes Administration",
+           "Terraform / IaC",
+           
+           "Azure Solutions Architect"
+       ],
+       
+       "sugestoesDeCursos": [
+           "Certificação AZ-305",
+           "CKA (Certified Kubernetes Administrator)"
+       ]
+    }
 
 👨‍💻 Autores
 Thiago Mendes do Nascimento - RM555352
