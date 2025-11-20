@@ -96,11 +96,17 @@ Body (JSON):
 
 {
   "nomeUsuario": "Thiago",
+  
   "objetivoProfissional": "Arquiteto de Soluções Cloud",
+  
   "cargoAtual": "Desenvolvedor Java Senior",
+  
   "areaAtuacao": "TI",
+  
   "habilidadesAtuais": ["Java", "Spring Boot", "Microservices"],
+  
   "habilidadesDesejadas": ["Azure", "Kubernetes", "DevOps"],
+  
   "horasPorSemana": 10
 }
 
@@ -108,15 +114,19 @@ Resposta Esperada (Gerada via Deep Learning):
 
 {
     "resumoEstrategia": "Para transicionar de Desenvolvedor Java para Arquiteto Cloud, o foco deve ser em infraestrutura como código e orquestração...",
+    
     "passosSugeridos": [
         "Dominar os padrões de arquitetura em nuvem (Well-Architected Framework).",
         "Aprofundar conhecimentos em orquestração de containers (K8s) e CI/CD."
     ],
+    
     "habilidadesPrioritarias": [
         "Kubernetes Administration",
         "Terraform / IaC",
+        
         "Azure Solutions Architect"
     ],
+    
     "sugestoesDeCursos": [
         "Certificação AZ-305",
         "CKA (Certified Kubernetes Administrator)"
