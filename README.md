@@ -83,7 +83,7 @@ Gerencia a autenticação e autorização da plataforma.
 2. **Inicie a Stack: O docker-compose iniciará o Backend, Banco de Dados (Oracle/H2), RabbitMQ e o Serviço de IA.**
    ```bash
    docker compose up -d
-* Nota: Na primeira execução, o download da imagem da IA (aprox. 3GB) pode levar alguns minutos.
+Nota: Na primeira execução, o download da imagem da IA (aprox. 3GB) pode levar alguns minutos.
 
 3. **Acompanhe os Logs:**
    ```bash
@@ -136,8 +136,11 @@ Resposta Esperada (Gerada via Deep Learning):
     }
 
 👨‍💻 Autores
+
 Thiago Mendes do Nascimento - RM555352
+
 Guilherme Gonçalves Britto  - RM558475
+
 Vinicius Banciela           - RM558117
 
 "A inteligência artificial não substitui o arquiteto, mas o arquiteto que domina a IA substituirá o que não a utiliza."
