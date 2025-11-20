@@ -143,4 +143,4 @@ Guilherme Gonçalves Britto  - RM558475
 
 Vinicius Banciela           - RM558117
 
-"A inteligência artificial não substitui o arquiteto, mas o arquiteto que domina a IA substituirá o que não a utiliza."
+*"A inteligência artificial não substitui o arquiteto, mas o arquiteto que domina a IA substituirá o que não a utiliza."*
