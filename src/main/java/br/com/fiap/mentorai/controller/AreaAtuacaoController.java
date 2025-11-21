@@ -15,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -42,10 +43,8 @@ public class AreaAtuacaoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<AreaAtuacaoDto>> list(
-            @PageableDefault(size = 20, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<AreaAtuacao> page = repo.findAll(pageable);
-        return ResponseEntity.ok(page.map(AreaAtuacaoMapper::toDto));
+    public ResponseEntity<List<AreaAtuacaoDto>> list() {
+        return ResponseEntity.ok(service.list());
     }
 
     @PutMapping("/{id}")

@@ -15,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -42,10 +43,9 @@ public class HabilidadeController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<HabilidadeResponse>> list(
-            @PageableDefault(size = 20, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<Habilidade> page = repo.findAll(pageable);
-        return ResponseEntity.ok(page.map(HabilidadeMapper::toDto));
+    public ResponseEntity<List<HabilidadeResponse>> list() {
+        // CORREÇÃO: Usa service.list() (Cacheado e retorna Lista simples para as Tags do Mobile)
+        return ResponseEntity.ok(service.list());
     }
 
     @PutMapping("/{id}")

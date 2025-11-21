@@ -15,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -43,10 +44,9 @@ public class RotaRequalificacaoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<RotaRequalificacaoResponse>> list(
-            @PageableDefault(size = 20, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<RotaRequalificacao> page = repo.findAll(pageable);
-        return ResponseEntity.ok(page.map(RotaRequalificacaoMapper::toDto));
+    public ResponseEntity<List<RotaRequalificacaoResponse>> list() {
+        // CORREÇÃO: Usa service.list() (Cacheado e retorna Lista simples para as Tags do Mobile)
+        return ResponseEntity.ok(service.list());
     }
 
     @PutMapping("/{id}")

@@ -2,6 +2,7 @@ package br.com.fiap.mentorai.controller;
 
 import br.com.fiap.mentorai.dto.request.create.CreateTendenciaMercadoRequest;
 import br.com.fiap.mentorai.dto.request.update.UpdateTendenciaMercadoRequest;
+import br.com.fiap.mentorai.dto.response.HabilidadeResponse;
 import br.com.fiap.mentorai.dto.response.TendenciaMercadoResponse;
 import br.com.fiap.mentorai.mapper.TendenciaMercadoMapper;
 import br.com.fiap.mentorai.model.TendenciaMercado;
@@ -15,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -42,10 +44,9 @@ public class TendenciaMercadoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<TendenciaMercadoResponse>> list(
-            @PageableDefault(size = 20, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<TendenciaMercado> page = repo.findAll(pageable);
-        return ResponseEntity.ok(page.map(TendenciaMercadoMapper::toDto));
+    public ResponseEntity<List<TendenciaMercadoResponse>> list() {
+        // CORREÇÃO: Usa service.list() (Cacheado e retorna Lista simples para as Tags do Mobile)
+        return ResponseEntity.ok(service.list());
     }
 
     @PutMapping("/{id}")

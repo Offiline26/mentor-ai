@@ -2,6 +2,7 @@ package br.com.fiap.mentorai.controller;
 
 import br.com.fiap.mentorai.dto.request.create.CreateUsuarioRequest;
 import br.com.fiap.mentorai.dto.request.update.UpdateUsuarioRequest;
+import br.com.fiap.mentorai.dto.response.HabilidadeResponse;
 import br.com.fiap.mentorai.dto.response.UsuarioResponse;
 import br.com.fiap.mentorai.model.Usuario;
 import br.com.fiap.mentorai.repository.UsuarioRepository;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.*;
 
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -42,12 +44,9 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<UsuarioResponse>> list(
-            @PageableDefault(size = 20, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
-
-        Page<Usuario> page = repo.findAll(pageable);
-        Page<UsuarioResponse> mapped = page.map(u -> service.get(u.getId())); // reaproveita service/mappers
-        return ResponseEntity.ok(mapped);
+    public ResponseEntity<List<UsuarioResponse>> list() {
+        // CORREÇÃO: Usa service.list() (Cacheado e retorna Lista simples para as Tags do Mobile)
+        return ResponseEntity.ok(service.list());
     }
 
     @PutMapping("/{id}")

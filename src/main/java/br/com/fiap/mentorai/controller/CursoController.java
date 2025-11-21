@@ -15,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -42,10 +43,9 @@ public class CursoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<CursoResponse>> list(
-            @PageableDefault(size = 20, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<Curso> page = repo.findAll(pageable);
-        return ResponseEntity.ok(page.map(CursoMapper::toDto));
+    public ResponseEntity<List<CursoResponse>> list() {
+        // CORREÇÃO: Usa o service.list() que é cacheado e retorna Lista limpa
+        return ResponseEntity.ok(service.list());
     }
 
     @PutMapping("/{id}")

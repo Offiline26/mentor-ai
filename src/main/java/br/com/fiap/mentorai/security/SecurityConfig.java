@@ -71,19 +71,29 @@ public class SecurityConfig {
                         })
                 )
                 .authorizeHttpRequests(auth -> auth
+                        // 1. Permite pre-flight requests (CORS)
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+                        // 2. Rotas de Autenticação (Login/Register) - PÚBLICAS
                         .requestMatchers("/api/auth/**").permitAll()
 
-                        // 👇 AQUI ESTÁ A MUDANÇA PARA USAR SEUS CONTROLLERS
-                        // Liberamos APENAS O GET (Leitura) para popular os dropdowns do App
-                        // Se alguém tentar POST ou DELETE sem token, toma erro 401.
+                        // 3. Rotas de IA (Mentor) - PÚBLICAS (Para testes)
+                        .requestMatchers("/api/ia/**").permitAll()
+
+                        // 👇 4. ROTAS DE DADOS AUXILIARES - PÚBLICAS (GET) para o Mobile/Cadastro
+                        // Listagem de Cargos, Áreas, Categorias, Parceiros, etc.
                         .requestMatchers(HttpMethod.GET, "/api/cargos/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/areas/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/habilidades/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/categorias-curso/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/categorias-habilidade/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/parceiros/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/tendencias/**").permitAll()
 
-                        // IA liberada para testes
-                        .requestMatchers("/api/ia/**").permitAll()
+                        // Opcional: Libera a lista de cursos para usuários não logados (Vitrine)
+                        .requestMatchers(HttpMethod.GET, "/api/cursos/**").permitAll()
 
+                        // 5. Todo o resto exige Token JWT
                         .anyRequest().authenticated()
                 )
                 .formLogin(AbstractHttpConfigurer::disable)
