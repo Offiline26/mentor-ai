@@ -43,9 +43,8 @@ public class HabilidadeController {
     }
 
     @GetMapping
-    public ResponseEntity<List<HabilidadeResponse>> list() {
-        // CORREÇÃO: Usa service.list() (Cacheado e retorna Lista simples para as Tags do Mobile)
-        return ResponseEntity.ok(service.list());
+    public ResponseEntity<Page<HabilidadeResponse>> list(@PageableDefault(size = 20, sort = "nome") Pageable pageable) {
+        return ResponseEntity.ok(service.findAll(pageable));
     }
 
     @PutMapping("/{id}")

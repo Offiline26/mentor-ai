@@ -44,9 +44,8 @@ public class ParceiroCursoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ParceiroCursoDto>> list() {
-        // CORREÇÃO: Usa service.list() (Cacheado e retorna Lista simples para as Tags do Mobile)
-        return ResponseEntity.ok(service.list());
+    public ResponseEntity<Page<ParceiroCursoDto>> list(@PageableDefault(size = 20, sort = "nomeParceiro") Pageable pageable) {
+        return ResponseEntity.ok(service.findAll(pageable));
     }
 
     @PutMapping("/{id}")

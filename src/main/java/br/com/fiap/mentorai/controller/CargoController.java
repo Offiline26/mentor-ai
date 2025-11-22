@@ -5,6 +5,9 @@ import br.com.fiap.mentorai.dto.request.create.CreateCargoRequest;
 import br.com.fiap.mentorai.dto.request.update.UpdateCargoRequest;
 import br.com.fiap.mentorai.service.CargoService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -29,10 +32,8 @@ public class CargoController {
     // 1. MÉTODO PÚBLICO (GET) - Liberado no SecurityConfig
     // ==============================================================
     @GetMapping
-    public ResponseEntity<List<CargoDto>> list() {
-        // Chama o service.list() que tem @Cacheable("cargosList")
-        // Retorna JSON Array puro [{}, {}], perfeito para o React Native
-        return ResponseEntity.ok(service.list());
+    public ResponseEntity<Page<CargoDto>> list(@PageableDefault(size = 20, sort = "nomeCargo") Pageable pageable) {
+        return ResponseEntity.ok(service.findAll(pageable));
     }
 
     @GetMapping("/{id}")

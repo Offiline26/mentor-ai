@@ -44,9 +44,8 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UsuarioResponse>> list() {
-        // CORREÇÃO: Usa service.list() (Cacheado e retorna Lista simples para as Tags do Mobile)
-        return ResponseEntity.ok(service.list());
+    public ResponseEntity<Page<UsuarioResponse>> list(@PageableDefault(size = 20, sort = "nomeRota") Pageable pageable) {
+        return ResponseEntity.ok(service.findAll(pageable));
     }
 
     @PutMapping("/{id}")

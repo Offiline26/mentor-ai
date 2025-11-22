@@ -12,6 +12,8 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,8 +47,8 @@ public class CategoriaHabilidadeService {
     }
 
     @Cacheable(cacheNames = "categoriasHabList")
-    public List<CategoriaHabilidadeDto> list() {
-        return CategoriaHabilidadeMapper.toDtoList(repo.findAll());
+    public Page<CategoriaHabilidadeDto> findAll(Pageable pageable) {
+        return repo.findAll(pageable).map(CategoriaHabilidadeMapper::toDto);
     }
 
     @Transactional

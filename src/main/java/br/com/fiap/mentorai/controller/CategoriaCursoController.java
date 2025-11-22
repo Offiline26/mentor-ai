@@ -43,9 +43,8 @@ public class CategoriaCursoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CategoriaCursoDto>> list() {
-        // CORREÇÃO: Usa service.list() (Cacheado e retorna Lista simples para as Tags do Mobile)
-        return ResponseEntity.ok(service.list());
+    public ResponseEntity<Page<CategoriaCursoDto>> list(@PageableDefault(size = 20, sort = "nomeCatCurso") Pageable pageable) {
+        return ResponseEntity.ok(service.findAll(pageable));
     }
 
     @PutMapping("/{id}")

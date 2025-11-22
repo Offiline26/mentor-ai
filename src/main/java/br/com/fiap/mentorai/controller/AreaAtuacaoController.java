@@ -43,8 +43,8 @@ public class AreaAtuacaoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<AreaAtuacaoDto>> list() {
-        return ResponseEntity.ok(service.list());
+    public ResponseEntity<Page<AreaAtuacaoDto>> list(@PageableDefault(size = 20, sort = "nomeArea") Pageable pageable) {
+        return ResponseEntity.ok(service.findAll(pageable));
     }
 
     @PutMapping("/{id}")

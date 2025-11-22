@@ -44,9 +44,8 @@ public class TendenciaMercadoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TendenciaMercadoResponse>> list() {
-        // CORREÇÃO: Usa service.list() (Cacheado e retorna Lista simples para as Tags do Mobile)
-        return ResponseEntity.ok(service.list());
+    public ResponseEntity<Page<TendenciaMercadoResponse>> list(@PageableDefault(size = 20, sort = "dataAnalise", direction = Sort.Direction.DESC) Pageable pageable) {
+        return ResponseEntity.ok(service.findAll(pageable));
     }
 
     @PutMapping("/{id}")

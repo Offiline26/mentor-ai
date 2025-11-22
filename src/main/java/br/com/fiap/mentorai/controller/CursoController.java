@@ -43,9 +43,8 @@ public class CursoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CursoResponse>> list() {
-        // CORREÇÃO: Usa o service.list() que é cacheado e retorna Lista limpa
-        return ResponseEntity.ok(service.list());
+    public ResponseEntity<Page<CursoResponse>> list(@PageableDefault(size = 20, sort = "titulo") Pageable pageable) {
+        return ResponseEntity.ok(service.findAll(pageable));
     }
 
     @PutMapping("/{id}")

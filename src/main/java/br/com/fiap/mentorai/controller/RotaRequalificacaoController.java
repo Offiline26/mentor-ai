@@ -44,9 +44,8 @@ public class RotaRequalificacaoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<RotaRequalificacaoResponse>> list() {
-        // CORREÇÃO: Usa service.list() (Cacheado e retorna Lista simples para as Tags do Mobile)
-        return ResponseEntity.ok(service.list());
+    public ResponseEntity<Page<RotaRequalificacaoResponse>> list(@PageableDefault(size = 20, sort = "nomeRota") Pageable pageable) {
+        return ResponseEntity.ok(service.findAll(pageable));
     }
 
     @PutMapping("/{id}")
