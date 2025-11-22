@@ -23,8 +23,6 @@ public class UpdateRotaRequalificacaoRequest {
     // opcional, sem @NotNull porque é update
     private UUID idTendencia;
 
-    private Boolean geradaPorIa;
-
     @Valid
     private List<CreateRotaRequalificacaoRequest.RotaCursoItem> trilha;
 }

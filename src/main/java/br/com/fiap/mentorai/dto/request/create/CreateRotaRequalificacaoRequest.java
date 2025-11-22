@@ -27,8 +27,6 @@ public class CreateRotaRequalificacaoRequest {
     // opcional
     private UUID idTendencia;
 
-    private Boolean geradaPorIa;
-
     @Valid
     @Builder.Default
     private List<RotaCursoItem> trilha = new ArrayList<>();

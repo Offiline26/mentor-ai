@@ -12,7 +12,6 @@ public class RotaRequalificacaoResponse {
     private String descricao;
     private String objetivoProfissional;
     private UUID idTendencia;
-    private Boolean geradaPorIa;
 
     // cursos em ordem
     @Builder.Default
