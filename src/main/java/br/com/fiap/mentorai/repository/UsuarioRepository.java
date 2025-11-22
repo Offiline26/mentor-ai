@@ -15,6 +15,10 @@ public interface UsuarioRepository extends JpaRepository<Usuario, UUID> {
 
     List<Usuario> email(String email);
 
+
+    @Query("SELECT u FROM Usuario u LEFT JOIN FETCH u.habilidades uh LEFT JOIN FETCH u.rotas ur WHERE u.id = :id")
+    Optional<Usuario> findByIdWithDetails(@Param("id") UUID id);
+    
     /**
      * Chama a função Oracle FN_VALIDAR_EMAIL_FORMATO.
      * @param email O email a ser validado.
