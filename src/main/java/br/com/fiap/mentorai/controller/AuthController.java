@@ -53,21 +53,46 @@ public class AuthController {
     // ------------------------------
     //           LOGIN
     // ------------------------------
+    // ------------------------------
+    //           LOGIN (COM DEBUG)
+    // ------------------------------
     @PostMapping("/login")
     public ResponseEntity<?> apiLogin(@Valid @RequestBody LoginRequest req) {
 
+        // --- DEBUG DE ARQUITETO ---
+        String emailRecebido = req.getEmail();
+        System.out.println("========================================");
+        System.out.println(">>> [DEBUG LOGIN] Recebido do Front: '" + emailRecebido + "'");
+
+        if (emailRecebido != null) {
+            System.out.println(">>> [DEBUG LOGIN] Tamanho: " + emailRecebido.length());
+            System.out.println(">>> [DEBUG LOGIN] ASCII Codes: ");
+            // Isso vai imprimir os números de cada letra.
+            // Se tiver espaço fantasma, vai aparecer um número estranho (não 32, que é espaço normal)
+            req.getEmail().chars().forEach(c -> System.out.print(c + " "));
+            System.out.println("\n========================================");
+        }
+        // ---------------------------
+
         try {
-            final String email = req.getEmail().trim().toLowerCase(Locale.ROOT);
+            // Força limpeza agressiva (remove tudo que não é visível)
+            // O replaceAll abaixo remove caracteres de controle unicode invisíveis
+            final String emailNormalizado = req.getEmail()
+                    .replaceAll("\\p{C}", "")
+                    .trim()
+                    .toLowerCase(Locale.ROOT);
+
+            System.out.println(">>> [DEBUG LOGIN] Usado na busca: '" + emailNormalizado + "'");
 
             Authentication auth = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(email, req.getSenha())
+                    new UsernamePasswordAuthenticationToken(emailNormalizado, req.getSenha())
             );
 
             UserDetails principal = (UserDetails) auth.getPrincipal();
             String token = jwtService.generate(principal.getUsername(), principal.getAuthorities());
 
-            Usuario u = usuarioRepository.findByEmail(email)
-                    .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
+            Usuario u = usuarioRepository.findByEmail(emailNormalizado)
+                    .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado (Pós-Auth)"));
 
             LoginResponse userInfo = LoginResponse.builder()
                     .idUsuario(u.getId())
@@ -85,8 +110,14 @@ public class AuthController {
                     .body(body);
 
         } catch (BadCredentialsException e) {
+            System.out.println(">>> [DEBUG LOGIN] Falha: BadCredentials");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(Map.of("error", "E-mail ou senha inválidos"));
+        } catch (Exception e) {
+            System.out.println(">>> [DEBUG LOGIN] Erro Genérico: " + e.getMessage());
+            e.printStackTrace(); // Veja o stacktrace no console
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", e.getMessage()));
         }
     }
 
