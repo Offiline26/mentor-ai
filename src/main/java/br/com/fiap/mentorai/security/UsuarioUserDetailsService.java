@@ -19,8 +19,12 @@ public class UsuarioUserDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Usuario u = repo.findByEmail(email.trim().toLowerCase(Locale.ROOT))
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        // CORREÇÃO: Aplica a normalização (trim e toLowerCase) no username recebido
+        final String emailNormalizado = username.trim().toLowerCase(Locale.ROOT);
+
+        Usuario u = repo.findByEmail(emailNormalizado)
                 .orElseThrow(() -> new UsernameNotFoundException("E-mail não encontrado"));
 
         // Por enquanto todo mundo é ROLE_USER. Depois dá pra mapear Cargo → ROLE_XXX.
@@ -28,7 +32,7 @@ public class UsuarioUserDetailsService implements UserDetailsService {
 
         return new org.springframework.security.core.userdetails.User(
                 u.getEmail(),
-                u.getSenha(),
+                u.getSenha(), // Já é o hash BCrypt
                 auth
         );
     }
