@@ -191,16 +191,12 @@ public class UsuarioService {
 
 
     @Cacheable(cacheNames = "usuariosById", key = "#id")
-
-    public UsuarioResponse get(UUID id) {
-
-        Usuario e = usuarioRepo.findById(id)
-
-                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
-
-        return UsuarioMapper.toDto(e);
-
-    }
+public UsuarioResponse get(UUID id) {
+    // 🛑 USO DO REPOSITORY OTIMIZADO: findByIdWithDetails
+    Usuario e = usuarioRepo.findByIdWithDetails(id) 
+            .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
+    return UsuarioMapper.toDto(e);
+}
 
 
 
