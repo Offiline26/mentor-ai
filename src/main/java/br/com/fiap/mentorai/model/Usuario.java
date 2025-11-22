@@ -53,12 +53,12 @@ public class Usuario {
     @Column(name = "data_cadastro")
     private LocalDateTime dataCadastro;
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Builder.Default
-    private Set<UsuarioHabilidade> habilidades = new HashSet<>();
+    // 🛑 MUDANÇA CRÍTICA: Definir FetchType.LAZY
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UsuarioHabilidade> habilidades = new ArrayList<>();
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Builder.Default
+    // 🛑 MUDANÇA CRÍTICA: Definir FetchType.LAZY
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<UsuarioRota> rotas = new HashSet<>();
 
     @PrePersist
