@@ -1,156 +1,350 @@
--- ====================================================================
--- MENTOR-AI (H2) - SCRIPT 100% HEXADECIMAL (SEM LETRAS G-Z)
--- ====================================================================
+-- =======================
 
+-- Mentor-AI (H2) - SCHEMA + SEED (UUID)
+
+-- =======================
 DROP TABLE IF EXISTS usuario_rota;
+
 DROP TABLE IF EXISTS rota_curso;
+
 DROP TABLE IF EXISTS curso_habilidade;
+
 DROP TABLE IF EXISTS usuario_habilidade;
+
 DROP TABLE IF EXISTS rotas_requalificacao;
+
 DROP TABLE IF EXISTS cursos;
+
 DROP TABLE IF EXISTS habilidades;
+
 DROP TABLE IF EXISTS usuarios;
+
 DROP TABLE IF EXISTS tendencias_mercado;
+
 DROP TABLE IF EXISTS categorias_curso;
+
 DROP TABLE IF EXISTS parceiros_curso;
+
 DROP TABLE IF EXISTS categorias_habilidade;
+
 DROP TABLE IF EXISTS areas_atuacao;
+
 DROP TABLE IF EXISTS generos;
+
 DROP TABLE IF EXISTS cargos;
 
--- SCHEMA
+
+
+-- ========== TABELAS BASE
+
+
 
 CREATE TABLE cargos (
-                        id_cargo     UUID DEFAULT RANDOM_UUID() PRIMARY KEY,
-                        nome_cargo   VARCHAR(100) NOT NULL,
-                        descricao    CLOB,
+
+                        id_cargo UUID DEFAULT RANDOM_UUID() PRIMARY KEY,
+
+                        nome_cargo VARCHAR(100) NOT NULL,
+
+                        descricao CLOB,
+
                         CONSTRAINT cargos_nome_uk UNIQUE (nome_cargo)
+
 );
+
+
 
 CREATE TABLE generos (
-                         id_genero     UUID DEFAULT RANDOM_UUID() PRIMARY KEY,
-                         nome_genero   VARCHAR(30) NOT NULL,
+
+                         id_genero UUID DEFAULT RANDOM_UUID() PRIMARY KEY,
+
+                         nome_genero VARCHAR(30) NOT NULL,
+
                          CONSTRAINT generos_nome_uk UNIQUE (nome_genero)
+
 );
+
+
 
 CREATE TABLE areas_atuacao (
-                               id_area     UUID DEFAULT RANDOM_UUID() PRIMARY KEY,
-                               nome_area   VARCHAR(100) NOT NULL,
-                               descricao   CLOB,
+
+                               id_area UUID DEFAULT RANDOM_UUID() PRIMARY KEY,
+
+                               nome_area VARCHAR(100) NOT NULL,
+
+                               descricao CLOB,
+
                                CONSTRAINT areas_atuacao_nome_uk UNIQUE (nome_area)
+
 );
+
+
 
 CREATE TABLE categorias_habilidade (
-                                       id_cat_hab     UUID DEFAULT RANDOM_UUID() PRIMARY KEY,
-                                       nome_cat_hab   VARCHAR(100) NOT NULL,
-                                       descricao      CLOB,
+
+                                       id_cat_hab UUID DEFAULT RANDOM_UUID() PRIMARY KEY,
+
+                                       nome_cat_hab VARCHAR(100) NOT NULL,
+
+                                       descricao CLOB,
+
                                        CONSTRAINT cat_habilidade_nome_uk UNIQUE (nome_cat_hab)
+
 );
+
+
 
 CREATE TABLE parceiros_curso (
-                                 id_parceiro     UUID DEFAULT RANDOM_UUID() PRIMARY KEY,
-                                 nome_parceiro   VARCHAR(150) NOT NULL,
-                                 descricao       CLOB,
+
+                                 id_parceiro UUID DEFAULT RANDOM_UUID() PRIMARY KEY,
+
+                                 nome_parceiro VARCHAR(150) NOT NULL,
+
+                                 descricao CLOB,
+
                                  CONSTRAINT parceiros_curso_nome_uk UNIQUE (nome_parceiro)
+
 );
+
+
 
 CREATE TABLE categorias_curso (
-                                  id_cat_curso     UUID DEFAULT RANDOM_UUID() PRIMARY KEY,
-                                  nome_cat_curso   VARCHAR(100) NOT NULL,
-                                  descricao        CLOB,
+
+                                  id_cat_curso UUID DEFAULT RANDOM_UUID() PRIMARY KEY,
+
+                                  nome_cat_curso VARCHAR(100) NOT NULL,
+
+                                  descricao CLOB,
+
                                   CONSTRAINT cat_curso_nome_uk UNIQUE (nome_cat_curso)
+
 );
+
+
 
 CREATE TABLE tendencias_mercado (
-                                    id_tendencia     UUID DEFAULT RANDOM_UUID() PRIMARY KEY,
-                                    descricao        CLOB NOT NULL,
-                                    indice_demanda   DECIMAL(6,2),
-                                    fonte            VARCHAR(100),
-                                    data_analise     DATE
+
+                                    id_tendencia UUID DEFAULT RANDOM_UUID() PRIMARY KEY,
+
+                                    descricao CLOB NOT NULL,
+
+                                    indice_demanda DECIMAL(6,2),
+
+                                    fonte VARCHAR(100),
+
+                                    data_analise DATE
+
 );
+
+
+
+-- ========== USUÁRIOS / HABILIDADES / CURSOS / ROTAS
+
+
 
 CREATE TABLE usuarios (
-                          id_usuario        UUID DEFAULT RANDOM_UUID() PRIMARY KEY,
-                          nome              VARCHAR(100) NOT NULL,
-                          email             VARCHAR(100) NOT NULL,
-                          senha_hash        VARCHAR(255) NOT NULL,
-                          data_nascimento   DATE,
-                          genero            INTEGER,
-                          pais              VARCHAR(50),
-                          id_cargo          UUID NOT NULL,
-                          id_area           UUID NOT NULL,
-                          data_cadastro     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+                          id_usuario UUID DEFAULT RANDOM_UUID() PRIMARY KEY,
+
+                          nome VARCHAR(100) NOT NULL,
+
+                          email VARCHAR(100) NOT NULL,
+
+                          senha_hash VARCHAR(255) NOT NULL,
+
+                          data_nascimento DATE,
+
+
+
+                          genero INTEGER, -- <<<<<<<<<< AQUI: INTEGER
+
+
+
+                          pais VARCHAR(50),
+
+                          id_cargo UUID NOT NULL,
+
+                          id_area UUID NOT NULL,
+
+                          data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+
+
                           CONSTRAINT usuarios_email_uk UNIQUE (email),
-                          CONSTRAINT usuarios_cargo_fk FOREIGN KEY (id_cargo) REFERENCES cargos(id_cargo),
-                          CONSTRAINT usuarios_area_fk FOREIGN KEY (id_area) REFERENCES areas_atuacao(id_area)
+
+                          CONSTRAINT usuarios_cargo_fk FOREIGN KEY (id_cargo)
+
+                              REFERENCES cargos(id_cargo) ON DELETE RESTRICT,
+
+                          CONSTRAINT usuarios_area_fk FOREIGN KEY (id_area)
+
+                              REFERENCES areas_atuacao(id_area) ON DELETE RESTRICT
+
 );
+
+
 
 CREATE TABLE habilidades (
-                             id_habilidade   UUID DEFAULT RANDOM_UUID() PRIMARY KEY,
-                             nome            VARCHAR(100) NOT NULL,
-                             id_cat_hab      UUID,
-                             descricao       CLOB,
-                             CONSTRAINT habilidades_cat_fk FOREIGN KEY (id_cat_hab) REFERENCES categorias_habilidade(id_cat_hab)
+
+                             id_habilidade UUID DEFAULT RANDOM_UUID() PRIMARY KEY,
+
+                             nome VARCHAR(100) NOT NULL,
+
+                             id_cat_hab UUID,
+
+                             descricao CLOB,
+
+                             CONSTRAINT habilidades_cat_fk FOREIGN KEY (id_cat_hab)
+
+                                 REFERENCES categorias_habilidade(id_cat_hab) ON DELETE SET NULL
+
 );
+
+
 
 CREATE TABLE cursos (
-                        id_curso        UUID DEFAULT RANDOM_UUID() PRIMARY KEY,
-                        titulo          VARCHAR(150) NOT NULL,
-                        descricao       CLOB,
-                        duracao_horas   DECIMAL(4,1),
-                        id_parceiro     UUID,
-                        link_curso      VARCHAR(255),
-                        id_cat_curso    UUID,
-                        CONSTRAINT cursos_parceiro_fk FOREIGN KEY (id_parceiro) REFERENCES parceiros_curso(id_parceiro),
-                        CONSTRAINT cursos_cat_fk FOREIGN KEY (id_cat_curso) REFERENCES categorias_curso(id_cat_curso)
+
+                        id_curso UUID DEFAULT RANDOM_UUID() PRIMARY KEY,
+
+                        titulo VARCHAR(150) NOT NULL,
+
+                        descricao CLOB,
+
+                        duracao_horas DECIMAL(4,1),
+
+                        id_parceiro UUID,
+
+                        link_curso VARCHAR(255),
+
+                        id_cat_curso UUID,
+
+                        CONSTRAINT cursos_parceiro_fk FOREIGN KEY (id_parceiro)
+
+                            REFERENCES parceiros_curso(id_parceiro) ON DELETE SET NULL,
+
+                        CONSTRAINT cursos_cat_fk FOREIGN KEY (id_cat_curso)
+
+                            REFERENCES categorias_curso(id_cat_curso) ON DELETE SET NULL
+
 );
+
+
 
 CREATE TABLE rotas_requalificacao (
-                                      id_rota                 UUID DEFAULT RANDOM_UUID() PRIMARY KEY,
-                                      nome_rota               VARCHAR(150) NOT NULL,
-                                      descricao               CLOB,
-                                      objetivo_profissional   VARCHAR(150),
-                                      id_tendencia            UUID,
-                                      gerada_por_ia           BOOLEAN DEFAULT TRUE NOT NULL,
-                                      CONSTRAINT rotas_tend_fk FOREIGN KEY (id_tendencia) REFERENCES tendencias_mercado(id_tendencia)
+
+                                      id_rota UUID DEFAULT RANDOM_UUID() PRIMARY KEY,
+
+                                      nome_rota VARCHAR(150) NOT NULL,
+
+                                      descricao CLOB,
+
+                                      objetivo_profissional VARCHAR(150),
+
+                                      id_tendencia UUID,
+
+                                      gerada_por_ia BOOLEAN DEFAULT TRUE NOT NULL,
+
+                                      CONSTRAINT rotas_tend_fk FOREIGN KEY (id_tendencia)
+
+                                          REFERENCES tendencias_mercado(id_tendencia) ON DELETE SET NULL
+
 );
+
+
+
+-- ========== TABELAS DE LIGAÇÃO
+
+
 
 CREATE TABLE usuario_habilidade (
-                                    id_usuario           UUID NOT NULL,
-                                    id_habilidade        UUID NOT NULL,
-                                    nivel_proficiencia   INTEGER,
+
+                                    id_usuario UUID NOT NULL,
+
+                                    id_habilidade UUID NOT NULL,
+
+                                    nivel_proficiencia INTEGER,
+
                                     CONSTRAINT usuario_habilidade_pk PRIMARY KEY (id_usuario, id_habilidade),
-                                    CONSTRAINT usuhab_usuario_fk FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE,
-                                    CONSTRAINT usuhab_habilidade_fk FOREIGN KEY (id_habilidade) REFERENCES habilidades(id_habilidade) ON DELETE CASCADE
+
+                                    CONSTRAINT usuhab_usuario_fk FOREIGN KEY (id_usuario)
+
+                                        REFERENCES usuarios(id_usuario) ON DELETE CASCADE,
+
+                                    CONSTRAINT usuhab_habilidade_fk FOREIGN KEY (id_habilidade)
+
+                                        REFERENCES habilidades(id_habilidade) ON DELETE CASCADE,
+
+                                    CONSTRAINT usuhab_nivel_ck CHECK (nivel_proficiencia BETWEEN 1 AND 5)
+
 );
+
+
 
 CREATE TABLE curso_habilidade (
-                                  id_curso       UUID NOT NULL,
-                                  id_habilidade  UUID NOT NULL,
+
+                                  id_curso UUID NOT NULL,
+
+                                  id_habilidade UUID NOT NULL,
+
                                   CONSTRAINT curso_habilidade_pk PRIMARY KEY (id_curso, id_habilidade),
-                                  CONSTRAINT curhab_curso_fk FOREIGN KEY (id_curso) REFERENCES cursos(id_curso) ON DELETE CASCADE,
-                                  CONSTRAINT curhab_habilidade_fk FOREIGN KEY (id_habilidade) REFERENCES habilidades(id_habilidade) ON DELETE CASCADE
+
+                                  CONSTRAINT curhab_curso_fk FOREIGN KEY (id_curso)
+
+                                      REFERENCES cursos(id_curso) ON DELETE CASCADE,
+
+                                  CONSTRAINT curhab_habilidade_fk FOREIGN KEY (id_habilidade)
+
+                                      REFERENCES habilidades(id_habilidade) ON DELETE CASCADE
+
 );
+
+
 
 CREATE TABLE rota_curso (
-                            id_rota    UUID NOT NULL,
-                            id_curso   UUID NOT NULL,
-                            ordem      INTEGER,
+
+                            id_rota UUID NOT NULL,
+
+                            id_curso UUID NOT NULL,
+
+                            ordem INTEGER,
+
                             CONSTRAINT rota_curso_pk PRIMARY KEY (id_rota, id_curso),
-                            CONSTRAINT rotcur_rota_fk FOREIGN KEY (id_rota) REFERENCES rotas_requalificacao(id_rota) ON DELETE CASCADE,
-                            CONSTRAINT rotcur_curso_fk FOREIGN KEY (id_curso) REFERENCES cursos(id_curso) ON DELETE CASCADE
+
+                            CONSTRAINT rotcur_rota_fk FOREIGN KEY (id_rota)
+
+                                REFERENCES rotas_requalificacao(id_rota) ON DELETE CASCADE,
+
+                            CONSTRAINT rotcur_curso_fk FOREIGN KEY (id_curso)
+
+                                REFERENCES cursos(id_curso) ON DELETE CASCADE
+
 );
 
+
+
 CREATE TABLE usuario_rota (
-                              id_usuario             UUID NOT NULL,
-                              id_rota                UUID NOT NULL,
-                              progresso_percentual   DECIMAL(5,2) DEFAULT 0,
-                              data_inicio            TIMESTAMP,
-                              data_conclusao         TIMESTAMP,
+
+                              id_usuario UUID NOT NULL,
+
+                              id_rota UUID NOT NULL,
+
+                              progresso_percentual DECIMAL(5,2) DEFAULT 0,
+
+                              data_inicio TIMESTAMP,
+
+                              data_conclusao TIMESTAMP,
+
                               CONSTRAINT usuario_rota_pk PRIMARY KEY (id_usuario, id_rota),
-                              CONSTRAINT usurto_usuario_fk FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE,
-                              CONSTRAINT usurto_rota_fk FOREIGN KEY (id_rota) REFERENCES rotas_requalificacao(id_rota) ON DELETE CASCADE
+
+                              CONSTRAINT usurto_usuario_fk FOREIGN KEY (id_usuario)
+
+                                  REFERENCES usuarios(id_usuario) ON DELETE CASCADE,
+
+                              CONSTRAINT usurto_rota_fk FOREIGN KEY (id_rota)
+
+                                  REFERENCES rotas_requalificacao(id_rota) ON DELETE CASCADE
+
 );
+
 
 -- ====================================================================
 -- SEED (Prefixos Hexadecimais: A-F apenas)
@@ -248,12 +442,63 @@ INSERT INTO tendencias_mercado (id_tendencia, descricao, indice_demanda, fonte, 
                                                                                                   ('00000000-0000-0000-0000-0000000000E5', 'Modernização de Legado Java para Microsserviços', 75.0, 'IDC Report', DATE '2025-07-10');
 
 -- USUÁRIOS (Prefix: US -> 0005)
-INSERT INTO usuarios (id_usuario, nome, email, senha_hash, data_nascimento, genero, pais, id_cargo, id_area) VALUES
-                                                                                                                 ('00000000-0000-0000-0000-000000000051', 'Administrador', 'admin@mentorai.com', '$2b$10$mDn1QxWAF1esglWOvThEEurwjZ2V540nTbKd/lpPoQJsBwRIAEQxy', DATE '1980-01-01', 0, 'Brasil', '00000000-0000-0000-0000-000000000C99', '00000000-0000-0000-0000-000000000A99'),
-                                                                                                                 ('00000000-0000-0000-0000-000000000052', 'Thiago Dev',    'thiago@email.com',   '$2b$10$mDn1QxWAF1esglWOvThEEurwjZ2V540nTbKd/lpPoQJsBwRIAEQxy', DATE '1998-05-20', 0, 'Brasil', '00000000-0000-0000-0000-000000000C01', '00000000-0000-0000-0000-000000000A01'),
-                                                                                                                 ('00000000-0000-0000-0000-000000000053', 'Maria Ops',     'maria@email.com',    '$2b$10$mDn1QxWAF1esglWOvThEEurwjZ2V540nTbKd/lpPoQJsBwRIAEQxy', DATE '1995-03-15', 1, 'Brasil', '00000000-0000-0000-0000-000000000C05', '00000000-0000-0000-0000-000000000A04'),
-                                                                                                                 ('00000000-0000-0000-0000-000000000054', 'João Mobile',   'joao@email.com',     '$2b$10$mDn1QxWAF1esglWOvThEEurwjZ2V540nTbKd/lpPoQJsBwRIAEQxy', DATE '2000-12-10', 0, 'Portugal', '00000000-0000-0000-0000-000000000C01', '00000000-0000-0000-0000-000000000A03'),
-                                                                                                                 ('00000000-0000-0000-0000-000000000055', 'Ana Data',      'ana@email.com',      '$2b$10$mDn1QxWAF1esglWOvThEEurwjZ2V540nTbKd/lpPoQJsBwRIAEQxy', DATE '1992-07-07', 1, 'Argentina', '00000000-0000-0000-0000-000000000C06', '00000000-0000-0000-0000-000000000A05');
+INSERT INTO usuarios (
+
+    id_usuario, nome, email, senha_hash,
+
+    data_nascimento, genero, pais,
+
+    id_cargo, id_area, data_cadastro
+
+) VALUES
+
+      (
+
+          RANDOM_UUID(),
+
+          'Administrador',
+
+          'admin@mentorai.com',
+
+          '$2b$10$mDn1QxWAF1esglWOvThEEurwjZ2V540nTbKd/lpPoQJsBwRIAEQxy',
+
+          NULL,
+
+          NULL, -- genero NULL para admin
+
+          'Brasil',
+
+          '00000000-0000-0000-0000-000000000C01',
+
+          '00000000-0000-0000-0000-000000000A02',
+
+          CURRENT_TIMESTAMP
+
+      ),
+
+      (
+
+          RANDOM_UUID(),
+
+          'Usuário Demo',
+
+          'demo@mentorai.com',
+
+          '$2b$10$mDn1QxWAF1esglWOvThEEurwjZ2V540nTbKd/lpPoQJsBwRIAEQxy',
+
+          DATE '1995-08-15',
+
+          2, -- FEMININO (ENUM = 2)
+
+          'Brasil',
+
+          '00000000-0000-0000-0000-000000000C01',
+
+          '00000000-0000-0000-0000-000000000A02',
+
+          CURRENT_TIMESTAMP
+
+      );
 
 -- USUARIO_HABILIDADE
 INSERT INTO usuario_habilidade (id_usuario, id_habilidade, nivel_proficiencia) VALUES
