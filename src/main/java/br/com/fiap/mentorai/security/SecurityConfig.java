@@ -89,11 +89,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/categorias-habilidade/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/parceiros/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/tendencias/**").permitAll()
-
-                        // Opcional: Libera a lista de cursos para usuários não logados (Vitrine)
                         .requestMatchers(HttpMethod.GET, "/api/cursos/**").permitAll()
 
-                        // 5. Todo o resto exige Token JWT
                         .anyRequest().authenticated()
                 )
                 .formLogin(AbstractHttpConfigurer::disable)
