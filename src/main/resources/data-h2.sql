@@ -179,7 +179,6 @@ INSERT INTO areas_atuacao (id_area, nome_area, descricao) VALUES
 INSERT INTO generos (id_genero, nome_genero) VALUES
                                                  (RANDOM_UUID(), 'MASCULINO'),
                                                  (RANDOM_UUID(), 'FEMININO'),
-                                                 (RANDOM_UUID(), 'NAO_BINARIO'),
                                                  (RANDOM_UUID(), 'OUTRO'),
                                                  (RANDOM_UUID(), 'PREFIRO_NAO_INFORMAR');
 
