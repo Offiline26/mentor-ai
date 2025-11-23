@@ -38,7 +38,7 @@ public class RotaRequalificacaoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<RotaRequalificacaoResponse>> list(@PageableDefault(size = 20, sort = "nome") Pageable pageable) {
+    public ResponseEntity<Page<RotaRequalificacaoResponse>> list(@PageableDefault(size = 20, sort = "nomeRota") Pageable pageable) {
         return ResponseEntity.ok(service.findAll(pageable));
     }
 
