@@ -344,11 +344,10 @@ REFERENCES rotas_requalificacao(id_rota) ON DELETE CASCADE
 );
 
 -- ====================================================================
--- SEED DE DADOS (UUIDs NUMÉRICOS SEQUENCIAIS)
--- Estratégia: 000...001, 000...002, etc. Sem letras nos sufixos.
+-- MENTOR-AI (H2) - MASSIVE DATA SEED (UUID SEQUENCIAL)
 -- ====================================================================
 
--- CARGOS (IDs: 1 a 6 + 99)
+-- 1. CARGOS (30 Itens)
 INSERT INTO cargos (id_cargo, nome_cargo, descricao) VALUES
 ('00000000-0000-0000-0000-000000000001', 'Desenvolvedor Back-end Junior', 'Iniciante em lógica de servidor e APIs.'),
 ('00000000-0000-0000-0000-000000000002', 'Desenvolvedor Back-end Pleno', 'Experiência em arquitetura e banco de dados.'),
@@ -381,7 +380,7 @@ INSERT INTO cargos (id_cargo, nome_cargo, descricao) VALUES
 ('00000000-0000-0000-0000-000000000029', 'UI Designer', 'Design de interfaces visuais.'),
 ('00000000-0000-0000-0000-000000000099', 'Administrador do Sistema', 'Acesso total à plataforma.');
 
--- ÁREAS DE ATUAÇÃO (IDs: 11 a 15)
+-- 2. ÁREAS DE ATUAÇÃO (10 Itens)
 INSERT INTO areas_atuacao (id_area, nome_area, descricao) VALUES
 ('00000000-0000-0000-0000-000000000011', 'Desenvolvimento Back-end', 'Foco em servidores, APIs e Bancos de Dados.'),
 ('00000000-0000-0000-0000-000000000012', 'Desenvolvimento Front-end', 'Foco em interfaces web e SPA.'),
@@ -394,7 +393,7 @@ INSERT INTO areas_atuacao (id_area, nome_area, descricao) VALUES
 ('00000000-0000-0000-0000-000000000019', 'Design (UX/UI)', 'Experiência e interface.'),
 ('00000000-0000-0000-0000-000000000020', 'Qualidade de Software (QA)', 'Testes e garantia de qualidade.');
 
--- GÊNEROS (IDs Aleatórios)
+-- 3. GÊNEROS
 INSERT INTO generos (id_genero, nome_genero) VALUES
 (RANDOM_UUID(), 'MASCULINO'),
 (RANDOM_UUID(), 'FEMININO'),
@@ -514,6 +513,12 @@ INSERT INTO usuarios (id_usuario, nome, email, senha_hash, data_nascimento, gene
 ('00000000-0000-0000-0000-000000000204', 'Roberto Almeida',        'beto.ops@email.com',   '$2b$10$mDn1QxWAF1esglWOvThEEurwjZ2V540nTbKd/lpPoQJsBwRIAEQxy', DATE '1990-11-30', 1, 'Brasil', '00000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000013'),
 ('00000000-0000-0000-0000-000000000205', 'Fernanda Souza',         'nanda.mobile@email.com','$2b$10$mDn1QxWAF1esglWOvThEEurwjZ2V540nTbKd/lpPoQJsBwRIAEQxy', DATE '2001-07-22', 2, 'Argentina', '00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000013');
 
+-- 11. ROTAS DE REQUALIFICAÇÃO (3 Rotas)
+INSERT INTO rotas_requalificacao (id_rota, nome_rota, descricao, objetivo_profissional, id_tendencia, gerada_por_ia) VALUES
+('00000000-0000-0000-0000-000000000301', 'De Java Jr a Arquiteto Cloud', 'Trilha focada em fortalecer o back-end e migrar para infraestrutura.', 'Arquiteto de Soluções', '00000000-0000-0000-0000-000000000101', TRUE),
+('00000000-0000-0000-0000-000000000302', 'Especialização em Desenvolvimento Mobile', 'Focado em profissionais React Native.', 'Desenvolvedor Mobile Senior', '00000000-0000-0000-0000-000000000102', TRUE),
+('00000000-0000-0000-0000-000000000303', 'Imersão em Data Science', 'Do zero aos modelos preditivos com Python.', 'Cientista de Dados', '00000000-0000-0000-0000-000000000108', TRUE);
+
 -- 12. ROTA_CURSO (Cursos das rotas)
 INSERT INTO rota_curso (id_rota, id_curso, ordem) VALUES
 ('00000000-0000-0000-0000-000000000301', '00000000-0000-0000-0000-000000000081', 1), -- Java
@@ -526,3 +531,31 @@ INSERT INTO rota_curso (id_rota, id_curso, ordem) VALUES
 INSERT INTO usuario_rota (id_usuario, id_rota, progresso_percentual, data_inicio) VALUES
 ('00000000-0000-0000-0000-000000000202', '00000000-0000-0000-0000-000000000301', 15.0, CURRENT_TIMESTAMP), -- Lucas -> Java
 ('00000000-0000-0000-0000-000000000205', '00000000-0000-0000-0000-000000000302', 5.0, CURRENT_TIMESTAMP);  -- Fernanda -> Mobile
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
