@@ -525,19 +525,166 @@ INSERT INTO usuario_habilidade (id_usuario, id_habilidade, nivel_proficiencia) V
 ('00000000-0000-0000-0000-000000000202', '00000000-0000-0000-0000-000000000031', 3), -- Lucas
 ('00000000-0000-0000-0000-000000000205', '00000000-0000-0000-0000-000000000036', 4); -- Amanda
 
--- 3.13 ROTAS DE REQUALIFICAÇÃO (IDs: 301 a 303) - Depende de Tendências (010x)
+-- ====================================================================
+-- 13. ROTAS DE REQUALIFICAÇÃO (30 ITENS - IDs: 301 a 330)
+-- ====================================================================
 INSERT INTO rotas_requalificacao (id_rota, nome_rota, descricao, objetivo_profissional, id_tendencia) VALUES
-         ('00000000-0000-0000-0000-000000000301', 'De Java Jr a Arquiteto Cloud', 'Trilha focada em fortalecer o back-end e migrar para infraestrutura.', 'Arquiteto de Soluções', '00000000-0000-0000-0000-000000000101'),
-         ('00000000-0000-0000-0000-000000000302', 'Especialização em Desenvolvimento Mobile', 'Focado em profissionais React Native.', 'Desenvolvedor Mobile Senior', '00000000-0000-0000-0000-000000000102'),
-         ('00000000-0000-0000-0000-000000000303', 'Imersão em Data Science', 'Do zero aos modelos preditivos com Python.', 'Cientista de Dados', '00000000-0000-0000-0000-000000000108');
+-- Cloud & Backend Focus
+('00000000-0000-0000-0000-0000000000301', 'De Java Jr a Arquiteto Cloud', 'Trilha focada em fortalecer o back-end e migrar para infraestrutura AWS.', 'Arquiteto de Soluções', '00000000-0000-0000-0000-000000000101'),
+('00000000-0000-0000-0000-0000000000302', 'Especialista Azure & .NET', 'Foco em ecossistema Microsoft para grandes corporações.', 'Engenheiro de Cloud', '00000000-0000-0000-0000-000000000101'),
+('00000000-0000-0000-0000-0000000000303', 'Microsserviços com Spring Boot', 'Domine a arquitetura distribuída e padrões de projeto.', 'Desenvolvedor Backend Senior', '00000000-0000-0000-0000-000000000105'),
+('00000000-0000-0000-0000-0000000000304', 'Modernização de Legado Java', 'Técnicas para refatorar monólitos para arquitetura moderna.', 'Arquiteto de Software', '00000000-0000-0000-0000-000000000105'),
+('00000000-0000-0000-0000-0000000000305', 'DevSecOps: Segurança no Pipeline', 'Integre segurança desde o primeiro commit.', 'Engenheiro de DevSecOps', '00000000-0000-0000-0000-000000000107'),
 
--- 3.14 ROTA_CURSO (Vincula Rotas 30x a Cursos 8x)
+-- Mobile Focus
+('00000000-0000-0000-0000-0000000000306', 'Especialização Mobile React Native', 'Focado em profissionais migrando do Web para Mobile.', 'Desenvolvedor Mobile Senior', '00000000-0000-0000-0000-000000000102'),
+('00000000-0000-0000-0000-0000000000307', 'Flutter para Desenvolvedores Java', 'Aprenda Dart e crie apps performáticos.', 'Desenvolvedor Mobile Pleno', '00000000-0000-0000-0000-000000000102'),
+('00000000-0000-0000-0000-0000000000308', 'Mobile Fullstack', 'Crie o App e a API que o alimenta.', 'Tech Lead Mobile', '00000000-0000-0000-0000-000000000102'),
+
+-- Data & AI Focus
+('00000000-0000-0000-0000-0000000000309', 'Imersão em Data Science', 'Do zero aos modelos preditivos com Python.', 'Cientista de Dados', '00000000-0000-0000-0000-000000000108'),
+('00000000-0000-0000-0000-0000000000310', 'Engenharia de Dados na Nuvem', 'Pipelines ETL robustos usando Azure e Python.', 'Engenheiro de Dados', '00000000-0000-0000-0000-000000000108'),
+('00000000-0000-0000-0000-0000000000311', 'IA Generativa para Devs', 'Como integrar LLMs em suas aplicações Java.', 'Engenheiro de IA', '00000000-0000-0000-0000-000000000103'),
+('00000000-0000-0000-0000-0000000000312', 'Python para Automação RPA', 'Automatize processos repetitivos nas empresas.', 'Desenvolvedor RPA', '00000000-0000-0000-0000-000000000109'),
+
+-- Web & Frontend
+('00000000-0000-0000-0000-0000000000313', 'Fullstack Java + React', 'A combinação mais empregável do mercado.', 'Desenvolvedor Fullstack', '00000000-0000-0000-0000-000000000110'),
+('00000000-0000-0000-0000-0000000000314', 'Frontend Performance Expert', 'Otimização de renderização e Core Web Vitals.', 'Especialista Frontend', '00000000-0000-0000-0000-000000000110'),
+
+-- Infra & DevOps
+('00000000-0000-0000-0000-0000000000315', 'Kubernetes Administrator (CKA)', 'Orquestração avançada de containers.', 'SRE', '00000000-0000-0000-0000-000000000101'),
+('00000000-0000-0000-0000-0000000000316', 'Infraestrutura como Código (IaC)', 'Terraform e Ansible para ambientes escaláveis.', 'DevOps Engineer', '00000000-0000-0000-0000-000000000101'),
+('00000000-0000-0000-0000-0000000000317', 'Zero Trust Security', 'Arquitetura de segurança moderna.', 'Analista de CyberSec', '00000000-0000-0000-0000-000000000104'),
+
+-- Leadership & Soft Skills
+('00000000-0000-0000-0000-0000000000318', 'Formação Tech Lead', 'Habilidades de liderança para devs seniors.', 'Tech Lead', NULL),
+('00000000-0000-0000-0000-0000000000319', 'Gestão Ágil com Scrum', 'Domine as cerimônias e artefatos.', 'Scrum Master', NULL),
+('00000000-0000-0000-0000-0000000000320', 'MBA em Arquitetura de Software', 'Visão executiva e estratégica da tecnologia.', 'CTO / Diretor de TI', NULL),
+
+-- Crossover & Transition
+('00000000-0000-0000-0000-0000000000321', 'De QA Manual para Automation', 'Aprenda a codar testes automatizados.', 'QA Automation Engineer', '00000000-0000-0000-0000-000000000105'),
+('00000000-0000-0000-0000-0000000000322', 'De Suporte para DevOps', 'Transição de carreira para infraestrutura.', 'DevOps Junior', '00000000-0000-0000-0000-000000000101'),
+('00000000-0000-0000-0000-0000000000323', 'Analista de Dados para Engenheiro de Dados', 'Foco em pipeline e arquitetura de dados.', 'Engenheiro de Dados', '00000000-0000-0000-0000-000000000108'),
+
+-- Niche Technologies
+('00000000-0000-0000-0000-0000000000324', 'APIs Restful de Alta Performance', 'Design, cache e segurança de APIs.', 'Desenvolvedor Backend', '00000000-0000-0000-0000-000000000105'),
+('00000000-0000-0000-0000-0000000000325', 'Docker Deep Dive', 'Tudo sobre containers em produção.', 'DevOps Engineer', '00000000-0000-0000-0000-000000000101'),
+('00000000-0000-0000-0000-0000000000326', 'Testes Unitários em Java', 'TDD e qualidade de código.', 'Desenvolvedor Java', '00000000-0000-0000-0000-000000000105'),
+('00000000-0000-0000-0000-0000000000327', 'Segurança Ofensiva', 'Introdução ao Ethical Hacking.', 'Pentester', '00000000-0000-0000-0000-000000000104'),
+('00000000-0000-0000-0000-0000000000328', 'React Hooks & State Management', 'Gerenciamento de estado avançado.', 'Desenvolvedor Frontend', '00000000-0000-0000-0000-000000000110'),
+('00000000-0000-0000-0000-0000000000329', 'Carreira Internacional Remota', 'Inglês e preparação para vagas globais.', 'Profissional Global', '00000000-0000-0000-0000-000000000110'),
+('00000000-0000-0000-0000-0000000000330', 'Introdução ao Cloud Computing', 'Primeiros passos na nuvem.', 'Estagiário/Junior', '00000000-0000-0000-0000-000000000101');
+
+-- ====================================================================
+-- 14. ROTA_CURSO (VINCULANDO CURSOS ÀS ROTAS)
+-- Usando Cursos 81-95
+-- ====================================================================
 INSERT INTO rota_curso (id_rota, id_curso, ordem) VALUES
-('00000000-0000-0000-0000-000000000301', '00000000-0000-0000-0000-000000000081', 1), -- Java
-('00000000-0000-0000-0000-000000000301', '00000000-0000-0000-0000-000000000082', 2), -- Spring
-('00000000-0000-0000-0000-000000000301', '00000000-0000-0000-0000-000000000085', 3), -- Azure
-('00000000-0000-0000-0000-000000000302', '00000000-0000-0000-0000-000000000088', 1), -- React Native
-('00000000-0000-0000-0000-000000000303', '00000000-0000-0000-0000-000000000091', 1); -- Python DS
+-- 301: Java -> Cloud
+('00000000-0000-0000-0000-0000000000301', '00000000-0000-0000-0000-000000000081', 1), -- Java
+('00000000-0000-0000-0000-0000000000301', '00000000-0000-0000-0000-000000000082', 2), -- Spring
+('00000000-0000-0000-0000-0000000000301', '00000000-0000-0000-0000-000000000084', 3), -- AWS
+
+-- 302: Azure & .NET (Usando Azure e DevOps)
+('00000000-0000-0000-0000-0000000000302', '00000000-0000-0000-0000-000000000085', 1), -- Azure
+('00000000-0000-0000-0000-0000000000302', '00000000-0000-0000-0000-000000000087', 2), -- DevOps
+
+-- 303: Microservices
+('00000000-0000-0000-0000-0000000000303', '00000000-0000-0000-0000-000000000081', 1), -- Java
+('00000000-0000-0000-0000-0000000000303', '00000000-0000-0000-0000-000000000082', 2), -- Spring
+('00000000-0000-0000-0000-0000000000303', '00000000-0000-0000-0000-000000000086', 3), -- Docker
+
+-- 304: Modernização Legado
+('00000000-0000-0000-0000-0000000000304', '00000000-0000-0000-0000-000000000083', 1), -- Testes
+('00000000-0000-0000-0000-0000000000304', '00000000-0000-0000-0000-000000000086', 2), -- Docker
+
+-- 305: DevSecOps
+('00000000-0000-0000-0000-0000000000305', '00000000-0000-0000-0000-000000000087', 1), -- DevOps
+('00000000-0000-0000-0000-0000000000305', '00000000-0000-0000-0000-000000000094', 2), -- CyberSec
+
+-- 306: Mobile RN
+('00000000-0000-0000-0000-0000000000306', '00000000-0000-0000-0000-000000000089', 1), -- ReactJS (Base)
+('00000000-0000-0000-0000-0000000000306', '00000000-0000-0000-0000-000000000088', 2), -- React Native
+
+-- 307: Flutter (Usando Flutter e Mobile)
+('00000000-0000-0000-0000-0000000000307', '00000000-0000-0000-0000-000000000090', 1), -- Flutter
+
+-- 308: Mobile Fullstack
+('00000000-0000-0000-0000-0000000000308', '00000000-0000-0000-0000-000000000088', 1), -- RN
+('00000000-0000-0000-0000-0000000000308', '00000000-0000-0000-0000-000000000082', 2), -- Spring API
+
+-- 309: Data Science
+('00000000-0000-0000-0000-0000000000309', '00000000-0000-0000-0000-000000000091', 1), -- Python DS
+
+-- 310: Eng Dados
+('00000000-0000-0000-0000-0000000000310', '00000000-0000-0000-0000-000000000091', 1), -- Python DS
+('00000000-0000-0000-0000-0000000000310', '00000000-0000-0000-0000-000000000092', 2), -- Azure Data
+
+-- 311: IA Generativa (Python + Cloud)
+('00000000-0000-0000-0000-0000000000311', '00000000-0000-0000-0000-000000000091', 1), -- Python
+('00000000-0000-0000-0000-0000000000311', '00000000-0000-0000-0000-000000000085', 2), -- Azure
+
+-- 312: RPA (Python)
+('00000000-0000-0000-0000-0000000000312', '00000000-0000-0000-0000-000000000091', 1),
+
+-- 313: Fullstack Java React
+('00000000-0000-0000-0000-0000000000313', '00000000-0000-0000-0000-000000000081', 1), -- Java
+('00000000-0000-0000-0000-0000000000313', '00000000-0000-0000-0000-000000000089', 2), -- React
+
+-- 314: Frontend Expert
+('00000000-0000-0000-0000-0000000000314', '00000000-0000-0000-0000-000000000089', 1), -- React
+
+-- 315: K8s Admin
+('00000000-0000-0000-0000-0000000000315', '00000000-0000-0000-0000-000000000086', 1), -- Docker K8s
+
+-- 316: IaC
+('00000000-0000-0000-0000-0000000000316', '00000000-0000-0000-0000-000000000084', 1), -- AWS
+('00000000-0000-0000-0000-0000000000316', '00000000-0000-0000-0000-000000000087', 2), -- DevOps
+
+-- 317: Zero Trust
+('00000000-0000-0000-0000-0000000000317', '00000000-0000-0000-0000-000000000094', 1), -- CyberSec
+
+-- 318: Tech Lead
+('00000000-0000-0000-0000-0000000000318', '00000000-0000-0000-0000-000000000093', 1), -- MBA
+('00000000-0000-0000-0000-0000000000318', '00000000-0000-0000-0000-000000000095', 2), -- Scrum
+
+-- 319: Scrum Master
+('00000000-0000-0000-0000-0000000000319', '00000000-0000-0000-0000-000000000095', 1),
+
+-- 320: MBA
+('00000000-0000-0000-0000-0000000000320', '00000000-0000-0000-0000-000000000093', 1),
+
+-- 321: QA Automation
+('00000000-0000-0000-0000-0000000000321', '00000000-0000-0000-0000-000000000081', 1), -- Java
+('00000000-0000-0000-0000-0000000000321', '00000000-0000-0000-0000-000000000083', 2), -- JUnit
+
+-- 322: Support to DevOps
+('00000000-0000-0000-0000-0000000000322', '00000000-0000-0000-0000-000000000086', 1), -- Docker
+('00000000-0000-0000-0000-0000000000322', '00000000-0000-0000-0000-000000000087', 2), -- DevOps
+
+-- 323: Data Transition
+('00000000-0000-0000-0000-0000000000323', '00000000-0000-0000-0000-000000000092', 1), -- Azure Data
+
+-- 324: API Rest
+('00000000-0000-0000-0000-0000000000324', '00000000-0000-0000-0000-000000000082', 1), -- Spring
+
+-- 325: Docker Deep Dive
+('00000000-0000-0000-0000-0000000000325', '00000000-0000-0000-0000-000000000086', 1), -- Docker
+
+-- 326: Testes Java
+('00000000-0000-0000-0000-0000000000326', '00000000-0000-0000-0000-000000000083', 1),
+
+-- 327: Pentest
+('00000000-0000-0000-0000-0000000000327', '00000000-0000-0000-0000-000000000094', 1),
+
+-- 328: React Hooks
+('00000000-0000-0000-0000-0000000000328', '00000000-0000-0000-0000-000000000089', 1),
+
+-- 329: English Tech
+('00000000-0000-0000-0000-0000000000329', '00000000-0000-0000-0000-000000000093', 1), -- MBA (Contexto de negócios)
+
+-- 330: Cloud Intro
+('00000000-0000-0000-0000-0000000000330', '00000000-0000-0000-0000-000000000084', 1); -- AWS CP
 
 -- 3.15 USUARIO_ROTA (Vincula Users 9x a Rotas 30x)
 INSERT INTO usuario_rota (id_usuario, id_rota, progresso_percentual, data_inicio) VALUES
