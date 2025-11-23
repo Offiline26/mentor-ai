@@ -40,7 +40,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
-
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import java.util.UUID;
@@ -50,8 +51,6 @@ import java.util.UUID;
 @Service
 
 public class UsuarioService {
-
-
 
     private final UsuarioRepository usuarioRepo;
 
@@ -318,30 +317,40 @@ public UsuarioResponse get(UUID id) {
 
 
     // -------- Rotas do usuário (não cacheei, pois é ação de domínio que mexe em progresso) --------
-
-
-
     @Transactional
     @CachePut(cacheNames = "usuariosById", key = "#idUsuario")
     public UsuarioResponse iniciarRota(UUID idUsuario, UUID idRota) {
+        // 1. Valida se o usuário existe
         Usuario user = usuarioRepo.findById(idUsuario)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
+
+        // 2. Valida se a rota existe
         RotaRequalificacao rota = rotaRepo.findById(idRota)
                 .orElseThrow(() -> new ResourceNotFoundException("Rota não encontrada"));
 
-        // 🛑 CORREÇÃO DA LÓGICA:
-        boolean jaTem = user.getRotas().stream().anyMatch(ur -> ur.getRota().getId().equals(idRota));
+        // 3. CRÍTICO: Verifica existência usando o ID Composto correto
+        // Com o @EqualsAndHashCode na classe ID, isso agora vai encontrar o objeto se ele já estiver na sessão
+        UsuarioRotaId idVinculo = new UsuarioRotaId(idUsuario, idRota);
 
-        if (jaTem) {
-            // Se a rota já existe, lançamos um erro de CONFLITO (409) controlado
+        if (usuarioRotaRepo.existsById(idVinculo)) {
+            // Se já existe, lança o 409 Conflict e aborta a transação
             throw new ResourceConflictException("O usuário já está realizando esta rota de requalificação.");
         }
 
-        // Se não tem, iniciamos e salvamos
-        UsuarioRota ur = user.iniciarRota(rota);
+        // 4. Se não existe, cria e salva
+        UsuarioRota ur = UsuarioRota.builder()
+                .usuario(user)
+                .rota(rota)
+                .dataInicio(LocalDateTime.now())
+                .progressoPercentual(BigDecimal.ZERO)
+                .build();
+
         usuarioRotaRepo.save(ur);
 
-        // Retorna o DTO do usuário ATUALIZADO (para o CachePut)
+        // 5. Retorno
+        // Não precisamos fazer user.getRotas().add(ur) aqui, pois o @CachePut
+        // vai serializar o 'user' que buscamos no início.
+        // Na próxima chamada GET, o Hibernate vai trazer a lista atualizada do banco.
         return UsuarioMapper.toDto(user);
     }
 
