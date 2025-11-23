@@ -52,10 +52,12 @@ public class Usuario {
     private LocalDateTime dataCadastro;
 
     // 🛑 MUDANÇA CRÍTICA: Definir FetchType.LAZY
+    @Builder.Default
     @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UsuarioHabilidade> habilidades = new ArrayList<>();
 
     // 🛑 MUDANÇA CRÍTICA: Definir FetchType.LAZY
+    @Builder.Default
     @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<UsuarioRota> rotas = new HashSet<>();
 
