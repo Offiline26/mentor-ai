@@ -14,7 +14,7 @@ import br.com.fiap.mentorai.repository.CursoRepository;
 import br.com.fiap.mentorai.repository.RotaCursoRepository;
 import br.com.fiap.mentorai.repository.RotaRequalificacaoRepository;
 import br.com.fiap.mentorai.repository.TendenciaMercadoRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -98,17 +98,23 @@ public class RotaRequalificacaoService {
         return dto;
     }
 
+    // 👇 CORREÇÃO CRÍTICA AQUI: @Transactional(readOnly = true)
+    // Isso permite que o Mapper leia a lista LAZY de cursos dentro da mesma sessão.
     @Cacheable(cacheNames = "rotasById", key = "#id")
+    @Transactional(readOnly = true)
     public RotaRequalificacaoResponse get(UUID id) {
-        // 🛑 CORREÇÃO: Usamos o método com JOIN FETCH para trazer a trilha
-        RotaRequalificacao e = rotaRepo.findByIdWithCursos(id)
+        RotaRequalificacao e = rotaRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Rota não encontrada"));
-
+        // O Mapper vai chamar .getCursos(). Como é LAZY, precisa da transação aberta.
         return RotaRequalificacaoMapper.toDto(e);
     }
 
+    // 👇 CORREÇÃO CRÍTICA AQUI TAMBÉM
     @Cacheable(cacheNames = "rotasList")
+    @Transactional(readOnly = true)
     public Page<RotaRequalificacaoResponse> findAll(Pageable pageable) {
+        // Garante que ao iterar sobre cada rota para transformar em DTO,
+        // o Hibernate consiga buscar os cursos de cada uma sem fechar a conexão.
         return rotaRepo.findAll(pageable).map(RotaRequalificacaoMapper::toDto);
     }
 
