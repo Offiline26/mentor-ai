@@ -70,4 +70,16 @@ public class UsuarioController {
         // 2. A segurança (@PreAuthorize) já validou que o idUsuario é o dono do token.
         return ResponseEntity.ok(service.iniciarRota(idUsuario, idRota));
     }
+
+    // Em UsuarioController.java
+
+    @PutMapping("/{idUsuario}/rotas/{idRota}")
+    @PreAuthorize("@usuarioSecurity.isOwner(#idUsuario)")
+    public ResponseEntity<UsuarioResponse> atualizarProgresso(
+            @PathVariable UUID idUsuario,
+            @PathVariable UUID idRota,
+            @Valid @RequestBody br.com.fiap.mentorai.dto.request.update.UpdateProgressoRotaRequest req
+    ) {
+        return ResponseEntity.ok(service.atualizarProgresso(idUsuario, idRota, req.getProgresso()));
+    }
 }

@@ -354,4 +354,31 @@ public UsuarioResponse get(UUID id) {
         return UsuarioMapper.toDto(user);
     }
 
+    @Transactional
+    @CachePut(cacheNames = "usuariosById", key = "#idUsuario")
+    public UsuarioResponse atualizarProgresso(UUID idUsuario, UUID idRota, BigDecimal novoProgresso) {
+        // 1. Busca o relacionamento específico usando o ID Composto
+        UsuarioRotaId idVinculo = new UsuarioRotaId(idUsuario, idRota);
+
+        UsuarioRota ur = usuarioRotaRepo.findById(idVinculo)
+                .orElseThrow(() -> new ResourceNotFoundException("O usuário não iniciou esta rota."));
+
+        // 2. Atualiza o progresso
+        ur.setProgressoPercentual(novoProgresso);
+
+        // 3. Lógica de Conclusão Automática
+        if (novoProgresso.compareTo(new BigDecimal("100.00")) >= 0) {
+            if (ur.getDataConclusao() == null) {
+                ur.setDataConclusao(LocalDateTime.now()); // Marca como concluído hoje
+            }
+        } else {
+            ur.setDataConclusao(null); // Se desmarcou algo, reabre a rota
+        }
+
+        usuarioRotaRepo.save(ur);
+
+        // 4. Retorna o usuário atualizado para o Cache
+        return UsuarioMapper.toDto(ur.getUsuario());
+    }
+
 }
