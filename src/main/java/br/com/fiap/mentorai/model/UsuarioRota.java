@@ -1,6 +1,7 @@
 package br.com.fiap.mentorai.model;
 
 import br.com.fiap.mentorai.model.enums.StatusRotaEnum;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,6 +17,8 @@ public class UsuarioRota {
     @Id
     @ManyToOne
     @JoinColumn(name = "id_usuario")
+    @JsonIgnore // 🛑 Protege contra loop se serializar usuário -> rota -> usuário
+    @ToString.Exclude
     private Usuario usuario;
 
     @Id

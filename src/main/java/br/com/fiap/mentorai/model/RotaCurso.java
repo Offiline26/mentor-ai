@@ -12,6 +12,8 @@ public class RotaCurso {
     @Id
     @ManyToOne
     @JoinColumn(name = "id_rota")
+    @JsonIgnore // 🛑 CORREÇÃO CRÍTICA: Quebra o loop infinito do JSON
+    @ToString.Exclude // Evita loop no toString()
     private RotaRequalificacao rota;
 
     @Id
