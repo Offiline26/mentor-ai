@@ -34,9 +34,7 @@ public class RotaRequalificacao {
     @OneToMany(mappedBy = "rota", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("ordem ASC")
     @Builder.Default
-    @ToString.Exclude // 🛑 EVITA LOOP NO LOG
-    // O JsonManagedReference é opcional aqui se usarmos JsonIgnore no filho,
-    // mas vamos focar na proteção do filho.
+    @ToString.Exclude
     private Set<RotaCurso> cursos = new LinkedHashSet<>();
 
     public void adicionarCurso(Curso curso, Integer ordem) {

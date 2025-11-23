@@ -1,5 +1,6 @@
 package br.com.fiap.mentorai.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
