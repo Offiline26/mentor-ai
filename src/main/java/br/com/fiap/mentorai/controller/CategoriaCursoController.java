@@ -37,7 +37,7 @@ public class CategoriaCursoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<CategoriaCursoDto>> list(@PageableDefault(size = 20, sort = "nomeCatCurso") Pageable pageable) {
+    public ResponseEntity<Page<CategoriaCursoDto>> list(@PageableDefault(size = 20, sort = "nome") Pageable pageable) {
         return ResponseEntity.ok(service.findAll(pageable));
     }
 

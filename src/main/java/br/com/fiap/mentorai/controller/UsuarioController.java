@@ -61,7 +61,13 @@ public class UsuarioController {
     // O método iniciarRota precisa do ID do usuário, então a regra também deve ser aplicada
     @PostMapping("/{idUsuario}/rotas/{idRota}/iniciar")
     @PreAuthorize("@usuarioSecurity.isOwner(#idUsuario)")
-    public ResponseEntity<UsuarioResponse> iniciarRota(@PathVariable UUID idUsuario, @PathVariable UUID idRota) {
+    public ResponseEntity<UsuarioResponse> iniciarRota(
+            // Garantimos que a variável do Path (@PathVariable) tem o mesmo nome do argumento (idUsuario)
+            @PathVariable UUID idUsuario,
+            @PathVariable UUID idRota
+    ) {
+        // 1. O Path está correto, agora a lógica será executada.
+        // 2. A segurança (@PreAuthorize) já validou que o idUsuario é o dono do token.
         return ResponseEntity.ok(service.iniciarRota(idUsuario, idRota));
     }
 }

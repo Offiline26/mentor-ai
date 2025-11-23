@@ -27,7 +27,7 @@ public class CargoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<CargoDto>> list(@PageableDefault(size = 20, sort = "nomeCargo") Pageable pageable) {
+    public ResponseEntity<Page<CargoDto>> list(@PageableDefault(size = 20, sort = "nome") Pageable pageable) {
         return ResponseEntity.ok(service.findAll(pageable));
     }
 

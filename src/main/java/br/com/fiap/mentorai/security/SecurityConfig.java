@@ -80,8 +80,6 @@ public class SecurityConfig {
                         // 3. Rotas de IA (Mentor) - PÚBLICAS (Para testes)
                         .requestMatchers("/api/ia/**").permitAll()
 
-                        .requestMatchers("/api/usuarios/**").permitAll()
-
                         // 👇 4. ROTAS DE DADOS AUXILIARES - PÚBLICAS (GET) para o Mobile/Cadastro
                         // Listagem de Cargos, Áreas, Categorias, Parceiros, etc.
                         .requestMatchers(HttpMethod.GET, "/api/cargos/**").permitAll()
