@@ -318,7 +318,7 @@ public UsuarioResponse get(UUID id) {
 
     // -------- Rotas do usuário (não cacheei, pois é ação de domínio que mexe em progresso) --------
     @Transactional
-    @CachePut(cacheNames = "usuariosById", key = "#idUsuario")
+    @CacheEvict(cacheNames = "usuariosById", key = "#idUsuario")
     public UsuarioResponse iniciarRota(UUID idUsuario, UUID idRota) {
         // 1. Valida se o usuário existe
         Usuario user = usuarioRepo.findById(idUsuario)
@@ -355,7 +355,7 @@ public UsuarioResponse get(UUID id) {
     }
 
     @Transactional
-    @CachePut(cacheNames = "usuariosById", key = "#idUsuario")
+    @CacheEvict(cacheNames = "usuariosById", key = "#idUsuario")
     public UsuarioResponse atualizarProgresso(UUID idUsuario, UUID idRota, BigDecimal novoProgresso) {
         // 1. Busca o relacionamento específico usando o ID Composto
         UsuarioRotaId idVinculo = new UsuarioRotaId(idUsuario, idRota);
