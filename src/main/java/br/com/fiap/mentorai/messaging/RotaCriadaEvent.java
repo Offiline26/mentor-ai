@@ -12,7 +12,6 @@ public class RotaCriadaEvent {
     private UUID idRota;
     private String nomeRota;
     private String objetivoProfissional;
-    private Boolean geradaPorIa;
     private LocalDateTime dataCriacao;
 
     // opcional: ids dos cursos da trilha

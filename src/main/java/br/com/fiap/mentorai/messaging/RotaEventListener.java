@@ -13,12 +13,9 @@ public class RotaEventListener {
     @RabbitListener(queues = RabbitConfig.QUEUE_ROTA_CRIADA)
     public void onRotaCriada(RotaCriadaEvent event) {
         // Aqui você simula algo assíncrono: envio de e-mail, notificação, log inteligente, etc.
-        log.info("📩 Evento de rota criada recebido: id={}, nome={}, geradaPorIa={}",
+        log.info("📩 Evento de rota criada recebido: id={}, nome={}",
                 event.getIdRota(),
-                event.getNomeRota(),
-                event.getGeradaPorIa());
+                event.getNomeRota());
 
-        // Pra demo você pode falar:
-        // "Aqui poderíamos mandar um e-mail para o usuário com a trilha de requalificação sugerida."
     }
 }
