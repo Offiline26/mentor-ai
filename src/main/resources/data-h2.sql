@@ -350,20 +350,49 @@ REFERENCES rotas_requalificacao(id_rota) ON DELETE CASCADE
 
 -- CARGOS (IDs: 1 a 6 + 99)
 INSERT INTO cargos (id_cargo, nome_cargo, descricao) VALUES
-('00000000-0000-0000-0000-000000000001', 'Desenvolvedor Back-end Junior', 'Profissional focado em lógica de servidor, APIs e banco de dados, nível iniciante.'),
-('00000000-0000-0000-0000-000000000002', 'Analista de Dados Pleno',       'Profissional responsável por ETL, dashboards e análise exploratória de dados.'),
-('00000000-0000-0000-0000-000000000003', 'Engenheiro de DevOps Senior',   'Especialista em infraestrutura, CI/CD, Cloud e automação de processos.'),
-('00000000-0000-0000-0000-000000000004', 'Product Owner (PO)',            'Responsável pela visão do produto, backlog e priorização de valor.'),
-('00000000-0000-0000-0000-000000000005', 'Arquiteto de Soluções',         'Define padrões de projeto, escolhe tecnologias e desenha sistemas escaláveis.'),
-('00000000-0000-0000-0000-000000000099', 'Administrador do Sistema',      'Superusuário com acesso total à plataforma MentorAI.');
+('00000000-0000-0000-0000-000000000001', 'Desenvolvedor Back-end Junior', 'Iniciante em lógica de servidor e APIs.'),
+('00000000-0000-0000-0000-000000000002', 'Desenvolvedor Back-end Pleno', 'Experiência em arquitetura e banco de dados.'),
+('00000000-0000-0000-0000-000000000003', 'Desenvolvedor Back-end Senior', 'Especialista em performance e escalabilidade.'),
+('00000000-0000-0000-0000-000000000004', 'Desenvolvedor Front-end Junior', 'Iniciante em HTML, CSS e JS.'),
+('00000000-0000-0000-0000-000000000005', 'Desenvolvedor Front-end Pleno', 'Experiência com React, Angular ou Vue.'),
+('00000000-0000-0000-0000-000000000006', 'Desenvolvedor Front-end Senior', 'Especialista em UX e performance web.'),
+('00000000-0000-0000-0000-000000000007', 'Desenvolvedor Fullstack Junior', 'Conhecimento básico de todo o stack.'),
+('00000000-0000-0000-0000-000000000008', 'Desenvolvedor Fullstack Pleno', 'Autonomia no front e back-end.'),
+('00000000-0000-0000-0000-000000000009', 'Desenvolvedor Fullstack Senior', 'Domínio completo da arquitetura web.'),
+('00000000-0000-0000-0000-000000000010', 'Desenvolvedor Mobile iOS', 'Especialista em Swift e ecossistema Apple.'),
+('00000000-0000-0000-0000-000000000011', 'Desenvolvedor Mobile Android', 'Especialista em Kotlin e ecossistema Google.'),
+('00000000-0000-0000-0000-000000000012', 'Desenvolvedor Mobile Híbrido', 'Especialista em React Native ou Flutter.'),
+('00000000-0000-0000-0000-000000000013', 'Analista de Dados Junior', 'Coleta e limpeza de dados.'),
+('00000000-0000-0000-0000-000000000014', 'Analista de Dados Pleno', 'Criação de dashboards e insights.'),
+('00000000-0000-0000-0000-000000000015', 'Cientista de Dados', 'Modelagem preditiva e Machine Learning.'),
+('00000000-0000-0000-0000-000000000016', 'Engenheiro de Dados', 'Construção de pipelines e ETL.'),
+('00000000-0000-0000-0000-000000000017', 'DevOps Engineer', 'Automação, CI/CD e Infraestrutura.'),
+('00000000-0000-0000-0000-000000000018', 'SRE (Site Reliability Engineer)', 'Garantia de confiabilidade e uptime.'),
+('00000000-0000-0000-0000-000000000019', 'Arquiteto de Software', 'Definição de padrões e tecnologias.'),
+('00000000-0000-0000-0000-000000000020', 'Arquiteto de Soluções Cloud', 'Especialista em AWS, Azure ou GCP.'),
+('00000000-0000-0000-0000-000000000021', 'Analista de Segurança (CyberSec)', 'Proteção de redes e aplicações.'),
+('00000000-0000-0000-0000-000000000022', 'Pentester (Hacker Ético)', 'Testes de intrusão e vulnerabilidade.'),
+('00000000-0000-0000-0000-000000000023', 'Product Owner (PO)', 'Gestão de backlog e valor do produto.'),
+('00000000-0000-0000-0000-000000000024', 'Scrum Master', 'Facilitador de metodologias ágeis.'),
+('00000000-0000-0000-0000-000000000025', 'Tech Lead', 'Liderança técnica de equipes.'),
+('00000000-0000-0000-0000-000000000026', 'QA Tester (Manual)', 'Testes funcionais e de usabilidade.'),
+('00000000-0000-0000-0000-000000000027', 'QA Automation Engineer', 'Automação de testes E2E e unitários.'),
+('00000000-0000-0000-0000-000000000028', 'UX Designer', 'Design de experiência do usuário.'),
+('00000000-0000-0000-0000-000000000029', 'UI Designer', 'Design de interfaces visuais.'),
+('00000000-0000-0000-0000-000000000099', 'Administrador do Sistema', 'Acesso total à plataforma.');
 
 -- ÁREAS DE ATUAÇÃO (IDs: 11 a 15)
 INSERT INTO areas_atuacao (id_area, nome_area, descricao) VALUES
-('00000000-0000-0000-0000-000000000011', 'Desenvolvimento de Software',   'Criação, manutenção e testes de aplicações web, mobile e desktop.'),
-('00000000-0000-0000-0000-000000000012', 'Data Science & Analytics',      'Extração de conhecimento a partir de dados estruturados e não estruturados.'),
-('00000000-0000-0000-0000-000000000013', 'Infraestrutura e Cloud',        'Gerenciamento de servidores, redes e serviços em nuvem (AWS, Azure).'),
-('00000000-0000-0000-0000-000000000014', 'Segurança da Informação',       'Proteção de sistemas, redes e dados contra ataques cibernéticos.'),
-('00000000-0000-0000-0000-000000000015', 'Gestão e Agilidade',            'Gerenciamento de projetos, produtos e liderança de times técnicos.');
+('00000000-0000-0000-0000-000000000011', 'Desenvolvimento Back-end', 'Foco em servidores, APIs e Bancos de Dados.'),
+('00000000-0000-0000-0000-000000000012', 'Desenvolvimento Front-end', 'Foco em interfaces web e SPA.'),
+('00000000-0000-0000-0000-000000000013', 'Desenvolvimento Mobile', 'Apps nativos e híbridos.'),
+('00000000-0000-0000-0000-000000000014', 'Data Science & Analytics', 'Inteligência de dados e IA.'),
+('00000000-0000-0000-0000-000000000015', 'Cloud Computing & DevOps', 'Infraestrutura e automação.'),
+('00000000-0000-0000-0000-000000000016', 'Cibersegurança', 'Proteção e conformidade.'),
+('00000000-0000-0000-0000-000000000017', 'Gestão de Produtos (Product)', 'Estratégia e roadmap.'),
+('00000000-0000-0000-0000-000000000018', 'Agilidade e Processos', 'Scrum, Kanban e Lean.'),
+('00000000-0000-0000-0000-000000000019', 'Design (UX/UI)', 'Experiência e interface.'),
+('00000000-0000-0000-0000-000000000020', 'Qualidade de Software (QA)', 'Testes e garantia de qualidade.');
 
 -- GÊNEROS (IDs Aleatórios)
 INSERT INTO generos (id_genero, nome_genero) VALUES
@@ -372,105 +401,128 @@ INSERT INTO generos (id_genero, nome_genero) VALUES
 (RANDOM_UUID(), 'OUTRO'),
 (RANDOM_UUID(), 'PREFIRO_NAO_INFORMAR');
 
--- CATEGORIAS DE HABILIDADE (IDs: 21 a 25)
+-- 4. CATEGORIAS DE HABILIDADE
 INSERT INTO categorias_habilidade (id_cat_hab, nome_cat_hab, descricao) VALUES
-('00000000-0000-0000-0000-000000000021', 'Linguagens de Programação', 'Idiomas técnicos para escrita de código fonte.'),
-('00000000-0000-0000-0000-000000000022', 'Frameworks e Bibliotecas',  'Conjuntos de ferramentas pré-prontas para agilizar o desenvolvimento.'),
-('00000000-0000-0000-0000-000000000023', 'Plataformas de Nuvem',      'Serviços de computação em nuvem e orquestração.'),
-('00000000-0000-0000-0000-000000000024', 'Bancos de Dados',           'Sistemas de gerenciamento de dados relacionais e não-relacionais.'),
-('00000000-0000-0000-0000-000000000025', 'Soft Skills',               'Habilidades comportamentais e interpessoais.');
+('00000000-0000-0000-0000-000000000021', 'Linguagens de Programação', 'Idiomas para codificação.'),
+('00000000-0000-0000-0000-000000000022', 'Frameworks Back-end', 'Ferramentas para APIs e servidores.'),
+('00000000-0000-0000-0000-000000000023', 'Frameworks Front-end', 'Ferramentas para interfaces web.'),
+('00000000-0000-0000-0000-000000000024', 'Cloud & DevOps', 'Serviços de nuvem e CI/CD.'),
+('00000000-0000-0000-0000-000000000025', 'Bancos de Dados', 'SQL e NoSQL.'),
+('00000000-0000-0000-0000-000000000026', 'Data & IA', 'Ferramentas de dados e Machine Learning.'),
+('00000000-0000-0000-0000-000000000027', 'Soft Skills', 'Habilidades comportamentais.');
 
--- HABILIDADES (IDs: 31 a 41) - Vinculadas às categorias 21-25
+-- 5. HABILIDADES (30 Itens)
 INSERT INTO habilidades (id_habilidade, nome, id_cat_hab, descricao) VALUES
-('00000000-0000-0000-0000-000000000031', 'Java 21',          '00000000-0000-0000-0000-000000000021', 'Linguagem robusta orientada a objetos.'),
-('00000000-0000-0000-0000-000000000032', 'Python',           '00000000-0000-0000-0000-000000000021', 'Linguagem versátil para Data Science e Scripts.'),
-('00000000-0000-0000-0000-000000000033', 'JavaScript',     '00000000-0000-0000-0000-000000000021', 'Linguagem web fullstack.'),
-('00000000-0000-0000-0000-000000000034', 'Spring Boot 3',    '00000000-0000-0000-0000-000000000022', 'Framework líder para microsserviços em Java.'),
-('00000000-0000-0000-0000-000000000035', 'React Native',     '00000000-0000-0000-0000-000000000022', 'Framework para desenvolvimento mobile híbrido.'),
-('00000000-0000-0000-0000-000000000036', 'Docker',         '00000000-0000-0000-0000-000000000023', 'Containerização de apps.'),
-('00000000-0000-0000-0000-000000000037', 'Kubernetes',     '00000000-0000-0000-0000-000000000023', 'Orquestração de containers.'),
-('00000000-0000-0000-0000-000000000038', 'AWS',            '00000000-0000-0000-0000-000000000024', 'Amazon Web Services.'),
-('00000000-0000-0000-0000-000000000039', 'Azure',          '00000000-0000-0000-0000-000000000024', 'Microsoft Cloud.'),
-('00000000-0000-0000-0000-000000000040', 'Comunicação',    '00000000-0000-0000-0000-000000000025', 'Comunicação assertiva.'),
-('00000000-0000-0000-0000-000000000041', 'Liderança',      '00000000-0000-0000-0000-000000000025', 'Gestão de pessoas.');
+-- Linguagens
+('00000000-0000-0000-0000-000000000031', 'Java 21', '00000000-0000-0000-0000-000000000021', 'Linguagem robusta para enterprise.'),
+('00000000-0000-0000-0000-000000000032', 'Python', '00000000-0000-0000-0000-000000000021', 'Linguagem versátil para dados e web.'),
+('00000000-0000-0000-0000-000000000033', 'JavaScript (ES6+)', '00000000-0000-0000-0000-000000000021', 'Linguagem essencial da web.'),
+('00000000-0000-0000-0000-000000000034', 'TypeScript', '00000000-0000-0000-0000-000000000021', 'JavaScript com tipagem estática.'),
+('00000000-0000-0000-0000-000000000035', 'C#', '00000000-0000-0000-0000-000000000021', 'Linguagem da plataforma .NET.'),
+('00000000-0000-0000-0000-000000000036', 'Go (Golang)', '00000000-0000-0000-0000-000000000021', 'Linguagem focada em performance e concorrência.'),
+-- Frameworks Back
+('00000000-0000-0000-0000-000000000037', 'Spring Boot 3', '00000000-0000-0000-0000-000000000022', 'Framework Java líder de mercado.'),
+('00000000-0000-0000-0000-000000000038', 'Node.js', '00000000-0000-0000-0000-000000000022', 'Runtime JS para backend.'),
+('00000000-0000-0000-0000-000000000039', '.NET Core', '00000000-0000-0000-0000-000000000022', 'Plataforma Microsoft cross-platform.'),
+-- Frameworks Front/Mobile
+('00000000-0000-0000-0000-000000000040', 'React.js', '00000000-0000-0000-0000-000000000023', 'Biblioteca para interfaces web.'),
+('00000000-0000-0000-0000-000000000041', 'Angular', '00000000-0000-0000-0000-000000000023', 'Framework completo para SPA.'),
+('00000000-0000-0000-0000-000000000042', 'React Native', '00000000-0000-0000-0000-000000000023', 'Desenvolvimento mobile híbrido.'),
+('00000000-0000-0000-0000-000000000043', 'Flutter', '00000000-0000-0000-0000-000000000023', 'Toolkit UI do Google.'),
+-- Cloud & DevOps
+('00000000-0000-0000-0000-000000000044', 'Docker', '00000000-0000-0000-0000-000000000024', 'Containerização de aplicações.'),
+('00000000-0000-0000-0000-000000000045', 'Kubernetes', '00000000-0000-0000-0000-000000000024', 'Orquestração de containers.'),
+('00000000-0000-0000-0000-000000000046', 'AWS (Amazon)', '00000000-0000-0000-0000-000000000024', 'Líder em cloud computing.'),
+('00000000-0000-0000-0000-000000000047', 'Microsoft Azure', '00000000-0000-0000-0000-000000000024', 'Nuvem corporativa da Microsoft.'),
+('00000000-0000-0000-0000-000000000048', 'Terraform', '00000000-0000-0000-0000-000000000024', 'Infraestrutura como Código (IaC).'),
+('00000000-0000-0000-0000-000000000049', 'CI/CD (Jenkins/Actions)', '00000000-0000-0000-0000-000000000024', 'Integração e entrega contínua.'),
+-- Banco de Dados
+('00000000-0000-0000-0000-000000000050', 'SQL (Oracle/Postgres)', '00000000-0000-0000-0000-000000000025', 'Linguagem de consulta estruturada.'),
+('00000000-0000-0000-0000-000000000051', 'NoSQL (MongoDB)', '00000000-0000-0000-0000-000000000025', 'Banco de dados orientado a documentos.'),
+-- Soft Skills
+('00000000-0000-0000-0000-000000000052', 'Comunicação Assertiva', '00000000-0000-0000-0000-000000000027', 'Clareza na transmissão de ideias.'),
+('00000000-0000-0000-0000-000000000053', 'Liderança de Equipes', '00000000-0000-0000-0000-000000000027', 'Gestão e motivação de pessoas.'),
+('00000000-0000-0000-0000-000000000054', 'Resolução de Problemas', '00000000-0000-0000-0000-000000000027', 'Pensamento crítico e analítico.'),
+('00000000-0000-0000-0000-000000000055', 'Gestão de Tempo', '00000000-0000-0000-0000-000000000027', 'Priorização e produtividade.'),
+('00000000-0000-0000-0000-000000000056', 'Inglês Técnico', '00000000-0000-0000-0000-000000000027', 'Leitura e escrita técnica.'),
+('00000000-0000-0000-0000-000000000057', 'Scrum / Agile', '00000000-0000-0000-0000-000000000027', 'Metodologias ágeis de trabalho.');
 
--- PARCEIROS DE CURSO (IDs: 51 a 55)
+-- 6. PARCEIROS DE CURSO (10 Itens)
 INSERT INTO parceiros_curso (id_parceiro, nome_parceiro, descricao) VALUES
-('00000000-0000-0000-0000-000000000051', 'Udemy',    'Marketplace global de ensino e aprendizado.'),
-('00000000-0000-0000-0000-000000000052', 'Coursera', 'Cursos em parceria com grandes universidades.'),
-('00000000-0000-0000-0000-000000000053', 'Alura',    'Maior plataforma de tecnologia do Brasil.'),
-('00000000-0000-0000-0000-000000000054', 'FIAP',     'Faculdade referência em tecnologia e inovação.'),
-('00000000-0000-0000-0000-000000000055', 'Microsoft Learn', 'Plataforma oficial de documentação e cursos.');
+('00000000-0000-0000-0000-000000000061', 'Udemy',    'Marketplace global com cursos diversos.'),
+('00000000-0000-0000-0000-000000000062', 'Coursera', 'Parcerias com Stanford, Yale e Google.'),
+('00000000-0000-0000-0000-000000000063', 'Alura',    'Maior escola de tecnologia do Brasil.'),
+('00000000-0000-0000-0000-000000000064', 'FIAP',     'Faculdade de Tecnologia e Inovação.'),
+('00000000-0000-0000-0000-000000000065', 'Microsoft Learn', 'Documentação e trilhas oficiais Microsoft.'),
+('00000000-0000-0000-0000-000000000066', 'AWS Training', 'Treinamento oficial da Amazon.'),
+('00000000-0000-0000-0000-000000000067', 'Pluralsight', 'Cursos técnicos avançados.'),
+('00000000-0000-0000-0000-000000000068', 'Rocketseat', 'Foco em JS, React e Node.'),
+('00000000-0000-0000-0000-000000000069', 'DIO (Digital Innovation One)', 'Bootcamps gratuitos e parcerias.'),
+('00000000-0000-0000-0000-000000000070', 'edX', 'Cursos de Harvard e MIT.');
 
--- CATEGORIAS DE CURSO (IDs: 61 a 65)
+-- 7. CATEGORIAS DE CURSO (5 Itens)
 INSERT INTO categorias_curso (id_cat_curso, nome_cat_curso, descricao) VALUES
-('00000000-0000-0000-0000-000000000061', 'Bootcamp Intensivo', 'Cursos de curta duração com foco prático e imersivo.'),
-('00000000-0000-0000-0000-000000000062', 'Formação Completa',  'Trilhas longas que cobrem do básico ao avançado.'),
-('00000000-0000-0000-0000-000000000063', 'Certificação Oficial', 'Preparatórios para exames de certificação.'),
-('00000000-0000-0000-0000-000000000064', 'Workshop Prático',   'Aulas focadas em resolver um problema específico.'),
-('00000000-0000-0000-0000-000000000065', 'Pós-Graduação / MBA', 'Ensino superior focado em especialização.');
+('00000000-0000-0000-0000-000000000071', 'Bootcamp',   'Imersão prática e intensiva.'),
+('00000000-0000-0000-0000-000000000072', 'Graduação/MBA', 'Formação acadêmica formal.'),
+('00000000-0000-0000-0000-000000000073', 'Certificação', 'Preparatório para exames oficiais.'),
+('00000000-0000-0000-0000-000000000074', 'Curso Livre',  'Focado em habilidades específicas.'),
+('00000000-0000-0000-0000-000000000075', 'Workshop',     'Evento prático de curta duração.');
 
--- CURSOS (IDs: 71 a 75) - Vinculados a Parceiros (5x) e Categorias (6x)
+-- 8. CURSOS (30 Itens - Links Reais)
 INSERT INTO cursos (id_curso, titulo, descricao, duracao_horas, id_parceiro, id_cat_curso, link_curso) VALUES
-('00000000-0000-0000-0000-000000000071', 'Java Masterclass: Do Zero ao Expert', 'Curso completo cobrindo JVM e POO.', 55.0, '00000000-0000-0000-0000-000000000051', '00000000-0000-0000-0000-000000000062', 'https://udemy.com/java'),
-('00000000-0000-0000-0000-000000000072', 'Spring Boot 3 & Microsserviços', 'Aprenda a criar APIs escaláveis.', 32.0, '00000000-0000-0000-0000-000000000053', '00000000-0000-0000-0000-000000000062', 'https://alura.com.br/spring'),
-('00000000-0000-0000-0000-000000000073', 'AWS Cloud Practitioner', 'Preparatório oficial.', 15.0, '00000000-0000-0000-0000-000000000055', '00000000-0000-0000-0000-000000000063', 'https://aws.amazon.com'),
-('00000000-0000-0000-0000-000000000074', 'Desenvolvimento Mobile com React Native', 'Crie apps iOS e Android.', 40.0, '00000000-0000-0000-0000-000000000051', '00000000-0000-0000-0000-000000000061', 'https://udemy.com/react'),
-('00000000-0000-0000-0000-000000000075', 'Python Data Science', 'Pandas, NumPy e Scikit-Learn.', 45.0, '00000000-0000-0000-0000-000000000052', '00000000-0000-0000-0000-000000000062', 'https://coursera.org/python');
+-- Java & Spring
+('00000000-0000-0000-0000-000000000081', 'Java Completo 2025: POO, Spring e Projetos', 'Domine o ecossistema Java do zero ao profissional.', 50.0, '00000000-0000-0000-0000-000000000061', '00000000-0000-0000-0000-000000000074', 'https://www.udemy.com/course/java-curso-completo/'),
+('00000000-0000-0000-0000-000000000082', 'Spring Boot 3: API REST e Microsserviços', 'Crie APIs escaláveis com Spring Boot, Data e Security.', 30.0, '00000000-0000-0000-0000-000000000063', '00000000-0000-0000-0000-000000000074', 'https://www.alura.com.br/formacao-spring-boot'),
+('00000000-0000-0000-0000-000000000083', 'Testes Automatizados com JUnit e Mockito', 'Garanta a qualidade do seu código Java.', 12.0, '00000000-0000-0000-0000-000000000063', '00000000-0000-0000-0000-000000000074', 'https://www.alura.com.br/curso-online-testes-java-junit'),
+-- Cloud & DevOps
+('00000000-0000-0000-0000-000000000084', 'AWS Certified Cloud Practitioner (CLF-C02)', 'Preparatório completo para a certificação AWS de entrada.', 20.0, '00000000-0000-0000-0000-000000000061', '00000000-0000-0000-0000-000000000073', 'https://www.udemy.com/course/aws-certified-cloud-practitioner-new/'),
+('00000000-0000-0000-0000-000000000085', 'Microsoft Azure Fundamentals (AZ-900)', 'Domine os fundamentos da nuvem Microsoft.', 15.0, '00000000-0000-0000-0000-000000000065', '00000000-0000-0000-0000-000000000073', 'https://learn.microsoft.com/en-us/training/paths/microsoft-azure-fundamentals-describe-cloud-concepts/'),
+('00000000-0000-0000-0000-000000000086', 'Docker & Kubernetes: The Complete Guide', 'Containerização e orquestração do zero.', 40.0, '00000000-0000-0000-0000-000000000061', '00000000-0000-0000-0000-000000000074', 'https://www.udemy.com/course/docker-and-kubernetes-the-complete-guide/'),
+('00000000-0000-0000-0000-000000000087', 'DevOps Culture & Tools', 'CI/CD, Jenkins, Gitlab e Terraform.', 25.0, '00000000-0000-0000-0000-000000000062', '00000000-0000-0000-0000-000000000074', 'https://www.coursera.org/specializations/devops'),
+-- Front-end & Mobile
+('00000000-0000-0000-0000-000000000088', 'React Native: Desenvolva APPs Reais', 'Crie Instagram e Uber clones com React Native.', 35.0, '00000000-0000-0000-0000-000000000063', '00000000-0000-0000-0000-000000000074', 'https://www.alura.com.br/formacao-react-native'),
+('00000000-0000-0000-0000-000000000089', 'React.js Completo com Next.js', 'Front-end moderno com SSR e Hooks.', 45.0, '00000000-0000-0000-0000-000000000068', '00000000-0000-0000-0000-000000000071', 'https://www.rocketseat.com.br/ignite'),
+('00000000-0000-0000-0000-000000000090', 'Flutter: Guia Completo', 'Desenvolva para Android e iOS com Dart.', 40.0, '00000000-0000-0000-0000-000000000061', '00000000-0000-0000-0000-000000000074', 'https://www.udemy.com/course/flutter-bootcamp-with-dart/'),
+-- Data Science
+('00000000-0000-0000-0000-000000000091', 'Python para Data Science e Machine Learning', 'Análise de dados com Pandas e Scikit-Learn.', 30.0, '00000000-0000-0000-0000-000000000061', '00000000-0000-0000-0000-000000000074', 'https://www.udemy.com/course/python-for-data-science-and-machine-learning-bootcamp/'),
+('00000000-0000-0000-0000-000000000092', 'Engenharia de Dados com Azure', 'Construa pipelines de dados na nuvem.', 28.0, '00000000-0000-0000-0000-000000000065', '00000000-0000-0000-0000-000000000073', 'https://learn.microsoft.com/en-us/credentials/certifications/azure-data-engineer/'),
+-- Outros
+('00000000-0000-0000-0000-000000000093', 'MBA em Arquitetura de Soluções', 'Formação executiva para arquitetos.', 360.0, '00000000-0000-0000-0000-000000000064', '00000000-0000-0000-0000-000000000072', 'https://www.fiap.com.br/mba/arquitetura-de-solucoes'),
+('00000000-0000-0000-0000-000000000094', 'Cyber Security Fundamentals', 'Conceitos de segurança ofensiva e defensiva.', 15.0, '00000000-0000-0000-0000-000000000069', '00000000-0000-0000-0000-000000000071', 'https://www.dio.me/bootcamp/cyber-security'),
+('00000000-0000-0000-0000-000000000095', 'Scrum Master Certification', 'Gestão ágil de projetos.', 16.0, '00000000-0000-0000-0000-000000000061', '00000000-0000-0000-0000-000000000073', 'https://www.udemy.com/course/scrum-master-certification-preparation/');
 
--- CURSO_HABILIDADE (Ligação Curso 7x -> Habilidade 3x)
-INSERT INTO curso_habilidade (id_curso, id_habilidade) VALUES
-('00000000-0000-0000-0000-000000000071', '00000000-0000-0000-0000-000000000031'), -- Java Masterclass ensina Java
-('00000000-0000-0000-0000-000000000072', '00000000-0000-0000-0000-000000000034'), -- Spring ensina Spring
-('00000000-0000-0000-0000-000000000072', '00000000-0000-0000-0000-000000000031'), -- Spring ensina Java
-('00000000-0000-0000-0000-000000000073', '00000000-0000-0000-0000-000000000038'), -- AWS ensina AWS
-('00000000-0000-0000-0000-000000000074', '00000000-0000-0000-0000-000000000035'), -- React Native ensina React
-('00000000-0000-0000-0000-000000000074', '00000000-0000-0000-0000-000000000033'), -- React Native ensina JS
-('00000000-0000-0000-0000-000000000075', '00000000-0000-0000-0000-000000000032'); -- Python DS ensina Python
-
--- TENDÊNCIAS (IDs: 81 a 85)
+-- 9. TENDÊNCIAS DE MERCADO (10 Itens)
 INSERT INTO tendencias_mercado (id_tendencia, descricao, indice_demanda, fonte, data_analise) VALUES
-('00000000-0000-0000-0000-000000000081', 'Alta procura por arquitetos especialistas em Nuvem', 92.5, 'LinkedIn', DATE '2025-10-01'),
-('00000000-0000-0000-0000-000000000082', 'Desenvolvimento Mobile Híbrido em alta', 85.0, 'StackOverflow', DATE '2025-09-15'),
-('00000000-0000-0000-0000-000000000083', 'Adoção de IA Generativa nas empresas', 98.0, 'Gartner', DATE '2025-11-01'),
-('00000000-0000-0000-0000-000000000084', 'Escassez de especialistas em Cyber Security', 89.0, 'TechCrunch', DATE '2025-08-20'),
-('00000000-0000-0000-0000-000000000085', 'Migração de Monólitos para Microsserviços', 75.0, 'IDC', DATE '2025-07-10');
+('00000000-0000-0000-0000-000000000101', 'Alta demanda por Arquitetos Cloud (Multi-cloud)', 92.5, 'LinkedIn Jobs 2025', DATE '2025-10-01'),
+('00000000-0000-0000-0000-000000000102', 'Crescimento do desenvolvimento Mobile Híbrido', 85.0, 'StackOverflow Survey', DATE '2025-09-15'),
+('00000000-0000-0000-0000-000000000103', 'IA Generativa no fluxo de desenvolvimento (Copilot)', 98.0, 'Gartner Trends', DATE '2025-11-01'),
+('00000000-0000-0000-0000-000000000104', 'Cyber Security e Zero Trust', 89.0, 'TechCrunch', DATE '2025-08-20'),
+('00000000-0000-0000-0000-000000000105', 'Modernização de Legado para Microsserviços', 75.0, 'IDC Report', DATE '2025-07-10'),
+('00000000-0000-0000-0000-000000000106', 'Engenharia de Prompt e LLMs', 95.0, 'OpenAI Report', DATE '2025-10-20'),
+('00000000-0000-0000-0000-000000000107', 'DevSecOps (Segurança no Pipeline)', 82.0, 'GitLab Report', DATE '2025-06-15'),
+('00000000-0000-0000-0000-000000000108', 'Python como linguagem dominante em Data', 90.0, 'TIOBE Index', DATE '2025-09-01'),
+('00000000-0000-0000-0000-000000000109', 'Automação RPA em processos corporativos', 68.0, 'Forrester', DATE '2025-05-30'),
+('00000000-0000-0000-0000-000000000110', 'Crescimento de vagas remotas globais', 88.0, 'Deel Report', DATE '2025-11-10');
 
--- USUÁRIOS (IDs: 91 a 95)
+-- 10. USUÁRIOS (IDs: 201 a 205)
 -- Senha Padrão para TODOS: Admin@123
 -- Hash Válido: $2b$10$mDn1QxWAF1esglWOvThEEurwjZ2V540nTbKd/lpPoQJsBwRIAEQxy
 INSERT INTO usuarios (id_usuario, nome, email, senha_hash, data_nascimento, genero, pais, id_cargo, id_area) VALUES
-('00000000-0000-0000-0000-000000000091', 'Administrador MentorAI', 'admin@mentorai.com', '$2b$10$mDn1QxWAF1esglWOvThEEurwjZ2V540nTbKd/lpPoQJsBwRIAEQxy', DATE '1985-01-01', 1, 'Brasil', '00000000-0000-0000-0000-000000000099', '00000000-0000-0000-0000-000000000015'),
-('00000000-0000-0000-0000-000000000092', 'Lucas Silva',            'lucas.dev@email.com',  '$2b$10$mDn1QxWAF1esglWOvThEEurwjZ2V540nTbKd/lpPoQJsBwRIAEQxy', DATE '1999-05-20', 1, 'Brasil', '00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000011'),
-('00000000-0000-0000-0000-000000000093', 'Amanda Costa',           'amanda.dados@email.com','$2b$10$mDn1QxWAF1esglWOvThEEurwjZ2V540nTbKd/lpPoQJsBwRIAEQxy', DATE '1995-03-15', 2, 'Portugal', '00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000012'),
-('00000000-0000-0000-0000-000000000094', 'Roberto Almeida',        'beto.ops@email.com',   '$2b$10$mDn1QxWAF1esglWOvThEEurwjZ2V540nTbKd/lpPoQJsBwRIAEQxy', DATE '1990-11-30', 1, 'Brasil', '00000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000013'),
-('00000000-0000-0000-0000-000000000095', 'Fernanda Souza',         'nanda.mobile@email.com','$2b$10$mDn1QxWAF1esglWOvThEEurwjZ2V540nTbKd/lpPoQJsBwRIAEQxy', DATE '2001-07-22', 2, 'Argentina', '00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000013');
+('00000000-0000-0000-0000-000000000201', 'Administrador MentorAI', 'admin@mentorai.com', '$2b$10$mDn1QxWAF1esglWOvThEEurwjZ2V540nTbKd/lpPoQJsBwRIAEQxy', DATE '1985-01-01', 1, 'Brasil', '00000000-0000-0000-0000-000000000099', '00000000-0000-0000-0000-000000000015'),
+('00000000-0000-0000-0000-000000000202', 'Lucas Silva',            'lucas.dev@email.com',  '$2b$10$mDn1QxWAF1esglWOvThEEurwjZ2V540nTbKd/lpPoQJsBwRIAEQxy', DATE '1999-05-20', 1, 'Brasil', '00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000011'),
+('00000000-0000-0000-0000-000000000203', 'Amanda Costa',           'amanda.dados@email.com','$2b$10$mDn1QxWAF1esglWOvThEEurwjZ2V540nTbKd/lpPoQJsBwRIAEQxy', DATE '1995-03-15', 2, 'Portugal', '00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000012'),
+('00000000-0000-0000-0000-000000000204', 'Roberto Almeida',        'beto.ops@email.com',   '$2b$10$mDn1QxWAF1esglWOvThEEurwjZ2V540nTbKd/lpPoQJsBwRIAEQxy', DATE '1990-11-30', 1, 'Brasil', '00000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000013'),
+('00000000-0000-0000-0000-000000000205', 'Fernanda Souza',         'nanda.mobile@email.com','$2b$10$mDn1QxWAF1esglWOvThEEurwjZ2V540nTbKd/lpPoQJsBwRIAEQxy', DATE '2001-07-22', 2, 'Argentina', '00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000013');
 
--- USUARIO_HABILIDADE (User 9x -> Hab 3x)
-INSERT INTO usuario_habilidade (id_usuario, id_habilidade, nivel_proficiencia) VALUES
-('00000000-0000-0000-0000-000000000092', '00000000-0000-0000-0000-000000000031', 3),
-('00000000-0000-0000-0000-000000000092', '00000000-0000-0000-0000-000000000039', 2),
-('00000000-0000-0000-0000-000000000093', '00000000-0000-0000-0000-000000000036', 4),
-('00000000-0000-0000-0000-000000000093', '00000000-0000-0000-0000-000000000038', 3),
-('00000000-0000-0000-0000-000000000094', '00000000-0000-0000-0000-000000000033', 3),
-('00000000-0000-0000-0000-000000000094', '00000000-0000-0000-0000-000000000035', 2);
-
--- ROTAS (IDs: 101 a 103)
-INSERT INTO rotas_requalificacao (id_rota, nome_rota, descricao, objetivo_profissional, id_tendencia) VALUES
-('00000000-0000-0000-0000-000000000101', 'Transição de Java Junior para Arquiteto Cloud', 'Trilha focada em fortalecer o back-end.', 'Arquiteto de Soluções', '00000000-0000-0000-0000-000000000081' ),
-('00000000-0000-0000-0000-000000000102', 'Especialização em Desenvolvimento Mobile', 'Focado em profissionais React Native.', 'Desenvolvedor Mobile Senior', '00000000-0000-0000-0000-000000000085'),
-('00000000-0000-0000-0000-000000000103', 'Imersão em Data Science', 'Do zero aos modelos preditivos.', 'Cientista de Dados', '00000000-0000-0000-0000-000000000084');
-
--- ROTA_CURSO (Rota 10x -> Curso 7x)
+-- 12. ROTA_CURSO (Cursos das rotas)
 INSERT INTO rota_curso (id_rota, id_curso, ordem) VALUES
-('00000000-0000-0000-0000-000000000101', '00000000-0000-0000-0000-000000000071', 1), -- Java Adv
-('00000000-0000-0000-0000-000000000101', '00000000-0000-0000-0000-000000000072', 2), -- Spring
-('00000000-0000-0000-0000-000000000101', '00000000-0000-0000-0000-000000000073', 3), -- AWS
-('00000000-0000-0000-0000-000000000102', '00000000-0000-0000-0000-000000000074', 1), -- React Native
-('00000000-0000-0000-0000-000000000103', '00000000-0000-0000-0000-000000000075', 1); -- DevOps
+('00000000-0000-0000-0000-000000000301', '00000000-0000-0000-0000-000000000081', 1), -- Java
+('00000000-0000-0000-0000-000000000301', '00000000-0000-0000-0000-000000000082', 2), -- Spring
+('00000000-0000-0000-0000-000000000301', '00000000-0000-0000-0000-000000000085', 3), -- Azure
+('00000000-0000-0000-0000-000000000302', '00000000-0000-0000-0000-000000000088', 1), -- React Native
+('00000000-0000-0000-0000-000000000303', '00000000-0000-0000-0000-000000000091', 1); -- Python DS
 
--- USUARIO_ROTA (User 9x -> Rota 10x)
+-- 13. USUARIO_ROTA
 INSERT INTO usuario_rota (id_usuario, id_rota, progresso_percentual, data_inicio) VALUES
-('00000000-0000-0000-0000-000000000092', '00000000-0000-0000-0000-000000000101', 15.0, CURRENT_TIMESTAMP), -- Lucas fazendo Rota Java
-('00000000-0000-0000-0000-000000000095', '00000000-0000-0000-0000-000000000102', 5.0, CURRENT_TIMESTAMP);  -- Fernanda fazendo Rota Mobile
-
+('00000000-0000-0000-0000-000000000202', '00000000-0000-0000-0000-000000000301', 15.0, CURRENT_TIMESTAMP), -- Lucas -> Java
+('00000000-0000-0000-0000-000000000205', '00000000-0000-0000-0000-000000000302', 5.0, CURRENT_TIMESTAMP);  -- Fernanda -> Mobile
