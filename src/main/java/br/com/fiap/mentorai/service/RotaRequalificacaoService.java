@@ -100,8 +100,10 @@ public class RotaRequalificacaoService {
 
     @Cacheable(cacheNames = "rotasById", key = "#id")
     public RotaRequalificacaoResponse get(UUID id) {
-        RotaRequalificacao e = rotaRepo.findById(id)
+        // 🛑 CORREÇÃO: Usamos o método com JOIN FETCH para trazer a trilha
+        RotaRequalificacao e = rotaRepo.findByIdWithCursos(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Rota não encontrada"));
+
         return RotaRequalificacaoMapper.toDto(e);
     }
 
