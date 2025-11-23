@@ -3,9 +3,6 @@ package br.com.fiap.mentorai.controller;
 import br.com.fiap.mentorai.dto.request.create.CreateHabilidadeRequest;
 import br.com.fiap.mentorai.dto.request.update.UpdateHabilidadeRequest;
 import br.com.fiap.mentorai.dto.response.HabilidadeResponse;
-import br.com.fiap.mentorai.mapper.HabilidadeMapper;
-import br.com.fiap.mentorai.model.Habilidade;
-import br.com.fiap.mentorai.repository.HabilidadeRepository;
 import br.com.fiap.mentorai.service.HabilidadeService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.*;
@@ -15,7 +12,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -24,11 +20,9 @@ import java.util.UUID;
 public class HabilidadeController {
 
     private final HabilidadeService service;
-    private final HabilidadeRepository repo;
 
-    public HabilidadeController(HabilidadeService service, HabilidadeRepository repo) {
+    public HabilidadeController(HabilidadeService service) {
         this.service = service;
-        this.repo = repo;
     }
 
     @PostMapping

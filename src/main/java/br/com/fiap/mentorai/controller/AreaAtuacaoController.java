@@ -3,9 +3,6 @@ package br.com.fiap.mentorai.controller;
 import br.com.fiap.mentorai.dto.*;
 import br.com.fiap.mentorai.dto.request.create.CreateAreaAtuacaoRequest;
 import br.com.fiap.mentorai.dto.request.update.UpdateAreaAtuacaoRequest;
-import br.com.fiap.mentorai.mapper.AreaAtuacaoMapper;
-import br.com.fiap.mentorai.model.AreaAtuacao;
-import br.com.fiap.mentorai.repository.AreaAtuacaoRepository;
 import br.com.fiap.mentorai.service.AreaAtuacaoService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.*;
@@ -15,7 +12,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -24,11 +20,9 @@ import java.util.UUID;
 public class AreaAtuacaoController {
 
     private final AreaAtuacaoService service;
-    private final AreaAtuacaoRepository repo;
 
-    public AreaAtuacaoController(AreaAtuacaoService service, AreaAtuacaoRepository repo) {
+    public AreaAtuacaoController(AreaAtuacaoService service) {
         this.service = service;
-        this.repo = repo;
     }
 
     @PostMapping

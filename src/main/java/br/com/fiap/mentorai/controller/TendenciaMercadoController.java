@@ -2,11 +2,7 @@ package br.com.fiap.mentorai.controller;
 
 import br.com.fiap.mentorai.dto.request.create.CreateTendenciaMercadoRequest;
 import br.com.fiap.mentorai.dto.request.update.UpdateTendenciaMercadoRequest;
-import br.com.fiap.mentorai.dto.response.HabilidadeResponse;
 import br.com.fiap.mentorai.dto.response.TendenciaMercadoResponse;
-import br.com.fiap.mentorai.mapper.TendenciaMercadoMapper;
-import br.com.fiap.mentorai.model.TendenciaMercado;
-import br.com.fiap.mentorai.repository.TendenciaMercadoRepository;
 import br.com.fiap.mentorai.service.TendenciaMercadoService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.*;
@@ -16,7 +12,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -25,11 +20,9 @@ import java.util.UUID;
 public class TendenciaMercadoController {
 
     private final TendenciaMercadoService service;
-    private final TendenciaMercadoRepository repo;
 
-    public TendenciaMercadoController(TendenciaMercadoService service, TendenciaMercadoRepository repo) {
+    public TendenciaMercadoController(TendenciaMercadoService service) {
         this.service = service;
-        this.repo = repo;
     }
 
     @PostMapping

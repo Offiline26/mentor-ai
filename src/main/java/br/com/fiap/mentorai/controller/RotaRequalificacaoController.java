@@ -3,9 +3,6 @@ package br.com.fiap.mentorai.controller;
 import br.com.fiap.mentorai.dto.request.create.CreateRotaRequalificacaoRequest;
 import br.com.fiap.mentorai.dto.request.update.UpdateRotaRequalificacaoRequest;
 import br.com.fiap.mentorai.dto.response.RotaRequalificacaoResponse;
-import br.com.fiap.mentorai.mapper.RotaRequalificacaoMapper;
-import br.com.fiap.mentorai.model.RotaRequalificacao;
-import br.com.fiap.mentorai.repository.RotaRequalificacaoRepository;
 import br.com.fiap.mentorai.service.RotaRequalificacaoService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.*;
@@ -15,7 +12,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -24,12 +20,10 @@ import java.util.UUID;
 public class RotaRequalificacaoController {
 
     private final RotaRequalificacaoService service;
-    private final RotaRequalificacaoRepository repo;
 
-    public RotaRequalificacaoController(RotaRequalificacaoService service,
-                                        RotaRequalificacaoRepository repo) {
+    public RotaRequalificacaoController(RotaRequalificacaoService service) {
         this.service = service;
-        this.repo = repo;
+
     }
 
     @PostMapping

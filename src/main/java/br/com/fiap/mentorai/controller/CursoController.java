@@ -3,9 +3,6 @@ package br.com.fiap.mentorai.controller;
 import br.com.fiap.mentorai.dto.request.create.CreateCursoRequest;
 import br.com.fiap.mentorai.dto.request.update.UpdateCursoRequest;
 import br.com.fiap.mentorai.dto.response.CursoResponse;
-import br.com.fiap.mentorai.mapper.CursoMapper;
-import br.com.fiap.mentorai.model.Curso;
-import br.com.fiap.mentorai.repository.CursoRepository;
 import br.com.fiap.mentorai.service.CursoService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.*;
@@ -15,7 +12,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -24,11 +20,9 @@ import java.util.UUID;
 public class CursoController {
 
     private final CursoService service;
-    private final CursoRepository repo;
 
-    public CursoController(CursoService service, CursoRepository repo) {
+    public CursoController(CursoService service) {
         this.service = service;
-        this.repo = repo;
     }
 
     @PostMapping

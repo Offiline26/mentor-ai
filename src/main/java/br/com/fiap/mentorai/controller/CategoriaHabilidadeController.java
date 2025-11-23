@@ -3,9 +3,6 @@ package br.com.fiap.mentorai.controller;
 import br.com.fiap.mentorai.dto.*;
 import br.com.fiap.mentorai.dto.request.create.CreateCategoriaHabilidadeRequest;
 import br.com.fiap.mentorai.dto.request.update.UpdateCategoriaHabilidadeRequest;
-import br.com.fiap.mentorai.mapper.CategoriaHabilidadeMapper;
-import br.com.fiap.mentorai.model.CategoriaHabilidade;
-import br.com.fiap.mentorai.repository.CategoriaHabilidadeRepository;
 import br.com.fiap.mentorai.service.CategoriaHabilidadeService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.*;
@@ -15,7 +12,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -24,11 +20,9 @@ import java.util.UUID;
 public class CategoriaHabilidadeController {
 
     private final CategoriaHabilidadeService service;
-    private final CategoriaHabilidadeRepository repo;
 
-    public CategoriaHabilidadeController(CategoriaHabilidadeService service, CategoriaHabilidadeRepository repo) {
+    public CategoriaHabilidadeController(CategoriaHabilidadeService service) {
         this.service = service;
-        this.repo = repo;
     }
 
     @PostMapping

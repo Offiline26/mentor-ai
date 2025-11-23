@@ -2,20 +2,17 @@ package br.com.fiap.mentorai.controller;
 
 import br.com.fiap.mentorai.dto.request.create.CreateUsuarioRequest;
 import br.com.fiap.mentorai.dto.request.update.UpdateUsuarioRequest;
-import br.com.fiap.mentorai.dto.response.HabilidadeResponse;
 import br.com.fiap.mentorai.dto.response.UsuarioResponse;
-import br.com.fiap.mentorai.model.Usuario;
-import br.com.fiap.mentorai.repository.UsuarioRepository;
 import br.com.fiap.mentorai.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.*;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.*;
 
 import java.net.URI;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -24,11 +21,9 @@ import java.util.UUID;
 public class UsuarioController {
 
     private final UsuarioService service;
-    private final UsuarioRepository repo;
 
-    public UsuarioController(UsuarioService service, UsuarioRepository repo) {
+    public UsuarioController(UsuarioService service) {
         this.service = service;
-        this.repo = repo;
     }
 
     @PostMapping
@@ -39,6 +34,8 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}")
+    // 🛑 AJUSTE CRÍTICO: Usa o bean para checar se o ID na URL (#id) é do usuário logado
+    @PreAuthorize("@usuarioSecurity.isOwner(#id)")
     public ResponseEntity<UsuarioResponse> get(@PathVariable UUID id) {
         return ResponseEntity.ok(service.get(id));
     }
@@ -49,19 +46,21 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioResponse> update(@PathVariable UUID id,
-                                                  @Valid @RequestBody UpdateUsuarioRequest req) {
+    @PreAuthorize("@usuarioSecurity.isOwner(#id)") // Aplique também em PUT e DELETE
+    public ResponseEntity<UsuarioResponse> update(@PathVariable UUID id, @RequestBody @Valid UpdateUsuarioRequest req) {
         return ResponseEntity.ok(service.update(id, req));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("@usuarioSecurity.isOwner(#id)") // Aplique também em PUT e DELETE
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    // Ações de domínio
-    @PostMapping("/{idUsuario}/rotas/{idRota}:iniciar")
+    // O método iniciarRota precisa do ID do usuário, então a regra também deve ser aplicada
+    @PostMapping("/{idUsuario}/rotas/{idRota}/iniciar")
+    @PreAuthorize("@usuarioSecurity.isOwner(#idUsuario)")
     public ResponseEntity<UsuarioResponse> iniciarRota(@PathVariable UUID idUsuario, @PathVariable UUID idRota) {
         return ResponseEntity.ok(service.iniciarRota(idUsuario, idRota));
     }

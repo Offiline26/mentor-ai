@@ -13,24 +13,19 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/cargos") // Bate com o Security: .requestMatchers(HttpMethod.GET, "/api/cargos/**").permitAll()
+@RequestMapping("/api/cargos")
 @Validated
 public class CargoController {
 
     private final CargoService service;
 
-    // Injeção de Dependência via Construtor (Padrão Sênior)
     public CargoController(CargoService service) {
         this.service = service;
     }
 
-    // ==============================================================
-    // 1. MÉTODO PÚBLICO (GET) - Liberado no SecurityConfig
-    // ==============================================================
     @GetMapping
     public ResponseEntity<Page<CargoDto>> list(@PageableDefault(size = 20, sort = "nomeCargo") Pageable pageable) {
         return ResponseEntity.ok(service.findAll(pageable));
@@ -41,9 +36,6 @@ public class CargoController {
         return ResponseEntity.ok(service.get(id));
     }
 
-    // ==============================================================
-    // 2. MÉTODOS PRIVADOS (POST/PUT/DELETE) - Exigem Token JWT
-    // ==============================================================
     @PostMapping
     public ResponseEntity<CargoDto> create(@Valid @RequestBody CreateCargoRequest req) {
         CargoDto created = service.create(req);
