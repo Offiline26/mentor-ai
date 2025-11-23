@@ -127,22 +127,28 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest req) {
 
-        String email = req.getEmail().trim().toLowerCase(Locale.ROOT);
+        // 🚀 ENHANCEMENT: Aggressive input normalization
+        // Use the email directly from the request object for normalization
+        String rawEmail = req.getEmail();
+        String emailNormalizado = rawEmail.trim().toLowerCase(Locale.ROOT);
 
-        if (usuarioRepository.findByEmail(email).isPresent()) {
+        // 1. Check for existing user using the clean email
+        if (usuarioRepository.findByEmail(emailNormalizado).isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT)
                     .body(Map.of("error", "E-mail já cadastrado"));
         }
 
+        // 2. Validate Foreign Keys
         Cargo cargo = cargoRepository.findById(req.getIdCargo())
                 .orElseThrow(() -> new ResourceNotFoundException("Cargo não encontrado"));
 
         AreaAtuacao area = areaAtuacaoRepository.findById(req.getIdAreaAtuacao())
                 .orElseThrow(() -> new ResourceNotFoundException("Área de atuação não encontrada"));
 
+        // 3. Create User Entity
         Usuario u = new Usuario();
         u.setNome(req.getNome());
-        u.setEmail(email);
+        u.setEmail(emailNormalizado); // <--- Use the clean email for storage
         u.setSenha(passwordEncoder.encode(req.getSenha()));
         u.setDataNascimento(req.getDataNascimento());
         u.setGenero(req.getGenero());
@@ -151,6 +157,7 @@ public class AuthController {
         u.setAreaAtuacao(area);
         u.setDataCadastro(LocalDateTime.now());
 
+        // 4. Save and return Response
         u = usuarioRepository.save(u);
 
         RegisterResponse resp = RegisterResponse.builder()
@@ -161,9 +168,9 @@ public class AuthController {
                 .genero(u.getGenero())
                 .pais(u.getPais())
                 .idCargo(cargo.getId())
-                .cargo(cargo.getNome())          // ajusta pro nome real do campo em Cargo
+                .cargo(cargo.getNome())
                 .idAreaAtuacao(area.getId())
-                .areaAtuacao(area.getNome())     // idem para AreaAtuacao
+                .areaAtuacao(area.getNome())
                 .dataCadastro(u.getDataCadastro())
                 .build();
 
