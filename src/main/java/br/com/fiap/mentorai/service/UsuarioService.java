@@ -10,6 +10,7 @@ import br.com.fiap.mentorai.dto.response.UsuarioResponse;
 
 import br.com.fiap.mentorai.dto.upsert.UsuarioHabilidadeUpsert;
 
+import br.com.fiap.mentorai.exception.ResourceConflictException;
 import br.com.fiap.mentorai.exception.ResourceNotFoundException;
 
 import br.com.fiap.mentorai.mapper.UsuarioMapper;
@@ -193,7 +194,7 @@ public class UsuarioService {
     @Cacheable(cacheNames = "usuariosById", key = "#id")
 public UsuarioResponse get(UUID id) {
     // 🛑 USO DO REPOSITORY OTIMIZADO: findByIdWithDetails
-    Usuario e = usuarioRepo.findByIdWithDetails(id) 
+    Usuario e = usuarioRepo.findByIdWithDetails(id)
             .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
     return UsuarioMapper.toDto(e);
 }
@@ -321,33 +322,27 @@ public UsuarioResponse get(UUID id) {
 
 
     @Transactional
-
-    @CachePut(cacheNames = "usuariosById", key = "#idUsuario") // <-- FIX: Aplicado CachePut
-
+    @CachePut(cacheNames = "usuariosById", key = "#idUsuario")
     public UsuarioResponse iniciarRota(UUID idUsuario, UUID idRota) {
-
         Usuario user = usuarioRepo.findById(idUsuario)
-
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
-
         RotaRequalificacao rota = rotaRepo.findById(idRota)
-
                 .orElseThrow(() -> new ResourceNotFoundException("Rota não encontrada"));
 
-
-
+        // 🛑 CORREÇÃO DA LÓGICA:
         boolean jaTem = user.getRotas().stream().anyMatch(ur -> ur.getRota().getId().equals(idRota));
 
-        if (!jaTem) {
-
-            UsuarioRota ur = user.iniciarRota(rota);
-
-            usuarioRotaRepo.save(ur);
-
+        if (jaTem) {
+            // Se a rota já existe, lançamos um erro de CONFLITO (409) controlado
+            throw new ResourceConflictException("O usuário já está realizando esta rota de requalificação.");
         }
 
-        return UsuarioMapper.toDto(user);
+        // Se não tem, iniciamos e salvamos
+        UsuarioRota ur = user.iniciarRota(rota);
+        usuarioRotaRepo.save(ur);
 
+        // Retorna o DTO do usuário ATUALIZADO (para o CachePut)
+        return UsuarioMapper.toDto(user);
     }
 
 }
