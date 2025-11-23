@@ -20,7 +20,6 @@ public class I18nConfig {
         return ms;
     }
 
-    @SuppressWarnings("deprecation")
     @Bean
     public LocaleResolver localeResolver() {
         AcceptHeaderLocaleResolver lr = new AcceptHeaderLocaleResolver();

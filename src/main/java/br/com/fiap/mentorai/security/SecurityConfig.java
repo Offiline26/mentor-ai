@@ -91,6 +91,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/tendencias/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/cursos/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/rotas/**").permitAll()
+                        .requestMatchers("/mentor-test").permitAll()
 
                         .anyRequest().authenticated()
                 )
