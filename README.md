@@ -6,9 +6,25 @@
 ![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=for-the-badge&logo=docker)
 ![Ollama](https://img.shields.io/badge/AI-Ollama_Phi3-black?style=for-the-badge)
 
-> **Disruptive Architectures: IoT, IoB & Generative IA**
 >
 > Projeto acadêmico focado na implementação de uma solução de **Deep Learning (Generative AI)** integrada a uma arquitetura de microsserviços Java, com foco em **IoB (Internet of Behavior)** para requalificação profissional.
+
+---
+
+## 🌐 Deploy & Acesso
+
+A API está disponível publicamente no ambiente de produção:
+
+| Recurso | URL |
+| :--- | :--- |
+| **Base URL** | `https://mentor-ai-o136.onrender.com` |
+| **Swagger UI** | `https://mentor-ai-o136.onrender.com/swagger-ui.html` |
+
+### 🔐 Credenciais para Teste (Admin)
+Utilize este usuário para validar os fluxos protegidos (JWT):
+
+* **E-mail:** `admin@mentorai.com`
+* **Senha:** `Admin@123`
 
 ---
 
@@ -28,7 +44,7 @@ Diferente de soluções que apenas consomem APIs públicas, este projeto impleme
 
 ## 🏗️ Arquitetura e Infraestrutura (Azure Cloud)
 
-A solução está hospedada na **Microsoft Azure**, dimensionada especificamente para suportar a carga de trabalho de Deep Learning sem o custo de uma GPU dedicada.
+A solução foi originalmente desenhada para a **Microsoft Azure**, dimensionada especificamente para suportar a carga de trabalho de Deep Learning sem o custo de uma GPU dedicada.
 
 | Componente | Especificação | Justificativa Técnica |
 | :--- | :--- | :--- |
@@ -67,7 +83,29 @@ Gerencia a autenticação e autorização da plataforma.
 
 ---
 
-## 🛠️ Como Executar o Projeto
+## 🔌 Documentação das Rotas (Endpoints)
+
+### 🔐 Autenticação
+* `POST /api/auth/login` - Login (Retorna Bearer Token).
+* `POST /api/auth/register` - Cadastro de Usuário.
+
+### 📂 Catálogos (Público / Cacheado)
+* `GET /api/cargos` - Lista de Cargos.
+* `GET /api/areas` - Lista de Áreas de Atuação.
+* `GET /api/habilidades` - Lista de Tags/Skills.
+* `GET /api/cursos` - Catálogo de Cursos.
+
+### 🧠 Inteligência Artificial
+* `POST /api/ia/mentor/recomendacoes` - Gera a mentoria personalizada.
+
+### 👤 Usuário (Privado)
+* `GET /api/usuarios/{id}` - Perfil completo.
+* `POST /api/usuarios/{uid}/rotas/{rid}/iniciar` - Inicia uma rota.
+* `PUT /api/usuarios/{uid}/rotas/{rid}` - Atualiza progresso.
+
+---
+
+## 🛠️ Como Executar Localmente
 
 ### Pré-requisitos
 * Docker & Docker Compose instalados.
@@ -77,9 +115,8 @@ Gerencia a autenticação e autorização da plataforma.
 
 1. **Clone o repositório:**
    ```bash
-   git clone [https://github.com/seu-usuario/mentor-ai.git](https://github.com/seu-usuario/mentor-ai.git)
+   git clone [https://github.com/felipecvo-fiap-mad/2tdspw-gs-2-mentor-ai.git](https://github.com/felipecvo-fiap-mad/2tdspw-gs-2-mentor-ai.git)
    cd mentor-ai
-
 2. **Inicie a Stack: O docker-compose iniciará o Backend, Banco de Dados (Oracle/H2), RabbitMQ e o Serviço de IA.**
    ```bash
    docker compose up -d
